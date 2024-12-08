@@ -1,0 +1,908 @@
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios';
+
+export default function HRHome() {
+
+  const [selectedFeature, setSelectedFeature] = useState(null);
+  const [departmentName, setDepartmentName] = useState("");
+  const [message, setMessage] = useState("");
+  const [employeeId, setEmployeeId] = useState("");
+  const [username, setUsername] = useState("");
+  const [employeeData, setEmployeeData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [hrFormData, setHRFormData] = useState({
+    dateOfBirth: '',
+    email: '',
+    gender: '',
+    name: '',
+    role: '',
+    salary: '',
+});
+
+const [updatePasswordFormData, setUpdatePasswordFormData] = useState({
+    newPassword: '',
+    confirmPassword: '',
+});
+
+const handleRegisterHRChange = (e) => {
+    const { name, value } = e.target;
+    setHRFormData((prev) => ({
+        ...prev,
+        [name]: value,
+    }));
+};
+
+const handleUpdatePasswordChange = (e) => {
+    const {name, value} = e.target;
+    setUpdatePasswordFormData((prev) => ({
+        ...prev,
+        [name]: value,
+    }));
+
+    console.log(updatePasswordFormData)
+};
+
+  const handleAddDepartment = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8896/admin/departments",
+        { departmentName },
+        {
+          headers: {
+            Authorization: localStorage.getItem('authToken'),
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setMessage(`Department added successfully: ${response.data.departmentName}`);
+    } catch (error) {
+      setMessage(
+        error.response?.data?.message || "An error occurred while adding the department."
+      );
+    }
+  };
+
+  const handleAddEmployee = async (e) => {
+    e.preventDefault();
+
+    const employeeData = {
+        name: document.getElementById("employeeName").value,
+        role: document.getElementById("role").value,
+        gender: document.getElementById("gender").value,
+        salary: parseFloat(document.getElementById("salary").value),
+        phoneNo: document.getElementById("phoneNo").value,
+        dateOfBirth: document.getElementById("dateOfBirth").value,
+        email: document.getElementById("email").value
+    };
+
+    const departmentId = document.getElementById("departmentId").value;
+
+    try {
+        const token = localStorage.getItem("authToken"); // Retrieve stored token
+
+        const response = await axios.post(
+            `http://localhost:8896/admin/employees/${departmentId}`,
+            employeeData,
+            {
+                headers: {
+                    Authorization: token,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+        setMessage(`Employee added successfully`);
+        document.getElementById("addEmployeeForm").reset();
+    } catch (error) {
+        setMessage(
+            error.response?.data?.message || "An error occurred while adding the employee."
+        );
+    }
+};
+
+const handleDeleteEmployee = async (e) => {
+    e.preventDefault();
+
+    if (!employeeId) {
+        alert("Please enter an Employee ID.");
+        return;
+    }
+
+    if (window.confirm(`Are you sure you want to delete employee with ID ${employeeId}?`)) {
+        try {
+            const token = localStorage.getItem("authToken");
+            const response = await axios.delete(
+                `http://localhost:8896/admin/employees/${employeeId}`,
+                {
+                    headers: {
+                        Authorization: token,
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+            setMessage(`Employee deleted successfully`);
+            setEmployeeId(""); // Clear the form field
+        } catch (error) {
+            setMessage(
+                error.response?.data?.message || "An error occurred while adding the employee."
+            );
+        }
+    }
+};
+
+const handleGetEmployeeById = async (e) => {    
+    e.preventDefault();
+
+    try {
+        setLoading(true);
+        setEmployeeData(null);
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get(`http://localhost:8896/admin/employees/byEmployeeId/${employeeId}`, {
+            headers: {
+                Authorization: token,
+                "Content-Type": "application/json",
+            }
+        });
+
+        // console.log(response)
+
+        setEmployeeData(response.data);
+        setLoading(false);
+        // setMessage(`Employee fetched successfully: ${JSON.stringify(response.data)}`);
+    }
+    catch (error) {
+        console.log(error.response.data.message)
+        setEmployeeData(null);
+        setLoading(false);
+        setMessage(error.response.data.message);
+    }
+};
+
+const handleGetEmployeeByUsername = async (e) => { 
+    e.preventDefault();
+
+    try {
+        setLoading(true);
+        setEmployeeData(null);
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get(`http://localhost:8896/admin/employees/byUserName/${username}`, {
+            headers: {
+                Authorization: token,
+                "Content-Type": "application/json",
+            },
+        });
+
+        setEmployeeData(response.data);
+        setLoading(false);
+        // setMessage(`Employee fetched successfully: ${JSON.stringify(response.data)}`);
+    } 
+    catch (error) {
+        setEmployeeData(null);
+        setLoading(false);
+        setMessage(`Error fetching employee: ${error.response?.data?.message || error.message}`);
+    }
+};
+
+const handleViewYourProfile = async (e) => {
+    e.preventDefault();
+
+    try {
+        setLoading(true);
+        setEmployeeData(null);
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get(`http://localhost:8896/admin/viewProfile`, {
+            headers: {
+                Authorization: token,
+                "Content-Type": "application/json",
+            },
+        });
+
+        setEmployeeData(response.data);
+        setLoading(false);
+        // setMessage(`Employee fetched successfully: ${JSON.stringify(response.data)}`);
+    }
+    catch(error) {
+        setEmployeeData(null);
+        setLoading(false);
+        setMessage(`Error fetching employee: ${error.response?.data?.message || error.message}`);
+    }
+};
+
+const handleRegisterHR = async (e) => {
+    e.preventDefault();
+
+    try
+    {
+        setLoading(true);
+        setEmployeeData(null);
+        const token = localStorage.getItem("authToken");
+        const response = await axios.post(`http://localhost:8896/admin/registerAdmin`,
+            hrFormData, 
+            {
+            headers:{
+                Authorization: token,
+                "Content-Type": "application/json",
+            }
+            });
+            setMessage("Successful")
+    }
+    catch(error)
+    {
+        setHRFormData(null)
+        setLoading(false);
+        setMessage(`Error registering HR`);
+    }
+}
+
+const handleUpdatePassword = async (e) => {
+    e.preventDefault();
+    
+    try
+    {
+        setLoading(true);
+        setEmployeeData(null);
+        const token = localStorage.getItem("authToken");
+        const response = await axios.put(`http://localhost:8896/admin/updatePassword`,
+            updatePasswordFormData,
+            {
+                headers:{
+                    Authorization: token,
+                    "Content-Type": "application/json",
+                }
+            }
+        )
+        setMessage("Successful");
+    }
+    catch(error)
+    {
+        setUpdatePasswordFormData(null)
+        setLoading(false)
+        setMessage(`Error updating password`);
+    }
+}
+
+  const renderForm = () => {
+    switch (selectedFeature) {
+        case 'addDepartment':
+            return (
+                <div className="mt-4">
+                  <h3>Add Department</h3>
+                  <form onSubmit={handleAddDepartment}>
+                    <div className="mb-3">
+                      <label htmlFor="departmentName" className="form-label">
+                        Department Name
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="departmentName"
+                        placeholder="Enter department name"
+                        value={departmentName}
+                        onChange={(e) => setDepartmentName(e.target.value)}
+                      />
+                    </div>
+                    <button type="submit" className="btn btn-success">
+                      Submit
+                    </button>
+                  </form>
+                  {message && <p className="mt-3">{message}</p>}
+                </div>
+            );
+        case 'addEmployee':
+            return (
+                <form id="addEmployeeForm" className="mt-4" onSubmit={handleAddEmployee}>
+                    <h3>Add Employee</h3>
+                    
+                    <div className="mb-3">
+                        <label htmlFor="employeeName" className="form-label">Employee Name</label>
+                        <input 
+                            type="text" 
+                            className="form-control" 
+                            id="employeeName" 
+                            placeholder="Enter employee name" 
+                            required 
+                        />
+                    </div>
+                    
+                    <div className="mb-3">
+                        <label htmlFor="departmentId" className="form-label">Department ID</label>
+                        <input 
+                            type="text" 
+                            className="form-control" 
+                            id="departmentId" 
+                            placeholder="Enter department ID" 
+                            required 
+                        />
+                    </div>
+
+                    <div className="mb-3">
+                        <label htmlFor="email" className="form-label">Email ID</label>
+                        <input 
+                            type="text" 
+                            className="form-control" 
+                            id="email" 
+                            placeholder="Enter Email ID" 
+                            required 
+                        />
+                    </div>
+                    
+                    <div className="mb-3">
+                        <label htmlFor="role" className="form-label">Role</label>
+                        <select className="form-select" id="role" required>
+                            <option value="">Select Role</option>
+                            <option value="CODER">Coder</option>
+                            <option value="TESTER">Tester</option>
+                            <option value="DEBBUGER">Debugger</option>
+                            <option value="HR">HR</option>
+                        </select>
+                    </div>
+                    
+                    <div className="mb-3">
+                        <label htmlFor="gender" className="form-label">Gender</label>
+                        <select className="form-select" id="gender" required>
+                            <option value="">Select Gender</option>
+                            <option value="MALE">Male</option>
+                            <option value="FEMALE">Female</option>
+                        </select>
+                    </div>
+                    
+                    <div className="mb-3">
+                        <label htmlFor="salary" className="form-label">Salary</label>
+                        <input 
+                            type="number" 
+                            className="form-control" 
+                            id="salary" 
+                            placeholder="Enter salary" 
+                            required 
+                        />
+                    </div>
+                    
+                    <div className="mb-3">
+                        <label htmlFor="phoneNo" className="form-label">Phone Number</label>
+                        <input 
+                            type="text" 
+                            className="form-control" 
+                            id="phoneNo" 
+                            placeholder="Enter phone number" 
+                            required 
+                        />
+                    </div>
+                    
+                    <div className="mb-3">
+                        <label htmlFor="dateOfBirth" className="form-label">Date of Birth</label>
+                        <input 
+                            type="date" 
+                            className="form-control" 
+                            id="dateOfBirth" 
+                            required 
+                        />
+                    </div>
+                    
+                    <button type="submit" className="btn btn-success">Submit</button>
+                    {message && <p className="mt-3">{message}</p>}
+                </form>
+        );            
+        case 'deleteEmployee':
+            return (
+                <form className="mt-4" onSubmit={handleDeleteEmployee}>
+                    <h3>Delete Employee</h3>
+                    <div className="mb-3">
+                        <label htmlFor="employeeId" className="form-label">Employee ID</label>
+                        <input
+                        type="text"
+                        className="form-control"
+                        id="employeeId"
+                        placeholder="Enter employee ID"
+                        value={employeeId}
+                        onChange={(e) => setEmployeeId(e.target.value)}
+                        required
+                        />
+                    </div>
+                    <button type="submit" className="btn btn-danger">Submit</button>
+                    {message && <p className="mt-3">{message}</p>}
+                </form>
+            );
+        case 'getEmployeeByID': //test from here
+            return (
+                <div className="mt-4">
+                    <form className="mt-4" onSubmit={handleGetEmployeeById}>
+                        <h3>Get Employee by ID</h3>
+                        <div className="mb-3">
+                            <label htmlFor="employeeId" className="form-label">Employee ID</label>
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                id="employeeId" 
+                                placeholder="Enter employee ID" 
+                                value={employeeId}
+                                onChange={(e) => setEmployeeId(e.target.value)}
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-danger">Submit</button>
+                    </form>
+                    {/* {loading && <p>Loading...</p>} */}
+
+                    {employeeData && (
+                        <div className="mt-4 border p-3 rounded shadow">
+                            <h3>Employee Details</h3>
+                            <p><strong>ID:</strong> {employeeData.employeeId}</p>
+                            <p><strong>Name:</strong> {employeeData.name}</p>
+                            <p><strong>Username:</strong> {employeeData.userName}</p>
+                            <p><strong>Email:</strong> {employeeData.email || 'Not Provided'}</p>
+                            <p><strong>Gender:</strong> {employeeData.gender || 'Not Specified'}</p>
+                            <p><strong>Salary:</strong> ${employeeData.salary.toLocaleString()}</p>
+                            <p><strong>Date of Birth:</strong> {employeeData.dateOfBirth || 'Not Provided'}</p>
+                            <p><strong>Role:</strong> {employeeData.role}</p>
+                            <p><strong>DepartmentID:</strong> {employeeData.departmentId}</p>
+                            <p><strong>Joining Date:</strong> {employeeData.joiningDate}</p>
+                            <p><strong>Department Name:</strong> {employeeData.departmentName}</p>
+                        </div>
+                    )}
+
+                    {message && (
+                        <p className="mt-3 text-danger">{message}</p>
+                    )}
+                </div>
+            );
+        case 'getEmployeeByUsername': 
+            return (
+                <div>
+                    <form className="mt-4" onSubmit={handleGetEmployeeByUsername}>
+                        <h3>Get Employee by Username</h3>
+                        <div className="mb-3">
+                            <label htmlFor="username" className="form-label">Username</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="username"
+                                placeholder="Enter username"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-primary">Submit</button>
+                    </form>
+                    {loading && <p>Loading...</p>}
+
+                    {employeeData && (
+                        <div className="mt-4 border p-3 rounded shadow">
+                            <h3>Employee Details</h3>
+                            <p><strong>ID:</strong> {employeeData.employeeId}</p>
+                            <p><strong>Name:</strong> {employeeData.name}</p>
+                            <p><strong>Username:</strong> {employeeData.userName}</p>
+                            <p><strong>Email:</strong> {employeeData.email || 'Not Provided'}</p>
+                            <p><strong>Gender:</strong> {employeeData.gender || 'Not Specified'}</p>
+                            <p><strong>Salary:</strong> ${employeeData.salary.toLocaleString()}</p>
+                            <p><strong>Date of Birth:</strong> {employeeData.dateOfBirth || 'Not Provided'}</p>
+                            <p><strong>Role:</strong> {employeeData.role}</p>
+                            <p><strong>DepartmentID:</strong> {employeeData.departmentId}</p>
+                            <p><strong>Joining Date:</strong> {employeeData.joiningDate}</p>
+                            <p><strong>Department Name:</strong> {employeeData.departmentName}</p>
+                        </div>
+                    )}
+
+                    {message && (
+                        <p className="mt-3 text-danger">{message}</p>
+                    )}
+                </div>
+            );
+        case 'viewYourProfile':
+            return (
+                <div className="mt-4 border p-3 rounded shadow">
+                    {loading && <p>Loading...</p>}
+
+                    <form className="mt-4" onSubmit={handleViewYourProfile}>
+                        <button type="submit" className="btn btn-primary">View my Profile</button>
+                    </form>
+
+                    {employeeData && (
+                        <div className="mt-4 border p-3 rounded shadow">
+                            <h3>Employee Details</h3>
+                            <p><strong>ID:</strong> {employeeData.employeeId}</p>
+                            <p><strong>Name:</strong> {employeeData.name}</p>
+                            <p><strong>Username:</strong> {employeeData.userName}</p>
+                            <p><strong>Email:</strong> {employeeData.email || 'Not Provided'}</p>
+                            <p><strong>Gender:</strong> {employeeData.gender || 'Not Specified'}</p>
+                            <p><strong>Salary:</strong> ${employeeData.salary.toLocaleString()}</p>
+                            <p><strong>Date of Birth:</strong> {employeeData.dateOfBirth || 'Not Provided'}</p>
+                            <p><strong>Role:</strong> {employeeData.employeeOrAdmin}</p>
+                        </div>
+                    )}
+
+                    {message && (
+                        <p className="mt-3 text-danger">{message}</p>
+                    )}
+                </div>
+            );
+        case 'registerAnotherHR':
+            return (
+                <form onSubmit={handleRegisterHR} className="border p-4 rounded shadow">
+                    <h3>Employee Form</h3>
+                    <div className="mb-3">
+                        <label className="form-label">Name</label>
+                        <input
+                            type="text"
+                            name="name"
+                            value={hrFormData.name}
+                            onChange={handleRegisterHRChange}
+                            className="form-control"
+                            placeholder="Enter your name"
+                            required
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">Email</label>
+                        <input
+                            type="email"
+                            name="email"
+                            value={hrFormData.email}
+                            onChange={handleRegisterHRChange}
+                            className="form-control"
+                            placeholder="Enter your email"
+                            required
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">Gender</label>
+                        <select
+                            name="gender"
+                            value={hrFormData.gender}
+                            onChange={handleRegisterHRChange}
+                            className="form-select"
+                            required
+                        >
+                            <option value="">Select Gender</option>
+                            <option value="MALE">Male</option>
+                            <option value="FEMALE">Female</option>
+                            <option value="OTHER">Other</option>
+                        </select>
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">Date of Birth</label>
+                        <input
+                            type="date"
+                            name="dateOfBirth"
+                            value={hrFormData.dateOfBirth}
+                            onChange={handleRegisterHRChange}
+                            className="form-control"
+                            required
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">Role</label>
+                        <input
+                            type="text"
+                            name="role"
+                            value={hrFormData.role}
+                            onChange={handleRegisterHRChange}
+                            className="form-control"
+                            placeholder="Enter your role"
+                            required
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">Salary</label>
+                        <input
+                            type="number"
+                            name="salary"
+                            value={hrFormData.salary}
+                            onChange={handleRegisterHRChange}
+                            className="form-control"
+                            placeholder="Enter your salary"
+                            required
+                        />
+                    </div>
+                    <button type="submit" className="btn btn-primary">
+                        Submit
+                    </button>
+
+                    <p>{message}</p>
+                </form>
+            );
+        case 'updatePassword':
+            return (
+                <form onSubmit={handleUpdatePassword} className="mt-4 border p-4 rounded shadow">
+                    <h3>Update Password</h3>
+                    <div className="mb-3">
+                        <label htmlFor="newPassword" className="form-label">New Password</label>
+                        <input
+                            type="password"
+                            name="newPassword"
+                            className="form-control"
+                            id="newPassword"
+                            placeholder="Enter new password"
+                            value={updatePasswordFormData.newPassword}
+                            onChange={handleUpdatePasswordChange}
+                            required
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
+                        <input
+                            type="password"
+                            name="confirmPassword"
+                            className="form-control"
+                            id="confirmPassword"
+                            placeholder="Confirm new password"
+                            value={updatePasswordFormData.confirmPassword}
+                            onChange={handleUpdatePasswordChange}
+                            required
+                        />
+                    </div>
+                    <button type="submit" className="btn btn-primary">Update Password</button>
+                    {message && <p className="mt-3 text-success">{message}</p>}
+                </form>
+            );
+        case 'getAllEmployees':
+            return (
+                <div className="mt-4 border p-3 rounded shadow">
+                    <h3 className="text-center">All Employees</h3>
+                    <div className="mt-3">
+                        <table className="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Employee ID</th>
+                                    <th>Name</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Gender</th>
+                                    <th>Salary</th>
+                                    <th>Date of Birth</th>
+                                    <th>Role</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            );
+        case 'changeEmployeeRole':
+            return (
+                <form className="mt-4">
+                    <h3>Change Employee Role</h3>
+                    <div className="mb-3">
+                        <label htmlFor="employeeId" className="form-label">Employee ID</label>
+                        <input type="text" className="form-control" id="employeeId" placeholder="Enter employee ID" />
+                    </div>
+                </form>
+            );
+        case 'setEmployeeSalary':
+            return (
+                <form className="mt-4">
+                    <h3>Set Employee Salary</h3>
+                    <div className="mb-3">
+                        <label htmlFor="employeeId" className="form-label">Employee ID</label>
+                        <input type="text" className="form-control" id="employeeId" placeholder="Enter employee ID" />
+                    </div>
+                </form>
+            );
+        case 'changeEmployeeDepartment':
+            return (
+                <form className="mt-4">
+                    <h3>Change Employee Department</h3>
+                    <div className="mb-3">
+                        <label htmlFor="employeeId" className="form-label">Employee ID</label>
+                        <input type="text" className="form-control" id="employeeId" placeholder="Enter employee ID" />
+                    </div>
+                </form>
+            );
+        case 'updateDepartmentName':
+            return (
+                <form className="mt-4">
+                    <h3>Update Department Name</h3>
+                    <div className="mb-3">
+                        <label htmlFor="departmentId" className="form-label">Department ID</label>
+                        <input type="text" className="form-control" id="departmentId" placeholder="Enter department ID" />
+                    </div>
+                </form>
+            );
+        case 'deleteDepartment':
+            return (
+                <form className='mt-4'>
+                    <h3>Delete Department</h3>
+                    <div className="mb-3">
+                        <label htmlFor="departmentId" className="form-label">Department ID</label>
+                        <input type="text" className="form-control" id="departmentId" placeholder="Enter department ID" />
+                    </div>
+                </form>
+            );
+        case 'getDepartmentbyID':
+            return (
+                <form className="mt-4">
+                    <h3>Get Department by ID</h3>
+                    <div className="mb-3">
+                        <label htmlFor="departmentId" className="form-label">Department ID</label>
+                        <input type="text" className="form-control" id="departmentId" placeholder="Enter department ID" />
+                    </div>
+                </form>
+            );
+        case 'getAllDepartments':
+            return (
+                <form className="mt-4">
+                    <h3>Get All Departments</h3>
+                </form>
+            )
+        case 'getDepartmentByName':
+            return (
+                <form className="mt-4">
+                    <h3>Get Department by Name</h3>
+                    <div className="mb-3">
+                        <label htmlFor="departmentName" className="form-label">Department Name</label>
+                        <input type="text" className="form-control" id="departmentName" placeholder="Enter department name" />
+                    </div>
+                </form>
+            );
+        case 'getDepartmentByName(ASC)':
+            return (
+                <form className="mt-4">
+                    <h3>Get Department by Name (ASC)</h3>
+                    <div className="mb-3">
+                        <label htmlFor="departmentName" className="form-label">Department Name</label>
+                    </div>
+                </form>
+            );
+        case 'getDepartmentByName(DESC)':
+            return (
+                <form className="mt-4">
+                    <h3>Get Department by Name (DESC)</h3>
+                    <div className="mb-3">
+                        <label htmlFor="departmentName" className="form-label">Department Name</label>
+                    </div>
+                </form>
+            );
+        case 'viewPending/CompletedLeaves':
+            return (
+                <form className="mt-4">
+                    <h3>View Pending/Completed Leaves</h3>
+                    <div className="mb-3">
+                        <label htmlFor="leaveStatus" className="form-label">Leave Status</label>
+                    </div>
+                </form>
+            );
+        case 'viewPendingStatusLeavesOfEmployee':
+            return (
+                <form className="mt-4">
+                    <h3>View Pending Status Leaves of Employee</h3>
+                    <div className="mb-3">
+                    </div>
+                </form>
+            );
+        case 'viewAllLeavesOfEmployee':
+            return (
+                <form className="mt-4">
+                    <h3>View All Leaves of Employee</h3>
+                </form>
+            )
+        default:
+            return null;
+    }
+  };
+
+
+  return (
+    <div>
+        {/* <Link to="/sign-in"> */}
+            <h1>HR Home</h1>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('addDepartment')}>
+                Add Department
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('addEmployee')}>
+                Add Employee (via DepartmentID)
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('deleteEmployee')}>
+                Delete Employee
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getEmployeeByID')}>
+                Get Employee by ID
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getEmployeeByUsername')}>
+                Get Employee by Username
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('viewYourProfile')}>
+                View your profile
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('registerAnotherHR')}>
+                Register Another HR
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('updatePassword')}>
+                Update your password
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getAllEmployees')}>
+                Get All employees
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('changeEmployeeRole')}>
+                Change employee Role
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('setEmployeeSalary')}>
+                Set Employee's Salary
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('changeEmployeeDepartment')}>
+                Change Employee's Department
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('deleteEmployee')}>
+                Delete an employee
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('updateDepartmentName')}>
+                Update Department Name
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('deleteDepartment')}>
+                Delete Department
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getDepartmentbyID')}>
+                Get Department by ID
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getAllDepartments')}>
+                Get All Departments
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getDepartmentByName')}>
+                Get Department by Name
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getDepartmentByName(ASC)')}>
+                Get Department by Name (ASC)
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getDepartmentByName(DESC)')}>
+                Get Department by Name  (DESC)
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('viewPending/CompletedLeaves')}>
+                View Pending/Completed leaves
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('viewAllLeavesOfEmployee')}>
+                View all leaves of the employee
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('viewPendingStatusLeavesOfEmployee')}>
+                View pending status leaves of the employee
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('respondToLeave')}>
+                Respond to a leave
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('assignIndividualWork')}>
+                Assign Individual work
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('deleteWork')}>
+                Delete Work
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('updateWork')}>
+                Update work
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('assignGroupWork')}>
+                Assign group work
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listAllWork')}>
+                List all works
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listAllIndividualWork')}>
+                List all Individual work
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listAllGroupWork')}>
+                List all Group work
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listAllPendingWork')}>
+                List all pending work
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listIndividualPendingWork')}>
+                List Individual Pending work
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listGroupPendingWork')}>
+                List Group Pending work
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listAllCompletedWork')}>
+                List All completed work
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listAllIndividualCompletedWork')}>
+                List Individual's completed work
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listGroupCompletedWork')}>
+                List Group's completed work
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listIndividualsInCompletedWork')}>
+                List Individuals in completed work
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('ListGroupsInCompletedWork')}>
+                List Groups in completed work
+            </button>
+            {renderForm()}
+        {/* </Link> */}
+    </div>
+  );
+}
