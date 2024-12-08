@@ -11,6 +11,7 @@ export default function HRHome() {
   const [username, setUsername] = useState("");
   const [employeeData, setEmployeeData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [allEmployees, setAllEmployees] = useState([]);
   const [hrFormData, setHRFormData] = useState({
     dateOfBirth: '',
     email: '',
@@ -18,11 +19,6 @@ export default function HRHome() {
     name: '',
     role: '',
     salary: '',
-});
-
-const [updatePasswordFormData, setUpdatePasswordFormData] = useState({
-    newPassword: '',
-    confirmPassword: '',
 });
 
 const handleRegisterHRChange = (e) => {
@@ -33,15 +29,31 @@ const handleRegisterHRChange = (e) => {
     }));
 };
 
+const [updatePasswordFormData, setUpdatePasswordFormData] = useState({
+    newPassword: '',
+    confirmPassword: '',
+});
+
 const handleUpdatePasswordChange = (e) => {
     const {name, value} = e.target;
     setUpdatePasswordFormData((prev) => ({
         ...prev,
         [name]: value,
     }));
-
-    console.log(updatePasswordFormData)
 };
+
+const[changeRole, setChangeRole] = useState({
+    employeeId: '',
+    newRole: '',
+})
+
+const handleRoleChange = (e) => {
+    const {name, value} = e.target;
+    setChangeRole((prev) => ({
+        ...prev,
+        [name]: value
+    }))
+}
 
   const handleAddDepartment = async (e) => {
     e.preventDefault();
@@ -260,6 +272,51 @@ const handleUpdatePassword = async (e) => {
         setUpdatePasswordFormData(null)
         setLoading(false)
         setMessage(`Error updating password`);
+    }
+}
+
+const handleGetAllEmployees = async (e) => {
+    e.preventDefault();
+    try
+    {
+        setLoading(true);
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get(`http://localhost:8896/admin/employees`,
+            {
+                headers:{
+                    Authorization: token,
+                    "Content-Type": "application/json",
+                }
+            }
+        )
+        setAllEmployees(response.data)
+    }
+    catch(error)
+    {
+        setMessage(`Error getting all employees`);
+    }
+}
+
+const handleEmployeeChangeRole = async (e) => {
+    e.preventDefault();
+    try
+    {
+        setLoading(true);
+        const token = localStorage.getItem("authToken");
+        const response = await axios.patch(`http://localhost:8896/admin/employees/setNewRole/${changeRole.employeeId}/${changeRole.newRole}`,
+            {},{
+                headers:{
+                    Authorization: token,
+                    "Content-Type": "application/json",
+                }
+            }
+        );
+        // setChangeRole(null);
+        setMessage("Successful");
+    }
+    catch(error)
+    {
+        setMessage(`error: ${error.message}`);
     }
 }
 
@@ -637,34 +694,83 @@ const handleUpdatePassword = async (e) => {
             );
         case 'getAllEmployees':
             return (
-                <div className="mt-4 border p-3 rounded shadow">
-                    <h3 className="text-center">All Employees</h3>
-                    <div className="mt-3">
+                <div className="mt-4 border p-4 rounded shadow">
+                    {allEmployees.length === 0 ? (
+                        <button className="btn btn-primary" onClick={handleGetAllEmployees}>Get all employees</button>
+                    ) : (
                         <table className="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Employee ID</th>
+                                    <th>ID</th>
                                     <th>Name</th>
-                                    <th>Username</th>
                                     <th>Email</th>
+                                    <th>Department ID</th>
+                                    <th>Department Name</th>
+                                    <th>Username</th>
+                                    <th>Role</th>
                                     <th>Gender</th>
                                     <th>Salary</th>
                                     <th>Date of Birth</th>
-                                    <th>Role</th>
+                                    <th>Joining Date</th>
                                 </tr>
                             </thead>
+                            <tbody>
+                                {allEmployees.map((employee) => (
+                                    <tr key={employee.employeeId}>
+                                        <td>{employee.employeeId}</td>
+                                        <td>{employee.name}</td>
+                                        <td>{employee.email || 'Not Provided'}</td>
+                                        <td>{employee.departmentId}</td>
+                                        <td>{employee.departmentName || 'Not Specified'}</td>
+                                        <td>{employee.userName}</td>
+                                        <td>{employee.role}</td>
+                                        <td>{employee.gender || 'Not Specified'}</td>
+                                        <td>${employee.salary.toLocaleString()}</td>
+                                        <td>{employee.dateOfBirth || 'Not Provided'}</td>
+                                        <td>{employee.joiningDate || 'Not Provided'}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
                         </table>
-                    </div>
+                    )}
                 </div>
             );
         case 'changeEmployeeRole':
             return (
-                <form className="mt-4">
+                <form onSubmit={handleEmployeeChangeRole} className="border p-4 rounded shadow mt-4">
                     <h3>Change Employee Role</h3>
                     <div className="mb-3">
-                        <label htmlFor="employeeId" className="form-label">Employee ID</label>
-                        <input type="text" className="form-control" id="employeeId" placeholder="Enter employee ID" />
+                        <label className="form-label">Employee ID</label>
+                        <input
+                            type="number"
+                            className="form-control"
+                            name="employeeId"
+                            value={changeRole.employeeId}
+                            onChange={handleRoleChange}
+                            placeholder="Enter Employee ID"
+                            required
+                        />
                     </div>
+                    <div className="mb-3">
+                        <label className="form-label">New Role</label>
+                        <select
+                            className="form-select"
+                            name="newRole"
+                            value={changeRole.newRole}
+                            onChange={handleRoleChange}
+                            required
+                        >
+                            <option value="">Select Role</option>
+                            <option value="CODER">CODER</option>
+                            <option value="TESTER">TESTER</option>
+                            <option value="DEBBUGER">DEBBUGER</option>
+                            <option value="HR">HR</option>
+                        </select>
+                    </div>
+                    <button type="submit" className="btn btn-primary">
+                        Submit
+                    </button>
+                    <p>{message}</p>
                 </form>
             );
         case 'setEmployeeSalary':
