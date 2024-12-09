@@ -5,7 +5,6 @@ import axios from 'axios';
 export default function HRHome() {
 
   const [selectedFeature, setSelectedFeature] = useState(null);
-  const [departmentName, setDepartmentName] = useState("");
   const [message, setMessage] = useState("");
   const [employeeId, setEmployeeId] = useState("");
   const [username, setUsername] = useState("");
@@ -54,6 +53,65 @@ const handleRoleChange = (e) => {
         [name]: value
     }))
 }
+
+const[changeSalary, setChangeSalary] = useState({
+    employeeId: '',
+    employeeSalary: '',
+    bonusThatYear: '',
+    benefitPoints: ''
+})
+
+const handleSalaryChange = (e) => {
+    const {name, value} = e.target;
+    setChangeSalary((prev) => ({
+        ...prev,
+        [name]: value
+    }))
+}
+
+const[changeDepartment, setChangeDepartment] = useState({
+    employeeId: '',
+    departmentId: '',
+})
+
+const handleDepartmentChange = (e) => {
+    const {name, value} = e.target;
+    setChangeDepartment((prev) => ({
+        ...prev,
+        [name]: value
+    }))
+}
+
+const [updateDept, setUpdateDept] = useState({
+    deptId: '',
+    newDeptName: '',
+});
+
+const handleDeptChange = (e) => {
+    const { name, value } = e.target;
+    setUpdateDept((prev) => ({
+        ...prev,
+        [name]: value,
+    }));
+};
+
+const [deleteDept, setDeleteDept] = useState({
+    deptId: '',
+});
+
+const handleDeptInputChange = (e) => {
+    const { name, value } = e.target;
+    setDeleteDept((prev) => ({
+        ...prev,
+        [name]: value,
+    }));
+};
+
+const [departmentId, setDepartmentId] = useState('');
+const [departmentName, setDepartmentName] = useState('');
+const [department, setDepartment] = useState(null);
+
+const [departments, setDepartments] = useState([]);
 
   const handleAddDepartment = async (e) => {
     e.preventDefault();
@@ -320,6 +378,258 @@ const handleEmployeeChangeRole = async (e) => {
     }
 }
 
+const handleEmployeeChangeSalary = async (e) => {
+    e.preventDefault();
+    try
+    {
+        setLoading(true);
+        const token = localStorage.getItem("authToken");
+        const response = await axios.patch(`http://localhost:8896/admin/employees/setNewSalary/${changeSalary.employeeId}/${changeSalary.employeeSalary}/${changeSalary.bonusThatYear}/${changeSalary.benefitPoints}`,
+            {},{
+                headers:{
+                    Authorization: token,
+                    "Content-Type": "application/json",
+                }
+            }
+        );
+        // setChangeRole(null);
+        setMessage("Successful");
+    }
+    catch(error)
+    {
+        setMessage(`error: ${error.message}`);
+    }
+}
+
+const handleEmployeeChangeDepartment = async (e) => {
+    e.preventDefault();
+    try
+    {
+        setLoading(true);
+        const token = localStorage.getItem("authToken");
+        const response = await axios.patch(`http://localhost:8896/admin/employees/setNewDepartment/${changeDepartment.employeeId}/${changeDepartment.departmentId}`,
+            {},{
+                headers:{
+                    Authorization: token,
+                    "Content-Type": "application/json",
+                }
+            }
+        );
+        // setChangeRole(null);
+        setMessage("Successful");
+    }
+    catch(error)
+    {
+        setMessage(`error: ${error.message}`);
+    }
+}
+
+const handleUpdateDepartmentName = async (e) => {
+    e.preventDefault();
+    try {
+        setLoading(true);
+
+        const token = localStorage.getItem("authToken");
+        const response = await axios.put(
+            `http://localhost:8896/admin/departments/${updateDept.deptId}`,
+            {
+                departmentName: updateDept.newDeptName, // Sending the updated department name in request body
+            },
+            {
+                headers: {
+                    Authorization: token,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        setUpdateDept({
+            deptId: '',
+            newDeptName: '',
+        });
+
+        setMessage(`Department updated successfully`);
+    } catch (error) {
+        setMessage(
+            `Error`
+        );
+    } finally {
+        setLoading(false);
+    }
+};
+
+const handleDeleteDepartment = async (e) => {
+    e.preventDefault();
+    try {
+        setLoading(true);
+
+        const token = localStorage.getItem("authToken");
+        const response = await axios.delete(
+            `http://localhost:8896/admin/departments/${deleteDept.deptId}`,
+            {
+                headers: {
+                    Authorization: token,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        setDeleteDept({
+            deptId: '',
+        });
+
+        setMessage(`Department deleted successfully`);
+    } catch (error) {
+        setMessage(
+            `Error`
+        );
+    } finally {
+        setLoading(false);
+    }
+};
+
+const handleGetDepartmentById = async (e) => {
+    e.preventDefault();
+    try {
+        setLoading(true);
+        setMessage('');
+        setDepartment(null);
+
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get(
+            `http://localhost:8896/admin/departments/${departmentId}`,
+            {
+                headers: {
+                    Authorization: token,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        setDepartment(response.data);
+    } catch (error) {
+        setMessage(
+            `Error`
+        );
+    } finally {
+        setLoading(false);
+    }
+};
+
+const handleGetAllDepartments = async () => {
+    try {
+        setLoading(true);
+        setMessage('');
+        setDepartments([]);
+
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get(
+            `http://localhost:8896/admin/departments`,
+            {
+                headers: {
+                    Authorization: token,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        setDepartments(response.data);
+    } catch (error) {
+        setMessage(
+            `Error: ${error.response?.data?.message || error.message}`
+        );
+    } finally {
+        setLoading(false);
+    }
+};
+
+const handleGetDepartmentByName = async (e) => {
+    e.preventDefault();
+    try {
+        setLoading(true);
+        setMessage('');
+        setDepartment(null);
+
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get(
+            `http://localhost:8896/admin/departments/name/${departmentName}`,
+            {
+                headers: {
+                    Authorization: token,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        setDepartment(response.data);
+    } catch (error) {
+        setMessage(
+            `Error`
+        );
+    } finally {
+        setLoading(false);
+    }
+};
+
+const fetchDepartmentsSortedByName = async (e) => {
+    e.preventDefault();
+    try {
+        setLoading(true);
+        setMessage('');
+        setDepartment(null);
+
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get(
+            `http://localhost:8896/admin/departments/sortByNameAsc`,
+            {
+                headers: {
+                    Authorization: token,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        setDepartments(response.data);
+    } catch (error) {
+        setMessage(
+            `Error`
+        );
+    } finally {
+        setLoading(false);
+    }
+}
+
+const fetchDepartmentsSortedByNameDesc = async (e) => {
+    e.preventDefault();
+    try {
+        setLoading(true);
+        setMessage('');
+        setDepartment(null);
+
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get(
+            `http://localhost:8896/admin/departments/sortByNameDesc`,
+            {
+                headers: {
+                    Authorization: token,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        setDepartments(response.data);
+    } catch (error) {
+        setMessage(
+            `Error`
+        );
+    } finally {
+        setLoading(false);
+    }
+}
+
+
+
+
   const renderForm = () => {
     switch (selectedFeature) {
         case 'addDepartment':
@@ -391,7 +701,7 @@ const handleEmployeeChangeRole = async (e) => {
                             <option value="">Select Role</option>
                             <option value="CODER">Coder</option>
                             <option value="TESTER">Tester</option>
-                            <option value="DEBBUGER">Debugger</option>
+                            <option value="DEBUGGER">Debugger</option>
                             <option value="HR">HR</option>
                         </select>
                     </div>
@@ -775,87 +1085,290 @@ const handleEmployeeChangeRole = async (e) => {
             );
         case 'setEmployeeSalary':
             return (
-                <form className="mt-4">
-                    <h3>Set Employee Salary</h3>
+                <form onSubmit={handleEmployeeChangeSalary} className="border p-4 rounded shadow mt-4">
+                    <h3>Change Employee Salary</h3>
                     <div className="mb-3">
-                        <label htmlFor="employeeId" className="form-label">Employee ID</label>
-                        <input type="text" className="form-control" id="employeeId" placeholder="Enter employee ID" />
+                        <label className="form-label">Employee ID</label>
+                        <input
+                            type="number"
+                            className="form-control"
+                            name="employeeId"
+                            value={changeSalary.employeeId}
+                            onChange={handleSalaryChange}
+                            placeholder="Enter Employee ID"
+                            required
+                        />
                     </div>
+                    <div className="mb-3">
+                        <label className="form-label">New Salary</label>
+                        <input
+                            type="number"
+                            className="form-control"
+                            name="employeeSalary"
+                            value={changeSalary.salary}
+                            onChange={handleSalaryChange}
+                            placeholder="Enter Employee Salary"
+                            required
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">BonusThatYear</label>
+                        <input
+                            type="number"
+                            className="form-control"
+                            name="bonusThatYear"
+                            value={changeSalary.bonusThatYear}
+                            onChange={handleSalaryChange}
+                            placeholder="Enter Employee bonus that year"
+                            required
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">benefitPoints</label>
+                        <input
+                            type="number"
+                            className="form-control"
+                            name="benefitPoints"
+                            value={changeSalary.benefitPoints}
+                            onChange={handleSalaryChange}
+                            placeholder="Enter Employee benefit points"
+                            required
+                        />
+                    </div>
+                    <button type="submit" className="btn btn-primary">
+                        Submit
+                    </button>
+                    <p>{message}</p>
                 </form>
             );
         case 'changeEmployeeDepartment':
             return (
-                <form className="mt-4">
-                    <h3>Change Employee Department</h3>
+                <form onSubmit={handleEmployeeChangeDepartment} className="border p-4 rounded shadow mt-4">
+                    <h3>Change Employee Role</h3>
                     <div className="mb-3">
-                        <label htmlFor="employeeId" className="form-label">Employee ID</label>
-                        <input type="text" className="form-control" id="employeeId" placeholder="Enter employee ID" />
+                        <label className="form-label">Employee ID</label>
+                        <input
+                            type="number"
+                            className="form-control"
+                            name="employeeId"
+                            value={changeDepartment.employeeId}
+                            onChange={handleDepartmentChange}
+                            placeholder="Enter Employee ID"
+                            required
+                        />
                     </div>
+                    <div className="mb-3">
+                        <label className="form-label">Department ID</label>
+                        <input
+                            type="number"
+                            className="form-control"
+                            name="departmentId"
+                            value={changeDepartment.departmentId}
+                            onChange={handleDepartmentChange}
+                            placeholder="Enter Department ID"
+                            required
+                        />
+                    </div>
+                    <button type="submit" className="btn btn-primary">
+                        Submit
+                    </button>
+                    <p>{message}</p>
                 </form>
             );
         case 'updateDepartmentName':
             return (
-                <form className="mt-4">
+                <form onSubmit={handleUpdateDepartmentName} className="border p-4 rounded shadow mt-4">
                     <h3>Update Department Name</h3>
                     <div className="mb-3">
-                        <label htmlFor="departmentId" className="form-label">Department ID</label>
-                        <input type="text" className="form-control" id="departmentId" placeholder="Enter department ID" />
+                        <label className="form-label">Department ID</label>
+                        <input
+                            type="number"
+                            name="deptId"
+                            value={updateDept.deptId}
+                            onChange={handleDeptChange}
+                            className="form-control"
+                            placeholder="Enter Department ID"
+                            required
+                        />
                     </div>
+                    <div className="mb-3">
+                        <label className="form-label">New Department Name</label>
+                        <input
+                            type="text"
+                            name="newDeptName"
+                            value={updateDept.newDeptName}
+                            onChange={handleDeptChange}
+                            className="form-control"
+                            placeholder="Enter New Department Name"
+                            required
+                        />
+                    </div>
+                    <button type="submit" className="btn btn-primary">
+                        Submit
+                    </button>
+                    {message && <p className="mt-3">{message}</p>}
                 </form>
             );
         case 'deleteDepartment':
             return (
-                <form className='mt-4'>
+                <form onSubmit={handleDeleteDepartment} className="border p-4 rounded shadow mt-4">
                     <h3>Delete Department</h3>
                     <div className="mb-3">
-                        <label htmlFor="departmentId" className="form-label">Department ID</label>
-                        <input type="text" className="form-control" id="departmentId" placeholder="Enter department ID" />
+                        <label className="form-label">Department ID</label>
+                        <input
+                            type="number"
+                            name="deptId"
+                            value={deleteDept.deptId}
+                            onChange={handleDeptInputChange}
+                            className="form-control"
+                            placeholder="Enter Department ID"
+                            required
+                        />
                     </div>
+                    <button type="submit" className="btn btn-danger">
+                        Delete
+                    </button>
+                    {message && <p className="mt-3">{message}</p>}
                 </form>
             );
         case 'getDepartmentbyID':
             return (
-                <form className="mt-4">
+                <form onSubmit={handleGetDepartmentById} className="border p-4 rounded shadow mt-4">
                     <h3>Get Department by ID</h3>
                     <div className="mb-3">
-                        <label htmlFor="departmentId" className="form-label">Department ID</label>
-                        <input type="text" className="form-control" id="departmentId" placeholder="Enter department ID" />
+                        <label className="form-label">Department ID</label>
+                        <input
+                            type="number"
+                            name="deptId"
+                            value={departmentId}
+                            onChange={(e) => setDepartmentId(e.target.value)}
+                            className="form-control"
+                            placeholder="Enter Department ID"
+                            required
+                        />
                     </div>
+                    <button type="submit" className="btn btn-primary">
+                        Get Department
+                    </button>
+                    {message && <p className="mt-3 text-danger">{message}</p>}
+                    {department && (
+                        <div className="mt-4 border p-3 rounded shadow">
+                            <h4>Department Details</h4>
+                            <p><strong>ID:</strong> {department.departmentId}</p>
+                            <p><strong>Name:</strong> {department.departmentName}</p>
+                        </div>
+                    )}
                 </form>
             );
         case 'getAllDepartments':
             return (
-                <form className="mt-4">
-                    <h3>Get All Departments</h3>
-                </form>
-            )
-        case 'getDepartmentByName':
-            return (
-                <form className="mt-4">
-                    <h3>Get Department by Name</h3>
-                    <div className="mb-3">
-                        <label htmlFor="departmentName" className="form-label">Department Name</label>
-                        <input type="text" className="form-control" id="departmentName" placeholder="Enter department name" />
-                    </div>
-                </form>
+                <div className="mt-4">
+                    <h3>All Departments</h3>
+                    <button
+                        onClick={handleGetAllDepartments}
+                        className="btn btn-primary mb-3"
+                    >
+                        Fetch All Departments
+                    </button>
+                    {departments && departments.length > 0 && (
+                        <table className="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {departments.map((dept) => (
+                                    <tr key={dept.departmentId}>
+                                        <td>{dept.departmentId}</td>
+                                        <td>{dept.departmentName}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
+                    {/* {departments && departments.length === 0 && (
+                        <p>No departments found.</p>
+                    )} */}
+                </div>
             );
-        case 'getDepartmentByName(ASC)':
-            return (
-                <form className="mt-4">
-                    <h3>Get Department by Name (ASC)</h3>
-                    <div className="mb-3">
-                        <label htmlFor="departmentName" className="form-label">Department Name</label>
+            
+            case 'getDepartmentByName':
+                return (
+                    <div className="mt-4">
+                        <h3>Get Department by Name</h3>
+                        <form onSubmit={handleGetDepartmentByName} className="border p-4 rounded shadow">
+                            <div className="mb-3">
+                                <label className="form-label">Department Name</label>
+                                <input
+                                    type="text"
+                                    name="departmentName"
+                                    value={departmentName}
+                                    onChange={(e) => setDepartmentName(e.target.value)}
+                                    className="form-control"
+                                    placeholder="Enter Department Name"
+                                    required
+                                />
+                            </div>
+                            <button type="submit" className="btn btn-primary">Submit</button>
+                        </form>
+                        {department && (
+                            <div className="mt-4">
+                                <h4>Department Details</h4>
+                                <p><strong>ID:</strong> {department.departmentId}</p>
+                                <p><strong>Name:</strong> {department.departmentName}</p>
+                            </div>
+                        )}
                     </div>
-                </form>
-            );
+                );
+                
+            case 'getDepartmentByName(ASC)':
+                return (
+                    <div className="mt-4">
+                        <h3>Get Departments in Alphabetical Order (ASC)</h3>
+                        <button onClick={fetchDepartmentsSortedByName} className="btn btn-primary">
+                            Fetch Departments
+                        </button>
+                        {loading && <p>Loading...</p>}
+                        {message && <p className="text-danger">{message}</p>}
+                        {departments.length > 0 && (
+                            <div className="mt-4">
+                                <h4>Departments List</h4>
+                                <ul className="list-group">
+                                    {departments.map((dept) => (
+                                        <li key={dept.departmentId} className="list-group-item">
+                                            <strong>ID:</strong> {dept.departmentId}, <strong>Name:</strong> {dept.departmentName}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+                    </div>
+                );
+                    
         case 'getDepartmentByName(DESC)':
             return (
-                <form className="mt-4">
-                    <h3>Get Department by Name (DESC)</h3>
-                    <div className="mb-3">
-                        <label htmlFor="departmentName" className="form-label">Department Name</label>
+                <div className="mt-4">
+                        <h3>Get Departments in Alphabetical Order (Desc)</h3>
+                        <button onClick={fetchDepartmentsSortedByNameDesc} className="btn btn-primary">
+                            Fetch Departments
+                        </button>
+                        {loading && <p>Loading...</p>}
+                        {message && <p className="text-danger">{message}</p>}
+                        {departments.length > 0 && (
+                            <div className="mt-4">
+                                <h4>Departments List</h4>
+                                <ul className="list-group">
+                                    {departments.map((dept) => (
+                                        <li key={dept.departmentId} className="list-group-item">
+                                            <strong>ID:</strong> {dept.departmentId}, <strong>Name:</strong> {dept.departmentName}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
                     </div>
-                </form>
             );
         case 'viewPending/CompletedLeaves':
             return (
@@ -925,9 +1438,6 @@ const handleEmployeeChangeRole = async (e) => {
             </button>
             <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('changeEmployeeDepartment')}>
                 Change Employee's Department
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('deleteEmployee')}>
-                Delete an employee
             </button>
             <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('updateDepartmentName')}>
                 Update Department Name
