@@ -113,63 +113,114 @@ const [department, setDepartment] = useState(null);
 
 const [departments, setDepartments] = useState([]);
 
-  const handleAddDepartment = async (e) => {
-    e.preventDefault();
+const [pendingLeaves, setPendingLeaves] = useState([]);
 
-    try {
-      const response = await axios.post(
-        "http://localhost:8896/admin/departments",
-        { departmentName },
+const [leaves, setLeaves] = useState([]);
+
+const [leaveResponse, setLeaveResponse] = useState({
+    leaveId: '',
+    status: '',
+});
+const [responseLeave, setResponseLeave] = useState(null);
+
+const handleLeaveChange = (e) => {
+    const { name, value } = e.target;
+    setLeaveResponse((prev) => ({
+        ...prev,
+        [name]: value,
+    }));
+};
+
+const [workDetails, setWorkDetails] = useState({
+    empId: '',
+    name: '',
+    description: '',
+    endDate: ''
+});
+
+const handleWorkChange = (e) => {
+    const { name, value } = e.target;
+    setWorkDetails((prev) => ({
+        ...prev,
+        [name]: value,
+    }));
+};
+
+const [workId, setWorkId] = useState('');
+
+const [updateWorkDetails, setUpdateWorkDetails] = useState({
+    workId: '',
+    name: '',
+    description: '',
+    endDate: ''
+});
+
+const handleWorkUpdateInputChange = (e) => {
+    const { name, value } = e.target;
+    setUpdateWorkDetails((prev) => ({
+        ...prev,
+        [name]: value,
+    }));
+};
+
+
+const handleAddDepartment = async (e) => {
+e.preventDefault();
+
+try {
+    const response = await axios.post(
+    "http://localhost:8896/admin/departments",
+    { departmentName },
+    {
+        headers: {
+        Authorization: localStorage.getItem('authToken'),
+        "Content-Type": "application/json",
+        },
+    }
+    );
+    setMessage(`Department added successfully: ${response.data.departmentName}`);
+} catch (error) {
+    setMessage(
+    error.response?.data?.message || "An error occurred while adding the department."
+    );
+}
+};
+
+const handleAddEmployee = async (e) => {
+e.preventDefault();
+
+const employeeData = {
+    name: document.getElementById("employeeName").value,
+    role: document.getElementById("role").value,
+    gender: document.getElementById("gender").value,
+    salary: parseFloat(document.getElementById("salary").value),
+    phoneNo: document.getElementById("phoneNo").value,
+    dateOfBirth: document.getElementById("dateOfBirth").value,
+    email: document.getElementById("email").value
+};
+
+const departmentId = document.getElementById("departmentId").value;
+
+try {
+    const token = localStorage.getItem("authToken"); // Retrieve stored token
+
+    const response = await axios.post(
+        `http://localhost:8896/admin/employees/${departmentId}`,
+        employeeData,
         {
-          headers: {
-            Authorization: localStorage.getItem('authToken'),
-            "Content-Type": "application/json",
-          },
+            headers: {
+                Authorization: token,
+                "Content-Type": "application/json",
+            },
         }
-      );
-      setMessage(`Department added successfully: ${response.data.departmentName}`);
-    } catch (error) {
-      setMessage(
-        error.response?.data?.message || "An error occurred while adding the department."
-      );
-    }
-  };
-
-  const handleAddEmployee = async (e) => {
-    e.preventDefault();
-
-    const employeeData = {
-        name: document.getElementById("employeeName").value,
-        role: document.getElementById("role").value,
-        gender: document.getElementById("gender").value,
-        salary: parseFloat(document.getElementById("salary").value),
-        phoneNo: document.getElementById("phoneNo").value,
-        dateOfBirth: document.getElementById("dateOfBirth").value,
-        email: document.getElementById("email").value
-    };
-
-    const departmentId = document.getElementById("departmentId").value;
-
-    try {
-        const token = localStorage.getItem("authToken"); // Retrieve stored token
-
-        const response = await axios.post(
-            `http://localhost:8896/admin/employees/${departmentId}`,
-            employeeData,
-            {
-                headers: {
-                    Authorization: token,
-                    "Content-Type": "application/json",
-                },
-            }
-        );
-        setMessage(`Employee added successfully`);
-        document.getElementById("addEmployeeForm").reset();
-    } catch (error) {
-        setMessage(
-            error.response?.data?.message || "An error occurred while adding the employee."
-        );
-    }
+    );
+    setMessage(`Employee added successfully`);
+    document.getElementById("addEmployeeForm").reset();
+} catch (error) {
+    setMessage(
+        error.response?.data?.message || "An error occurred while adding the employee."
+    );
+}
 };
 
 const handleDeleteEmployee = async (e) => {
@@ -433,7 +484,7 @@ const handleUpdateDepartmentName = async (e) => {
         const response = await axios.put(
             `http://localhost:8896/admin/departments/${updateDept.deptId}`,
             {
-                departmentName: updateDept.newDeptName, // Sending the updated department name in request body
+                departmentName: updateDept.newDeptName, 
             },
             {
                 headers: {
@@ -627,6 +678,210 @@ const fetchDepartmentsSortedByNameDesc = async (e) => {
     }
 }
 
+const fetchAllLeaves = async () => {    //Need to test
+    try {
+        setLoading(true);
+        setMessage('');
+        setLeaves([]);
+
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get(`http://localhost:8896/admin/allLeaves`, {
+            headers: {
+                Authorization: token,
+                "Content-Type": "application/json",
+            },
+        });
+
+        setLeaves(response.data);
+        setMessage("Leave history fetched successfully.");
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    } finally {
+        setLoading(false);
+    }
+};
+
+const fetchPendingLeaves = async () => {    //need to test
+    try {
+        setLoading(true);
+        setMessage('');
+        setPendingLeaves([]);
+
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get(`http://localhost:8896/admin/allPendingLeaves`, {
+            headers: {
+                Authorization: token,
+                "Content-Type": "application/json",
+            },
+        });
+
+        setPendingLeaves(response.data);
+        setMessage("Pending leaves fetched successfully.");
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    } finally {
+        setLoading(false);
+    }
+};
+
+const fetchLeavesOfEmployee = async (e) => {    //need to test
+    e.preventDefault();
+    try {
+        setLoading(true);
+        setMessage('');
+        setLeaves([]);
+
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+            throw new Error("Authentication token is missing. Please log in again.");
+        }
+
+        const response = await axios.get(`http://localhost:8896/admin/allLeaves/${employeeId}`, {
+            headers: {
+                Authorization: token,
+                "Content-Type": "application/json",
+            },
+        });
+
+        setLeaves(response.data);
+        setMessage("Leaves fetched successfully.");
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    } finally {
+        setLoading(false);
+    }
+};
+
+const handleLeaveResponse = async (e) => {  //need to test
+    e.preventDefault();
+    try {
+        setLoading(true);
+        setMessage('');
+        setResponseLeave(null);
+
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+            throw new Error("Authentication token is missing. Please log in again.");
+        }
+
+        const { leaveId, status } = leaveResponse;
+
+        const response = await axios.patch(
+            `http://localhost:8896/admin/response/${leaveId}/${status}`,
+            {},
+            {
+                headers: {
+                    Authorization: token,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        setResponseLeave(response.data);
+        setMessage("Response submitted successfully.");
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    } finally {
+        setLoading(false);
+    }
+};
+
+const handleAssignWork = async (e) => {
+    e.preventDefault();
+    try {
+        setLoading(true);
+        setMessage('');
+
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+            throw new Error("Authentication token is missing. Please log in again.");
+        }
+
+        const { empId, name, description, endDate } = workDetails;
+
+        const response = await axios.post(
+            `http://localhost:8896/admin/work/${empId}`,
+            { name, description, endDate },
+            {
+                headers: {
+                    Authorization: token,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        setMessage(response.data || "Work assigned successfully.");
+        setWorkDetails({ empId: '', name: '', description: '', endDate: '' });
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    } finally {
+        setLoading(false);
+    }
+};
+
+const handleDeleteWork = async (e) => {
+    e.preventDefault();
+    try {
+        setLoading(true);
+        // setError(false);
+        setMessage('');
+
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+            throw new Error("Authentication token is missing. Please log in again.");
+        }
+
+        const response = await axios.delete(`http://localhost:8896/admin/work/${workId}`, {
+            headers: {
+                Authorization: token,
+            },
+        });
+
+        setMessage("Work deleted successfully.");
+        setWorkId('');
+    } catch (error) {
+        // setError(true);
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    } finally {
+        setLoading(false);
+    }
+};
+
+const handleUpdateWork = async (e) => {
+    e.preventDefault();
+    try {
+        setLoading(true);
+        // setError(false);
+        setMessage('');
+
+        const { workId, ...workData } = updateWorkDetails;
+
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+            throw new Error("Authentication token is missing. Please log in again.");
+        }
+
+        const response = await axios.put(`http://localhost:8896/admin/work/${workId}`, workData, {
+            headers: {
+                Authorization: token,
+                "Content-Type": "application/json",
+            },
+        });
+
+        setMessage("Work updated successfully.");
+        setUpdateWorkDetails({
+            workId: '',
+            name: '',
+            description: '',
+            endDate: ''
+        });
+    } catch (error) {
+        // setError(true);
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    } finally {
+        setLoading(false);
+    }
+};
 
 
 
@@ -1372,27 +1627,333 @@ const fetchDepartmentsSortedByNameDesc = async (e) => {
             );
         case 'viewPending/CompletedLeaves':
             return (
-                <form className="mt-4">
+                <div className="mt-4">
                     <h3>View Pending/Completed Leaves</h3>
-                    <div className="mb-3">
-                        <label htmlFor="leaveStatus" className="form-label">Leave Status</label>
-                    </div>
-                </form>
+                    <button onClick={fetchAllLeaves} className="btn btn-primary">
+                        Fetch Leave History
+                    </button>
+                    {loading && <p>Loading...</p>}
+                    {message && <p className="text-danger">{message}</p>}
+                    {leaves.length > 0 && (
+                        <div className="mt-4">
+                            <h4>Leave History</h4>
+                            <table className="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Employee Name</th>
+                                        <th>Leave Status</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {leaves.map((leave) => (
+                                        <tr key={leave.leaveId}>
+                                            <td>{leave.leaveId}</td>
+                                            <td>{leave.employeeName}</td>
+                                            <td>{leave.status}</td>
+                                            <td>{leave.startDate}</td>
+                                            <td>{leave.endDate}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
+                </div>
             );
+            
         case 'viewPendingStatusLeavesOfEmployee':
             return (
-                <form className="mt-4">
-                    <h3>View Pending Status Leaves of Employee</h3>
-                    <div className="mb-3">
-                    </div>
-                </form>
+                <div className="mt-4">
+                    <h3>View Pending Leaves</h3>
+                    <button onClick={fetchPendingLeaves} className="btn btn-primary">
+                        Fetch Pending Leaves
+                    </button>
+                    {/* {loading && <p>Loading...</p>}
+                    {message && <p className="text-danger">{message}</p>} */}
+                    {pendingLeaves.length > 0 && (
+                        <div className="mt-4">
+                            <h4>Pending Leaves</h4>
+                            <table className="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Employee Name</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {pendingLeaves.map((leave) => (
+                                        <tr key={leave.leaveId}>
+                                            <td>{leave.leaveId}</td>
+                                            <td>{leave.employeeName}</td>
+                                            <td>{leave.startDate}</td>
+                                            <td>{leave.endDate}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
+                </div>
             );
+                
         case 'viewAllLeavesOfEmployee':
             return (
-                <form className="mt-4">
-                    <h3>View All Leaves of Employee</h3>
-                </form>
-            )
+                <div className="mt-4">
+                    <h3>View Leaves of an Employee</h3>
+                    <form onSubmit={fetchLeavesOfEmployee} className="border p-4 rounded shadow">
+                        <div className="mb-3">
+                            <label className="form-label">Employee ID</label>
+                            <input
+                                type="number"
+                                name="employeeId"
+                                value={employeeId}
+                                onChange={(e) => setEmployeeId(e.target.value)}
+                                className="form-control"
+                                placeholder="Enter Employee ID"
+                                required
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-primary">
+                            Fetch Leaves
+                        </button>
+                    </form>
+                    {loading && <p>Loading...</p>}
+                    {message && <p className="text-danger">{message}</p>}
+                    {leaves.length > 0 && (
+                        <div className="mt-4">
+                            <h4>Leave History</h4>
+                            <table className="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Leave ID</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th>Status</th>
+                                        <th>Reason</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {leaves.map((leave) => (
+                                        <tr key={leave.leaveId}>
+                                            <td>{leave.leaveId}</td>
+                                            <td>{leave.startDate}</td>
+                                            <td>{leave.endDate}</td>
+                                            <td>{leave.status}</td>
+                                            <td>{leave.reason}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
+                </div>
+            );
+
+        case 'respondToLeave':
+            return (
+                <div className="mt-4">
+                    <h3>Respond to Leave Request</h3>
+                    <form onSubmit={handleLeaveResponse} className="border p-4 rounded shadow">
+                        <div className="mb-3">
+                            <label className="form-label">Leave ID</label>
+                            <input
+                                type="number"
+                                name="leaveId"
+                                value={leaveResponse.leaveId}
+                                onChange={handleLeaveChange}
+                                className="form-control"
+                                placeholder="Enter Leave ID"
+                                required
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label className="form-label">Response Status</label>
+                            <select
+                                name="status"
+                                value={leaveResponse.status}
+                                onChange={handleLeaveChange}
+                                className="form-select"
+                                required
+                            >
+                                <option value="">Select Status</option>
+                                <option value="APPROVED">APPROVED</option>
+                                <option value="REJECTED">REJECTED</option>
+                            </select>
+                        </div>
+                        <button type="submit" className="btn btn-primary">
+                            Submit Response
+                        </button>
+                    </form>
+                    {loading && <p>Loading...</p>}
+                    {message && <p className="text-danger">{message}</p>}
+                    {responseLeave && (
+                        <div className="mt-4">
+                            <h4>Leave Response Details</h4>
+                            <p><strong>Leave ID:</strong> {responseLeave.leaveId}</p>
+                            <p><strong>Status:</strong> {responseLeave.status}</p>
+                            <p><strong>Reason:</strong> {responseLeave.reason}</p>
+                        </div>
+                    )}
+                </div>
+            );
+
+        case 'assignIndividualWork':
+            return (
+                <div className="mt-4">
+                    <h3>Assign Individual Work</h3>
+                    <form onSubmit={handleAssignWork} className="border p-4 rounded shadow">
+                        <div className="mb-3">
+                            <label className="form-label">Employee ID</label>
+                            <input
+                                type="number"
+                                name="empId"
+                                value={workDetails.empId}
+                                onChange={handleWorkChange}
+                                className="form-control"
+                                placeholder="Enter Employee ID"
+                                required
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label className="form-label">Work name</label>
+                            <input
+                                type="text"
+                                name="name"
+                                value={workDetails.name}
+                                onChange={handleWorkChange}
+                                className="form-control"
+                                placeholder="Enter Work name"
+                                required
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label className="form-label">Work Description</label>
+                            <textarea
+                                name="description"
+                                value={workDetails.description}
+                                onChange={handleWorkChange}
+                                className="form-control"
+                                placeholder="Enter Work Description"
+                                rows="3"
+                                required
+                            ></textarea>
+                        </div>
+                        <div className="mb-3">
+                            <label className='form-label'>End Date</label>
+                            <input
+                                name='endDate'
+                                value={workDetails.endDate}
+                                onChange={handleWorkChange}
+                                className='form-control'
+                                placeholder='Enter end date'
+                                type='date'
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-primary">
+                            Assign Work
+                        </button>
+                    </form>
+                    {loading && <p>Loading...</p>}
+                    {message && <p className="text-danger">{message}</p>}
+                </div>
+            );
+        
+        case 'deleteWork':
+            return (
+                <div className="mt-4">
+                    <h3>Delete Work</h3>
+                    <form onSubmit={handleDeleteWork} className="border p-4 rounded shadow">
+                        <div className="mb-3">
+                            <label className="form-label">Work ID</label>
+                            <input
+                                type="number"
+                                name="workId"
+                                value={workId}
+                                onChange={(e) => setWorkId(e.target.value)}
+                                className="form-control"
+                                placeholder="Enter Work ID"
+                                required
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-danger">
+                            Delete Work
+                        </button>
+                    </form>
+                    {loading && <p>Loading...</p>}
+                    <p>{message}</p>
+                </div>
+            );
+
+        case 'updateWork':
+            return (
+                <div className="mt-4">
+                    <h3>Update Work</h3>
+                    <form onSubmit={handleUpdateWork} className="border p-4 rounded shadow">
+                        <div className="mb-3">
+                            <label className="form-label">Work ID</label>
+                            <input
+                                type="number"
+                                name="workId"
+                                value={updateWorkDetails.workId}
+                                onChange={handleWorkUpdateInputChange}
+                                className="form-control"
+                                placeholder="Enter Work ID"
+                                required
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label className="form-label">Work name</label>
+                            <input
+                                type="text"
+                                name="name"
+                                value={updateWorkDetails.name}
+                                onChange={handleWorkUpdateInputChange}
+                                className="form-control"
+                                placeholder="Enter Work name"
+                                required
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label className="form-label">Work Description</label>
+                            <textarea
+                                name="description"
+                                value={updateWorkDetails.description}
+                                onChange={handleWorkUpdateInputChange}
+                                className="form-control"
+                                placeholder="Enter Work Description"
+                                rows="3"
+                                required
+                            ></textarea>
+                        </div>
+                        <div className="mb-3">
+                            <label className='form-label'>End Date</label>
+                            <input
+                                name='endDate'
+                                value={updateWorkDetails.endDate}
+                                onChange={handleWorkUpdateInputChange}
+                                className='form-control'
+                                placeholder='Enter end date'
+                                type='date'
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-primary">
+                            Update Work
+                        </button>
+                    </form>
+                    {loading && <p>Loading...</p>}
+                    <p>{message}</p>
+                </div>
+            );
+            
+            
+
+            
+            
         default:
             return null;
     }
