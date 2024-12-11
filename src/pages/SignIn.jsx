@@ -46,7 +46,7 @@ export default function SignIn() {
   return (
     <div className="container d-flex flex-column align-items-center justify-content-center vh-100 bg-light">
       <div className="card p-4 shadow" style={{ maxWidth: '400px', width: '100%' }}>
-        <h1 className="text-center fw-bold mb-4 text-primary">Sign In</h1>
+        <h1 className="text-center fw-bold mb-4 text-primary">Sign In HR</h1>
         <form onSubmit={handleSubmit} className="d-flex flex-column gap-3">
           <div className="form-floating">
             <input
