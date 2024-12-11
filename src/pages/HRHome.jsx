@@ -163,64 +163,97 @@ const handleWorkUpdateInputChange = (e) => {
     }));
 };
 
+const [groupWorkDetails, setGroupWorkDetails] = useState({
+    leaderId: '',
+    employeesId: '',
+    workName: '',
+    workDescription: '',
+    endDate: '',
+});
+
+const handleGroupWorkDetailsInputChange = (e) => {
+    const { name, value } = e.target;
+    setGroupWorkDetails((prev) => ({
+        ...prev,
+        [name]: value,
+    }));
+};
+
+const [works, setWorks] = useState([]);
+
+const [individualWorks, setIndividualWorks] = useState([]);
+
+const [groupWorks, setGroupWorks] = useState([]);
+
+const [pendingWorks, setPendingWorks] = useState([]);
+
+const [individualPendingWorks, setIndividualPendingWorks] = useState([]);
+
+const [groupPendingWorks, setGroupPendingWorks] = useState([]);
+
+const [allCompletedWorks, setAllCompletedWorks] = useState([]);
+
+const [allIndividualCompletedWorks, setAllIndividualCompletedWorks] = useState([]);
+
+const [allGroupCompletedWorks, setAllGroupCompletedWorks] = useState([]);
 
 const handleAddDepartment = async (e) => {
-e.preventDefault();
+    e.preventDefault();
 
-try {
-    const response = await axios.post(
-    "http://localhost:8896/admin/departments",
-    { departmentName },
-    {
-        headers: {
-        Authorization: localStorage.getItem('authToken'),
-        "Content-Type": "application/json",
-        },
+    try {
+        const response = await axios.post(
+        "http://localhost:8896/admin/departments",
+        { departmentName },
+        {
+            headers: {
+            Authorization: localStorage.getItem('authToken'),
+            "Content-Type": "application/json",
+            },
+        }
+        );
+        setMessage(`Department added successfully: ${response.data.departmentName}`);
+    } catch (error) {
+        setMessage(
+        error.response?.data?.message || "An error occurred while adding the department."
+        );
     }
-    );
-    setMessage(`Department added successfully: ${response.data.departmentName}`);
-} catch (error) {
-    setMessage(
-    error.response?.data?.message || "An error occurred while adding the department."
-    );
-}
 };
 
 const handleAddEmployee = async (e) => {
-e.preventDefault();
+    e.preventDefault();
 
-const employeeData = {
-    name: document.getElementById("employeeName").value,
-    role: document.getElementById("role").value,
-    gender: document.getElementById("gender").value,
-    salary: parseFloat(document.getElementById("salary").value),
-    phoneNo: document.getElementById("phoneNo").value,
-    dateOfBirth: document.getElementById("dateOfBirth").value,
-    email: document.getElementById("email").value
-};
+    const employeeData = {
+        name: document.getElementById("employeeName").value,
+        role: document.getElementById("role").value,
+        gender: document.getElementById("gender").value,
+        salary: parseFloat(document.getElementById("salary").value),
+        phoneNo: document.getElementById("phoneNo").value,
+        dateOfBirth: document.getElementById("dateOfBirth").value,
+        email: document.getElementById("email").value
+    };
 
-const departmentId = document.getElementById("departmentId").value;
+    const departmentId = document.getElementById("departmentId").value;
 
-try {
-    const token = localStorage.getItem("authToken"); // Retrieve stored token
+    try {
+        const token = localStorage.getItem("authToken"); // Retrieve stored token
 
-    const response = await axios.post(
-        `http://localhost:8896/admin/employees/${departmentId}`,
-        employeeData,
-        {
-            headers: {
-                Authorization: token,
-                "Content-Type": "application/json",
-            },
-        }
-    );
-    setMessage(`Employee added successfully`);
-    document.getElementById("addEmployeeForm").reset();
-} catch (error) {
-    setMessage(
-        error.response?.data?.message || "An error occurred while adding the employee."
-    );
-}
+        const response = await axios.post(
+            `http://localhost:8896/admin/employees/${departmentId}`,
+            employeeData,
+            {
+                headers: {
+                    Authorization: token,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+        setMessage(`Employee added successfully`);
+        document.getElementById("addEmployeeForm").reset();
+    } catch (error) {
+        setMessage(
+            error.response?.data?.message || "An error occurred while adding the employee."
+        );
+    }
 };
 
 const handleDeleteEmployee = async (e) => {
@@ -883,7 +916,225 @@ const handleUpdateWork = async (e) => {
     }
 };
 
+const handleAssignGroupWork = async (e) => {
+    e.preventDefault();
+    try {
+        setLoading(true);
+        // setError(false);
+        setMessage('');
 
+        const { leaderId, employeesId, workName, workDescription, endDate } = groupWorkDetails;
+
+        // Prepare the payload
+        const payload = {
+            leaderId: parseInt(leaderId),
+            employeesId: employeesId.split(',').map((id) => parseInt(id.trim())),
+            work: {
+                name: workName,
+                description: workDescription,
+                endDate,
+            },
+        };
+
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+            throw new Error("Authentication token is missing. Please log in again.");
+        }
+
+        const response = await axios.post("http://localhost:8896/admin/work", payload, {
+            headers: {
+                Authorization: token,
+                "Content-Type": "application/json",
+            },
+        });
+
+        setMessage("Work assigned successfully.");
+        setGroupWorkDetails({
+            leaderId: '',
+            employeesId: '',
+            workName: '',
+            workDescription: '',
+            endDate: '',
+        });
+    } catch (error) {
+        // setError(true);
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    } finally {
+        setLoading(false);
+    }
+};
+
+const fetchAllWorks = async () => {
+    setLoading(true);
+    setMessage('');
+    try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get("http://localhost:8896/admin/allWorks", {
+            headers: {
+                Authorization: token,
+                "Content-Type": "application/json",
+            },
+        });
+        console.log(response.data)
+        setWorks(response.data);
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    } finally {
+        setLoading(false);
+    }
+};
+
+const fetchAllIndividualWorks = async () => {
+    setLoading(true);
+    setMessage('');
+    try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get("http://localhost:8896/admin/allIndividualWorks", {
+            headers: {
+                Authorization: token,
+                "Content-Type": "application/json",
+            },
+        });
+        setIndividualWorks(response.data);
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    } finally {
+        setLoading(false);
+    }
+};
+
+const fetchAllGroupWorks = async () => {
+    setLoading(true);
+    setMessage('');
+    try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get("http://localhost:8896/admin/allGroupWorks", {
+            headers: {
+                Authorization: token,
+                "Content-Type": "application/json",
+            },
+        });
+        setGroupWorks(response.data);
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    } finally {
+        setLoading(false);
+    }
+};
+
+const fetchAllPendingWorks = async () => {
+    setLoading(true);
+    setMessage('');
+    try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get("http://localhost:8896/admin/allPendingWorks", {
+            headers: {
+                Authorization: token,
+                "Content-Type": "application/json",
+            },
+        });
+        setPendingWorks(response.data);
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    } finally {
+        setLoading(false);
+    }
+};
+
+const fetchIndividualPendingWorks = async () => {
+    setLoading(true);
+    setMessage('');
+    try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get("http://localhost:8896/admin/allIndividualPendingWorks", {
+            headers: {
+                Authorization: token,
+                "Content-Type": "application/json",
+            },
+        });
+        setIndividualPendingWorks(response.data);
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    } finally {
+        setLoading(false);
+    }
+};
+
+const fetchGroupPendingWorks = async () => {
+    setLoading(true);
+    setMessage('');
+    try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get("http://localhost:8896/admin/allGroupPendingWorks", {
+            headers: {
+                Authorization: token,
+                "Content-Type": "application/json",
+            },
+        });
+        setGroupPendingWorks(response.data);
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    } finally {
+        setLoading(false);
+    }
+};
+
+const fetchAllCompletedWorks = async () => {    //need to test
+    setLoading(true);
+    setMessage('');
+    try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get("http://localhost:8896/admin/allCompletedWorks", {
+            headers: {
+                Authorization: token,
+                "Content-Type": "application/json",
+            },
+        });
+        setAllCompletedWorks(response.data);
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    } finally {
+        setLoading(false);
+    }
+};
+
+const fetchAllIndividualCompletedWorks = async () => {    //need to test
+    setLoading(true);
+    setMessage('');
+    try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get("http://localhost:8896/admin/allIndividualCompletedWorks", {
+            headers: {
+                Authorization: token,
+                "Content-Type": "application/json",
+            },
+        });
+        setAllIndividualCompletedWorks(response.data);
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    } finally {
+        setLoading(false);
+    }
+};
+
+const fetchAllGroupCompletedWorks = async () => {    //need to test
+    setLoading(true);
+    setMessage('');
+    try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get("http://localhost:8896/admin/allGroupCompletedWorks", {
+            headers: {
+                Authorization: token,
+                "Content-Type": "application/json",
+            },
+        });
+        setAllGroupCompletedWorks(response.data);
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    } finally {
+        setLoading(false);
+    }
+};
 
   const renderForm = () => {
     switch (selectedFeature) {
@@ -1949,6 +2200,456 @@ const handleUpdateWork = async (e) => {
                     <p>{message}</p>
                 </div>
             );
+
+        case 'assignGroupWork':
+            return (
+                <div className="mt-4">
+                    <h3>Assign Group Work</h3>
+                    <form onSubmit={handleAssignGroupWork} className="border p-4 rounded shadow">
+                        <div className="mb-3">
+                            <label className="form-label">Leader ID</label>
+                            <input
+                                type="number"
+                                name="leaderId"
+                                value={groupWorkDetails.leaderId}
+                                onChange={handleGroupWorkDetailsInputChange}
+                                className="form-control"
+                                placeholder="Enter Leader ID"
+                                required
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label className="form-label">Employee IDs (Comma Separated)</label>
+                            <input
+                                type="text"
+                                name="employeesId"
+                                value={groupWorkDetails.employeesId}
+                                onChange={handleGroupWorkDetailsInputChange}
+                                className="form-control"
+                                placeholder="e.g., 3,8,9"
+                                required
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label className="form-label">Work Name</label>
+                            <input
+                                type="text"
+                                name="workName"
+                                value={groupWorkDetails.workName}
+                                onChange={handleGroupWorkDetailsInputChange}
+                                className="form-control"
+                                placeholder="Enter Work Name"
+                                required
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label className="form-label">Work Description</label>
+                            <textarea
+                                name="workDescription"
+                                value={groupWorkDetails.workDescription}
+                                onChange={handleGroupWorkDetailsInputChange}
+                                className="form-control"
+                                placeholder="Enter Work Description"
+                                rows="3"
+                                required
+                            ></textarea>
+                        </div>
+                        <div className="mb-3">
+                            <label className="form-label">endDate</label>
+                            <input
+                                type="date"
+                                name="endDate"
+                                value={groupWorkDetails.endDate}
+                                onChange={handleGroupWorkDetailsInputChange}
+                                className="form-control"
+                                required
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-primary">Assign Work</button>
+                    </form>
+                    {loading && <p>Loading...</p>}
+                    <p>{message}</p>
+                </div>
+            );
+            
+        case 'listAllWork':
+            return (
+                <div className="mt-4">
+                    <h3>All Works</h3>
+                    <button onClick={fetchAllWorks} className="btn btn-primary mb-3">
+                        Load Works
+                    </button>
+                    {loading && <p>Loading...</p>}
+                    {message && <p>{message}</p>}
+                    {works.length > 0 && (
+                        <table className="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Work ID</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Leader ID</th>
+                                    <th>Start Date</th>
+                                    <th>Deadline</th>
+                                    <th>Work Type</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {works.map((work) => (
+                                    <tr key={work.workId}>
+                                        <td>{work.workId}</td>
+                                        <td>{work.name || "N/A"}</td>
+                                        <td>{work.description}</td>
+                                        <td>{work.leaderId}</td>
+                                        <td>{work.startDate}</td>
+                                        <td>{work.endDate || "N/A"}</td>
+                                        <td>{work.workType}</td>
+                                        <td>{work.status}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
+                </div>
+            );
+
+        case 'listAllIndividualWork':
+            return (
+                <div className="mt-4">
+                    <h3>All Individual Works</h3>
+                    <button onClick={fetchAllIndividualWorks} className="btn btn-primary mb-3">
+                        Load Individual Works
+                    </button>
+                    {loading && <p>Loading...</p>}
+                    {message && <p>{message}</p>}
+                    {individualWorks.length > 0 && (
+                        <table className="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Work ID</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Leader ID</th>
+                                    <th>Start Date</th>
+                                    <th>Deadline</th>
+                                    <th>Work Type</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {individualWorks.map((work) => (
+                                    <tr key={work.workId}>
+                                        <td>{work.workId}</td>
+                                        <td>{work.name || "N/A"}</td>
+                                        <td>{work.description}</td>
+                                        <td>{work.leaderId}</td>
+                                        <td>{work.startDate}</td>
+                                        <td>{work.endDate || "N/A"}</td>
+                                        <td>{work.workType}</td>
+                                        <td>{work.status}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
+                </div>
+            );
+                        
+        case 'listAllGroupWork':
+            return (
+                <div className="mt-4">
+                    <h3>All Group Works</h3>
+                    <button onClick={fetchAllGroupWorks} className="btn btn-primary mb-3">
+                        Load Group Works
+                    </button>
+                    {loading && <p>Loading...</p>}
+                    {message && <p>{message}</p>}
+                    {groupWorks.length > 0 && (
+                        <table className="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Work ID</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Leader ID</th>
+                                    <th>Start Date</th>
+                                    <th>Deadline</th>
+                                    <th>Work Type</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {groupWorks.map((work) => (
+                                    <tr key={work.workId}>
+                                        <td>{work.workId}</td>
+                                        <td>{work.name || "N/A"}</td>
+                                        <td>{work.description}</td>
+                                        <td>{work.leaderId}</td>
+                                        <td>{work.startDate}</td>
+                                        <td>{work.endDate || "N/A"}</td>
+                                        <td>{work.workType}</td>
+                                        <td>{work.status}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
+                </div>
+            );
+
+        case 'listAllPendingWork':
+            return (
+                <div className="mt-4">
+                    <h3>All Pending Works</h3>
+                    <button onClick={fetchAllPendingWorks} className="btn btn-primary mb-3">
+                        Load Pending Works
+                    </button>
+                    {loading && <p>Loading...</p>}
+                    {message && <p>{message}</p>}
+                    {pendingWorks.length > 0 && (
+                        <table className="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Work ID</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Leader ID</th>
+                                    <th>Start Date</th>
+                                    <th>Deadline</th>
+                                    <th>Work Type</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {pendingWorks.map((work) => (
+                                    <tr key={work.workId}>
+                                        <td>{work.workId}</td>
+                                        <td>{work.name || "N/A"}</td>
+                                        <td>{work.description}</td>
+                                        <td>{work.leaderId}</td>
+                                        <td>{work.startDate}</td>
+                                        <td>{work.endDate || "N/A"}</td>
+                                        <td>{work.workType}</td>
+                                        <td>{work.status}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
+                </div>
+            );
+            
+        case 'listIndividualPendingWork':
+            return (
+                <div className="mt-4">
+                    <h3>All Individual Pending Works</h3>
+                    <button onClick={fetchIndividualPendingWorks} className="btn btn-primary mb-3">
+                        Load Individual Pending Works
+                    </button>
+                    {loading && <p>Loading...</p>}
+                    {message && <p>{message}</p>}
+                    {individualPendingWorks.length > 0 && (
+                        <table className="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Work ID</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Leader ID</th>
+                                    <th>Start Date</th>
+                                    <th>Deadline</th>
+                                    <th>Work Type</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {individualPendingWorks.map((work) => (
+                                    <tr key={work.workId}>
+                                        <td>{work.workId}</td>
+                                        <td>{work.name || "N/A"}</td>
+                                        <td>{work.description}</td>
+                                        <td>{work.leaderId}</td>
+                                        <td>{work.startDate}</td>
+                                        <td>{work.endDate || "N/A"}</td>
+                                        <td>{work.workType}</td>
+                                        <td>{work.status}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
+                </div>
+            );
+
+        case 'listGroupPendingWork':
+            return (
+                <div className="mt-4">
+                    <h3>All Group Pending Works</h3>
+                    <button onClick={fetchGroupPendingWorks} className="btn btn-primary mb-3">
+                        Load Group Pending Works
+                    </button>
+                    {loading && <p>Loading...</p>}
+                    {message && <p>{message}</p>}
+                    {groupPendingWorks.length > 0 && (
+                        <table className="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Work ID</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Leader ID</th>
+                                    <th>Start Date</th>
+                                    <th>Deadline</th>
+                                    <th>Work Type</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {groupPendingWorks.map((work) => (
+                                    <tr key={work.workId}>
+                                        <td>{work.workId}</td>
+                                        <td>{work.name || "N/A"}</td>
+                                        <td>{work.description}</td>
+                                        <td>{work.leaderId}</td>
+                                        <td>{work.startDate}</td>
+                                        <td>{work.endDate || "N/A"}</td>
+                                        <td>{work.workType}</td>
+                                        <td>{work.status}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
+                </div>
+            );
+
+        case 'listAllCompletedWork':
+            return (
+                <div className="mt-4">
+                    <h3>All Completed Works</h3>
+                    <button onClick={fetchAllCompletedWorks} className="btn btn-primary mb-3">
+                        Load All Completed Works
+                    </button>
+                    {loading && <p>Loading...</p>}
+                    {message && <p>{message}</p>}
+                    {allCompletedWorks.length > 0 && (
+                        <table className="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Work ID</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Leader ID</th>
+                                    <th>Start Date</th>
+                                    <th>Deadline</th>
+                                    <th>Work Type</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {allCompletedWorks.map((work) => (
+                                    <tr key={work.workId}>
+                                        <td>{work.workId}</td>
+                                        <td>{work.name || "N/A"}</td>
+                                        <td>{work.description}</td>
+                                        <td>{work.leaderId}</td>
+                                        <td>{work.startDate}</td>
+                                        <td>{work.endDate || "N/A"}</td>
+                                        <td>{work.workType}</td>
+                                        <td>{work.status}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
+                </div>
+            );
+            
+        case 'listAllIndividualCompletedWork':
+            return (
+                <div className="mt-4">
+                    <h3>All Individual Completed Works</h3>
+                    <button onClick={fetchAllIndividualCompletedWorks} className="btn btn-primary mb-3">
+                        Load All Individual Completed Works
+                    </button>
+                    {loading && <p>Loading...</p>}
+                    {message && <p>{message}</p>}
+                    {allIndividualCompletedWorks.length > 0 && (
+                        <table className="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Work ID</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Leader ID</th>
+                                    <th>Start Date</th>
+                                    <th>Deadline</th>
+                                    <th>Work Type</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {allIndividualCompletedWorks.map((work) => (
+                                    <tr key={work.workId}>
+                                        <td>{work.workId}</td>
+                                        <td>{work.name || "N/A"}</td>
+                                        <td>{work.description}</td>
+                                        <td>{work.leaderId}</td>
+                                        <td>{work.startDate}</td>
+                                        <td>{work.endDate || "N/A"}</td>
+                                        <td>{work.workType}</td>
+                                        <td>{work.status}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
+                </div>
+            );
+
+        case 'listAllGroupCompletedWork':
+        return (
+            <div className="mt-4">
+                <h3>All Group Completed Works</h3>
+                <button onClick={fetchAllGroupCompletedWorks} className="btn btn-primary mb-3">
+                    Load All Group Completed Works
+                </button>
+                {loading && <p>Loading...</p>}
+                {message && <p>{message}</p>}
+                {allIndividualCompletedWorks.length > 0 && (
+                    <table className="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Work ID</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Leader ID</th>
+                                <th>Start Date</th>
+                                <th>Deadline</th>
+                                <th>Work Type</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {allGroupCompletedWorks.map((work) => (
+                                <tr key={work.workId}>
+                                    <td>{work.workId}</td>
+                                    <td>{work.name || "N/A"}</td>
+                                    <td>{work.description}</td>
+                                    <td>{work.leaderId}</td>
+                                    <td>{work.startDate}</td>
+                                    <td>{work.endDate || "N/A"}</td>
+                                    <td>{work.workType}</td>
+                                    <td>{work.status}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                )}
+            </div>
+        );
+            
             
             
 
@@ -2069,7 +2770,7 @@ const handleUpdateWork = async (e) => {
             <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listAllIndividualCompletedWork')}>
                 List Individual's completed work
             </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listGroupCompletedWork')}>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listAllGroupCompletedWork')}>
                 List Group's completed work
             </button>
             <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listIndividualsInCompletedWork')}>
