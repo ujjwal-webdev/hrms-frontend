@@ -197,6 +197,41 @@ const [allIndividualCompletedWorks, setAllIndividualCompletedWorks] = useState([
 
 const [allGroupCompletedWorks, setAllGroupCompletedWorks] = useState([]);
 
+const [individualCompletedWorks, setIndividualCompletedWorks] = useState([]);
+
+const [groupCompletedWorks, setGroupCompletedWorks] = useState([]);
+
+const [salaryDetails, setSalaryDetails] = useState([]);
+
+const [equipmentDetails, setEquipmentDetails] = useState([]);
+
+const [equipment, setEquipment] = useState({
+    name: '',
+    model: '',
+    serialNumber: '',
+    assignedDate: ''
+});
+
+const [equipmentId, setEquipmentId] = useState('');
+
+const [job, setJob] = useState({
+    position: '',
+    description: '',
+    experienceRequired: '',
+});
+
+const [jobId, setJobId] = useState('');
+
+const [jobs, setJobs] = useState([]);
+
+const [candidates, setCandidates] = useState([]);
+
+const [candidateId, setCandidateId] = useState('');
+const [status, setStatus] = useState('PENDING');
+const [updatedCandidate, setUpdatedCandidate] = useState(null);
+
+const [candidate, setCandidate] = useState(null);
+
 const handleAddDepartment = async (e) => {
     e.preventDefault();
 
@@ -1133,6 +1168,250 @@ const fetchAllGroupCompletedWorks = async () => {    //need to test
         setMessage(`Error: ${error.response?.data?.message || error.message}`);
     } finally {
         setLoading(false);
+    }
+};
+
+const fetchIndividualCompletedWorks = async () => { //Need to test
+    setLoading(true);
+    setMessage('');
+    try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get("http://localhost:8896/admin/allIndividualInCompletedWorks", {
+            headers: {
+                Authorization: token,
+                "Content-Type": "application/json",
+            },
+        });
+        setIndividualCompletedWorks(response.data);
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    } finally {
+        setLoading(false);
+    }
+};
+
+const fetchGroupCompletedWorks = async () => {
+    setLoading(true);
+    setMessage('');
+    try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get("http://localhost:8896/admin/allGroupInCompletedWorks", {
+            headers: {
+                Authorization: token,
+                "Content-Type": "application/json",
+            },
+        });
+        setGroupCompletedWorks(response.data);
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    } finally {
+        setLoading(false);
+    }
+};
+
+const fetchEmployeeSalaryDetails = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage('');
+    setSalaryDetails([]);
+    try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get(`http://localhost:8896/admin/employees/salaryInfo/${employeeId}`, {
+            headers: {
+                Authorization: token,
+                "Content-Type": "application/json",
+            },
+        });
+        setSalaryDetails(response.data);
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    } finally {
+        setLoading(false);
+    }
+};
+
+const fetchEmployeeEquipmentDetails = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage('');
+    setEquipmentDetails([]);
+    try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get(`http://localhost:8896/admin/employees/equipmentInfo/${employeeId}`, {
+            headers: {
+                Authorization: token,
+                "Content-Type": "application/json",
+            },
+        });
+        setEquipmentDetails(response.data);
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    } finally {
+        setLoading(false);
+    }
+};
+
+const handleAssignEquipment = async (e) => {
+    e.preventDefault();
+    setMessage('');
+    try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.post(
+            `http://localhost:8896/admin/equipments/${employeeId}`,
+            equipment,
+            {
+                headers: {
+                    Authorization: token,
+                    "Content-Type": "application/json"
+                }
+            }
+        );
+        setMessage(`Success: ${response.data}`);
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    }
+};
+
+const handleUnassignEquipment = async (e) => {
+    e.preventDefault();
+    setMessage('');
+    try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.delete(
+            `http://localhost:8896/admin/equipments/${equipmentId}`,
+            {
+                headers: {
+                    Authorization: token,
+                    "Content-Type": "application/json"
+                }
+            }
+        );
+        setMessage(`Success: Equipment unassigned successfully!`);
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    }
+};
+
+const handleCreateJob = async (e) => {
+    e.preventDefault();
+    setMessage('');
+    try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.post(
+            "http://localhost:8896/admin/jobs/createJob",
+            job,
+            {
+                headers: {
+                    Authorization: token,
+                    "Content-Type": "application/json"
+                },
+            }
+        );
+        setMessage(`Success: Job created successfully with ID ${response.data.jobId}`);
+        setJob({ position: '', description: '', experienceRequired: '' });
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    }
+};
+
+const handleGetJobById = async (e) => {
+    e.preventDefault();
+    setMessage('');
+    setJob(null);
+    try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get(`http://localhost:8896/admin/jobs/getJobById/${jobId}`, {
+            headers: {
+                Authorization: token,
+            },
+        });
+        setJob(response.data);
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    }
+};
+
+const handleGetAllJobs = async () => {
+    setMessage('');
+    try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get('http://localhost:8896/admin/jobs/getAllJobs', {
+            headers: {
+                Authorization: token,
+            },
+        });
+        setJobs(response.data);
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    }
+};
+
+const handleDeleteJob = async (e) => {
+    e.preventDefault();
+    setMessage('');
+    try {
+        const token = localStorage.getItem("authToken");
+        await axios.delete(`http://localhost:8896/admin/jobs/deleteJob/${jobId}`, {
+            headers: {
+                Authorization: token,
+            },
+        });
+        setMessage('Job deleted successfully!');
+        setJobId(''); // Clear input field after success
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    }
+};
+
+const handleFetchCandidates = async () => {
+    setMessage('');
+    try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get(`http://localhost:8896/candidate/job/${jobId}`, {
+            headers: {
+                Authorization: token,
+            },
+        });
+        setCandidates(response.data); // Set candidates data in state
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    }
+};
+
+const handleCandidateUpdateStatus = async () => {
+    setMessage('');
+    try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.put(
+            `http://localhost:8896/candidate/status/${candidateId}?status=${status}`, 
+            {},
+            {
+                headers: {
+                    Authorization: token,
+                },
+            }
+        );
+        setUpdatedCandidate(response.data); // Set updated candidate details
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    }
+};
+
+const handleGetCandidateById = async () => {
+    setMessage('');
+    try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get(
+            `http://localhost:8896/candidate/getCandidateById/${candidateId}`,
+            {
+                headers: {
+                    Authorization: token,
+                },
+            }
+        );
+        setCandidate(response.data); // Set candidate details
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
     }
 };
 
@@ -2609,46 +2888,646 @@ const fetchAllGroupCompletedWorks = async () => {    //need to test
             );
 
         case 'listAllGroupCompletedWork':
-        return (
-            <div className="mt-4">
-                <h3>All Group Completed Works</h3>
-                <button onClick={fetchAllGroupCompletedWorks} className="btn btn-primary mb-3">
-                    Load All Group Completed Works
-                </button>
-                {loading && <p>Loading...</p>}
-                {message && <p>{message}</p>}
-                {allIndividualCompletedWorks.length > 0 && (
-                    <table className="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Work ID</th>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Leader ID</th>
-                                <th>Start Date</th>
-                                <th>Deadline</th>
-                                <th>Work Type</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {allGroupCompletedWorks.map((work) => (
-                                <tr key={work.workId}>
-                                    <td>{work.workId}</td>
-                                    <td>{work.name || "N/A"}</td>
-                                    <td>{work.description}</td>
-                                    <td>{work.leaderId}</td>
-                                    <td>{work.startDate}</td>
-                                    <td>{work.endDate || "N/A"}</td>
-                                    <td>{work.workType}</td>
-                                    <td>{work.status}</td>
+            return (
+                <div className="mt-4">
+                    <h3>All Group Completed Works</h3>
+                    <button onClick={fetchAllGroupCompletedWorks} className="btn btn-primary mb-3">
+                        Load All Group Completed Works
+                    </button>
+                    {loading && <p>Loading...</p>}
+                    {message && <p>{message}</p>}
+                    {allIndividualCompletedWorks.length > 0 && (
+                        <table className="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Work ID</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Leader ID</th>
+                                    <th>Start Date</th>
+                                    <th>Deadline</th>
+                                    <th>Work Type</th>
+                                    <th>Status</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                )}
-            </div>
-        );
+                            </thead>
+                            <tbody>
+                                {allGroupCompletedWorks.map((work) => (
+                                    <tr key={work.workId}>
+                                        <td>{work.workId}</td>
+                                        <td>{work.name || "N/A"}</td>
+                                        <td>{work.description}</td>
+                                        <td>{work.leaderId}</td>
+                                        <td>{work.startDate}</td>
+                                        <td>{work.endDate || "N/A"}</td>
+                                        <td>{work.workType}</td>
+                                        <td>{work.status}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
+                </div>
+            );
+
+        case 'listIndividualsInCompletedWork':
+            return (
+                <div className="mt-4">
+                    <h3>Individual Completed Works</h3>
+                    <button onClick={fetchIndividualCompletedWorks} className="btn btn-primary mb-3">
+                        Load Individual Completed Works
+                    </button>
+                    {loading && <p>Loading...</p>}
+                    {message && <p>{message}</p>}
+                    {individualCompletedWorks.length > 0 && (
+                        <table className="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Work ID</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Leader ID</th>
+                                    <th>Start Date</th>
+                                    <th>Deadline</th>
+                                    <th>Work Type</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {individualCompletedWorks.map((work) => (
+                                    <tr key={work.workId}>
+                                        <td>{work.workId}</td>
+                                        <td>{work.name || "N/A"}</td>
+                                        <td>{work.description}</td>
+                                        <td>{work.leaderId}</td>
+                                        <td>{work.startDate}</td>
+                                        <td>{work.endDate || "N/A"}</td>
+                                        <td>{work.workType}</td>
+                                        <td>{work.status}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
+                </div>
+            );
+
+        case 'ListGroupsInCompletedWork':
+            return (
+                <div className="mt-4">
+                    <h3>Group Completed Works</h3>
+                    <button onClick={fetchGroupCompletedWorks} className="btn btn-primary mb-3">
+                        Load Group Completed Works
+                    </button>
+                    {loading && <p>Loading...</p>}
+                    {message && <p>{message}</p>}
+                    {groupCompletedWorks.length > 0 && (
+                        <table className="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Work ID</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Leader ID</th>
+                                    <th>Start Date</th>
+                                    <th>Deadline</th>
+                                    <th>Work Type</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {groupCompletedWorks.map((work) => (
+                                    <tr key={work.workId}>
+                                        <td>{work.workId}</td>
+                                        <td>{work.name || "N/A"}</td>
+                                        <td>{work.description}</td>
+                                        <td>{work.leaderId}</td>
+                                        <td>{work.startDate}</td>
+                                        <td>{work.endDate || "N/A"}</td>
+                                        <td>{work.workType}</td>
+                                        <td>{work.status}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
+                </div>
+            );
+
+        case 'salaryDetailsOfEmployee':
+            return (
+                <div className="mt-4">
+                    <h3>Salary Details of Employee</h3>
+                    <form onSubmit={fetchEmployeeSalaryDetails} className="mb-3">
+                        <div className="mb-2">
+                            <label htmlFor="employeeId" className="form-label">Employee ID:</label>
+                            <input
+                                type="number"
+                                id="employeeId"
+                                name="employeeId"
+                                value={employeeId}
+                                onChange={(e) => setEmployeeId(e.target.value)}
+                                className="form-control"
+                                required
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-primary">Get Salary Details</button>
+                    </form>
+                    {loading && <p>Loading...</p>}
+                    {message && <p>{message}</p>}
+                    {salaryDetails.length > 0 && (
+                        <table className="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Salary ID</th>
+                                    <th>Year</th>
+                                    <th>Salary</th>
+                                    <th>Bonus</th>
+                                    <th>Benefit Points</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {salaryDetails.map((salary) => (
+                                    <tr key={salary.salaryId}>
+                                        <td>{salary.salaryId}</td>
+                                        <td>{salary.year}</td>
+                                        <td>{salary.salary.toFixed(2)}</td>
+                                        <td>{salary.bonusThatYear.toFixed(2)}</td>
+                                        <td>{salary.benefitPoints.toFixed(2)}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
+                </div>
+            );
+
+        case 'equipmentDetailsOfEmployee':
+            return (
+                <div className="mt-4">
+                    <h3>Equipment Details of Employee</h3>
+                    <form onSubmit={fetchEmployeeEquipmentDetails} className="mb-3">
+                        <div className="mb-2">
+                            <label htmlFor="employeeId" className="form-label">Employee ID:</label>
+                            <input
+                                type="number"
+                                id="employeeId"
+                                name="employeeId"
+                                value={employeeId}
+                                onChange={(e) => setEmployeeId(e.target.value)}
+                                className="form-control"
+                                required
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-primary">Get Equipment Details</button>
+                    </form>
+                    {loading && <p>Loading...</p>}
+                    {message && <p>{message}</p>}
+                    {equipmentDetails.length > 0 && (
+                        <table className="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Equipment ID</th>
+                                    <th>Name</th>
+                                    <th>Model</th>
+                                    <th>Serial Number</th>
+                                    <th>Assigned Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {equipmentDetails.map((equipment) => (
+                                    <tr key={equipment.equipmentId}>
+                                        <td>{equipment.equipmentId}</td>
+                                        <td>{equipment.name}</td>
+                                        <td>{equipment.model}</td>
+                                        <td>{equipment.serialNumber}</td>
+                                        <td>{equipment.assignedDate}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
+                </div>
+            );
+
+        case 'assignEquipment':
+            return (
+                <div className="mt-4">
+                    <h3>Assign Equipment to Employee</h3>
+                    <form onSubmit={handleAssignEquipment} className="mb-3">
+                        <div className="mb-2">
+                            <label htmlFor="employeeId" className="form-label">Employee ID:</label>
+                            <input
+                                type="number"
+                                id="employeeId"
+                                name="employeeId"
+                                value={employeeId}
+                                onChange={(e) => setEmployeeId(e.target.value)}
+                                className="form-control"
+                                required
+                            />
+                        </div>
+                        <div className="mb-2">
+                            <label htmlFor="name" className="form-label">Equipment Name:</label>
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                value={equipment.name}
+                                onChange={(e) => setEquipment({ ...equipment, name: e.target.value })}
+                                className="form-control"
+                                required
+                            />
+                        </div>
+                        <div className="mb-2">
+                            <label htmlFor="model" className="form-label">Equipment Model:</label>
+                            <input
+                                type="text"
+                                id="model"
+                                name="model"
+                                value={equipment.model}
+                                onChange={(e) => setEquipment({ ...equipment, model: e.target.value })}
+                                className="form-control"
+                                required
+                            />
+                        </div>
+                        <div className="mb-2">
+                            <label htmlFor="serialNumber" className="form-label">Serial Number:</label>
+                            <input
+                                type="text"
+                                id="serialNumber"
+                                name="serialNumber"
+                                value={equipment.serialNumber}
+                                onChange={(e) => setEquipment({ ...equipment, serialNumber: e.target.value })}
+                                className="form-control"
+                                required
+                            />
+                        </div>
+                        <div className="mb-2">
+                            <label htmlFor="assignedDate" className="form-label">Assigned Date:</label>
+                            <input
+                                type="date"
+                                id="assignedDate"
+                                name="assignedDate"
+                                value={equipment.assignedDate}
+                                onChange={(e) => setEquipment({ ...equipment, assignedDate: e.target.value })}
+                                className="form-control"
+                                required
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-primary">Assign Equipment</button>
+                    </form>
+                    {message && <p>{message}</p>}
+                </div>
+            );
+
+        case 'unassignEquipment':
+            return (
+                <div className="mt-4">
+                    <h3>Unassign Equipment</h3>
+                    <form onSubmit={handleUnassignEquipment} className="mb-3">
+                        <div className="mb-2">
+                            <label htmlFor="equipmentId" className="form-label">Equipment ID:</label>
+                            <input
+                                type="number"
+                                id="equipmentId"
+                                name="equipmentId"
+                                value={equipmentId}
+                                onChange={(e) => setEquipmentId(e.target.value)}
+                                className="form-control"
+                                required
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-danger">Unassign Equipment</button>
+                    </form>
+                    {message && <p>{message}</p>}
+                </div>
+            );
+
+        case 'createJob':
+            return (
+                <div className="mt-4">
+                    <h3>Create Job Position</h3>
+                    <form onSubmit={handleCreateJob} className="mb-3">
+                        <div className="mb-2">
+                            <label htmlFor="position" className="form-label">Position:</label>
+                            <input
+                                type="text"
+                                id="position"
+                                name="position"
+                                value={job.position}
+                                onChange={(e) => setJob({ ...job, position: e.target.value })}
+                                className="form-control"
+                                required
+                            />
+                        </div>
+                        <div className="mb-2">
+                            <label htmlFor="description" className="form-label">Description:</label>
+                            <textarea
+                                id="description"
+                                name="description"
+                                value={job.description}
+                                onChange={(e) => setJob({ ...job, description: e.target.value })}
+                                className="form-control"
+                                required
+                            />
+                        </div>
+                        <div className="mb-2">
+                            <label htmlFor="experienceRequired" className="form-label">Experience Required:</label>
+                            <input
+                                type="text"
+                                id="experienceRequired"
+                                name="experienceRequired"
+                                value={job.experienceRequired}
+                                onChange={(e) => setJob({ ...job, experienceRequired: e.target.value })}
+                                className="form-control"
+                                required
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-primary">Create Job</button>
+                    </form>
+                    {message && <p>{message}</p>}
+                </div>
+            );
+
+        case 'listAllJobs':
+            return (
+                <div className="mt-4">
+
+                    <h3>All Job Positions</h3>
+                    <button onClick={handleGetAllJobs} className="btn btn-primary mb-3">
+                        Load Individual Completed Works
+                    </button>
+                    {loading && <p>Loading...</p>}
+                    {message && <p>{message}</p>}
+                    {jobs.length === 0 ? (
+                        <p>No jobs available.</p>
+                    ) : (
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th>Job ID</th>
+                                    <th>Position</th>
+                                    <th>Description</th>
+                                    <th>Experience Required</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {jobs.map((job) => (
+                                    <tr key={job.jobId}>
+                                        <td>{job.jobId}</td>
+                                        <td>{job.position}</td>
+                                        <td>{job.description}</td>
+                                        <td>{job.experienceRequired}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
+                </div>
+            );
+            
+
+        case 'listJobByID':
+            return (
+                <div className="mt-4">
+                    <h3>Get Job Details by ID</h3>
+                    <form onSubmit={handleGetJobById} className="mb-3">
+                        <div className="mb-2">
+                            <label htmlFor="jobId" className="form-label">Job ID:</label>
+                            <input
+                                type="number"
+                                id="jobId"
+                                name="jobId"
+                                value={jobId}
+                                onChange={(e) => setJobId(e.target.value)}
+                                className="form-control"
+                                required
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-primary">Get Job</button>
+                    </form>
+                    {job && (
+                        <div className="mt-3">
+                            <h4>Job Details</h4>
+                            <p><strong>Job ID:</strong> {job.jobId}</p>
+                            <p><strong>Position:</strong> {job.position}</p>
+                            <p><strong>Description:</strong> {job.description}</p>
+                            <p><strong>Experience Required:</strong> {job.experienceRequired}</p>
+                        </div>
+                    )}
+                    {message && <p>{message}</p>}
+                </div>
+            );
+
+        case 'deleteJob':
+            return (
+                <div className="mt-4">
+                    <h3>Delete Job Position</h3>
+                    <form onSubmit={handleDeleteJob}>
+                        <div className="form-group">
+                            <label htmlFor="jobId">Job ID</label>
+                            <input
+                                type="number"
+                                className="form-control"
+                                id="jobId"
+                                value={jobId}
+                                onChange={(e) => setJobId(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-danger">Delete Job</button>
+                    </form>
+                    {message && <p className="mt-3">{message}</p>}
+                </div>
+            );
+
+        case 'listCandidatesForJob':
+            return (
+                <div className="mt-4">
+                    <h3>Candidates for Job</h3>
+                    <div className="form-group">
+                        <label htmlFor="jobId">Job ID</label>
+                        <input
+                            type="number"
+                            className="form-control"
+                            id="jobId"
+                            value={jobId}
+                            onChange={(e) => setJobId(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <button
+                        className="btn btn-primary mt-3"
+                        onClick={handleFetchCandidates}
+                    >
+                        Get Candidates
+                    </button>
+        
+                    {candidates.length > 0 && (
+                        <div className="mt-4">
+                            <h4>Candidates List</h4>
+                            <table className="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Candidate ID</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Age</th>
+                                        <th>Gender</th>
+                                        <th>Phone Number</th>
+                                        <th>Date of Birth</th>
+                                        <th>Email</th>
+                                        <th>Username</th>
+                                        <th>Work Company 1</th>
+                                        <th>Work Company 1 Skills</th>
+                                        <th>Work Company 1 Description</th>
+                                        <th>Work Company 2</th>
+                                        <th>Work Company 2 Skills</th>
+                                        <th>Work Company 2 Description</th>
+                                        <th>Education 1</th>
+                                        <th>Education 1 Description</th>
+                                        <th>Education 2</th>
+                                        <th>Education 2 Description</th>
+                                        <th>Status</th>
+                                        <th>Address</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {candidates.map((candidate, index) => (
+                                        <tr key={index}>
+                                            <td>{candidate.jobCandidateId}</td>
+                                            <td>{candidate.firstName}</td>
+                                            <td>{candidate.lastName}</td>
+                                            <td>{candidate.age}</td>
+                                            <td>{candidate.gender}</td>
+                                            <td>{candidate.phoneNo}</td>
+                                            <td>{candidate.dateOfBirth}</td>
+                                            <td>{candidate.email}</td>
+                                            <td>{candidate.userName}</td>
+                                            <td>{candidate.workCompany1}</td>
+                                            <td>{candidate.workCompany1Skills}</td>
+                                            <td>{candidate.workCompany1Description}</td>
+                                            <td>{candidate.workCompany2}</td>
+                                            <td>{candidate.workCompany2Skills}</td>
+                                            <td>{candidate.workCompany2Description}</td>
+                                            <td>{candidate.education1}</td>
+                                            <td>{candidate.education1Description}</td>
+                                            <td>{candidate.education2}</td>
+                                            <td>{candidate.education2Description}</td>
+                                            <td>{candidate.status}</td>
+                                            <td>{candidate.address}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
+        
+                    {message && <p className="mt-3">{message}</p>}
+                </div>
+            );
+
+        case 'updateCandidateStatus':
+            return (
+                <div className="mt-4">
+                    <h3>Update Candidate Status</h3>
+                    <div className="form-group">
+                        <label htmlFor="candidateId">Candidate ID</label>
+                        <input
+                            type="number"
+                            className="form-control"
+                            id="candidateId"
+                            value={candidateId}
+                            onChange={(e) => setCandidateId(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="status">Status</label>
+                        <select
+                            className="form-control"
+                            id="status"
+                            value={status}
+                            onChange={(e) => setStatus(e.target.value)}
+                            required
+                        >
+                            <option value="PENDING">PENDING</option>
+                            <option value="ACCEPTED">ACCEPTED</option>
+                            <option value="REJECTED">REJECTED</option>
+                            <option value="INTERVIEWED">INTERVIEWED</option>
+                        </select>
+                    </div>
+                    <button
+                        className="btn btn-primary mt-3"
+                        onClick={handleCandidateUpdateStatus}
+                    >
+                        Update Status
+                    </button>
+        
+                    {updatedCandidate && (
+                        <div className="mt-4">
+                            <h5>Updated Candidate:</h5>
+                            <p>Name: {updatedCandidate.firstName} {updatedCandidate.lastName}</p>
+                            <p>Status: {updatedCandidate.status}</p>
+                        </div>
+                    )}
+        
+                    {message && <p className="mt-3">{message}</p>}
+                </div>
+            );
+
+        case 'candidateByID':
+            return (
+                <div className="mt-4">
+                    <h3>Get Candidate By ID</h3>
+                    <div className="form-group">
+                        <label htmlFor="candidateId">Candidate ID</label>
+                        <input
+                            type="number"
+                            className="form-control"
+                            id="candidateId"
+                            value={candidateId}
+                            onChange={(e) => setCandidateId(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <button
+                        className="btn btn-primary mt-3"
+                        onClick={handleGetCandidateById}
+                    >
+                        Get Candidate Details
+                    </button>
+        
+                    {candidate && (
+                        <div className="mt-4">
+                            <h5>Candidate Details:</h5>
+                            <p><strong>First Name:</strong> {candidate.firstName}</p>
+                            <p><strong>Last Name:</strong> {candidate.lastName}</p>
+                            <p><strong>Age:</strong> {candidate.age}</p>
+                            <p><strong>Gender:</strong> {candidate.gender}</p>
+                            <p><strong>Phone Number:</strong> {candidate.phoneNo}</p>
+                            <p><strong>Email:</strong> {candidate.email}</p>
+                            <p><strong>Status:</strong> {candidate.status}</p>
+                            <p><strong>Address:</strong> {candidate.address}</p>
+                        </div>
+                    )}
+        
+                    {message && <p className="mt-3">{message}</p>}
+                </div>
+            );
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            
             
             
             
@@ -2778,6 +3657,39 @@ const fetchAllGroupCompletedWorks = async () => {    //need to test
             </button>
             <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('ListGroupsInCompletedWork')}>
                 List Groups in completed work
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('salaryDetailsOfEmployee')}>
+                Salary details of employee
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('equipmentDetailsOfEmployee')}>
+                Equipment details of employee
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('assignEquipment')}>
+                Assign Equipment
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('unassignEquipment')}>
+                Unassign Equipment
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('createJob')}>
+                Create a job
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listAllJobs')}>
+                Get All Jobs
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listJobByID')}>
+                Get Job by ID
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('deleteJob')}>
+                Delete Job
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listCandidatesForJob')}>
+                Get candidates for a job
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('updateCandidateStatus')}>
+                Update Status of Candidate
+            </button>
+            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('candidateByID')}>
+                Get Candidate By ID
             </button>
             {renderForm()}
         {/* </Link> */}
