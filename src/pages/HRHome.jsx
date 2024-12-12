@@ -1,7 +1,54 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
+import { handleViewYourProfile } from '../services/ProfileService';
+import { handleRegisterHR } from '../services/ProfileService';
+import { handleUpdatePassword } from '../services/ProfileService';
 import { handleAddEmployee } from '../services/EmployeeService';
+import { handleDeleteEmployee } from '../services/EmployeeService';
+import { handleGetEmployeeById } from '../services/EmployeeService';
+import { handleGetEmployeeByUsername } from '../services/EmployeeService';
+import { handleGetAllEmployees } from '../services/EmployeeService';
+import { handleEmployeeChangeRole } from '../services/EmployeeService';
+import { handleEmployeeChangeSalary } from '../services/EmployeeService';
+import { handleEmployeeChangeDepartment } from '../services/EmployeeService';
+import { fetchEmployeeSalaryDetails } from '../services/EmployeeService';
+import { fetchEmployeeEquipmentDetails } from '../services/EmployeeService';
+import { handleAddDepartment } from '../services/DepartmentService';
+import { handleUpdateDepartmentName } from '../services/DepartmentService';
+import { handleDeleteDepartment } from '../services/DepartmentService';
+import { handleGetDepartmentById } from '../services/DepartmentService';
+import { handleGetAllDepartments } from '../services/DepartmentService';
+import { handleGetDepartmentByName } from '../services/DepartmentService';
+import { fetchDepartmentsSortedByName } from '../services/DepartmentService';
+import { fetchDepartmentsSortedByNameDesc } from '../services/DepartmentService';
+import { fetchPendingLeaves } from '../services/LeaveService';
+import { fetchLeavesOfEmployee } from '../services/LeaveService';
+import { handleLeaveResponse } from '../services/LeaveService';
+import { handleAssignWork } from '../services/WorkService';
+import { handleDeleteWork } from '../services/WorkService';
+import { handleUpdateWork } from '../services/WorkService';
+import { handleAssignGroupWork } from '../services/WorkService';
+import { fetchAllWorks } from '../services/WorkService';
+import { fetchAllIndividualWorks } from '../services/WorkService';
+import { fetchAllGroupWorks } from '../services/WorkService';
+import { fetchAllPendingWorks } from '../services/WorkService';
+import { fetchIndividualPendingWorks } from '../services/WorkService';
+import { fetchGroupPendingWorks } from '../services/WorkService';
+import { fetchAllCompletedWorks } from '../services/WorkService';
+import { fetchAllIndividualCompletedWorks } from '../services/WorkService';
+import { fetchAllGroupCompletedWorks } from '../services/WorkService';
+import { fetchIndividualCompletedWorks } from '../services/WorkService';
+import { fetchGroupCompletedWorks } from '../services/WorkService';
+import { handleCreateJob } from '../services/JobService';
+import { handleGetJobById } from '../services/JobService';
+import { handleGetAllJobs } from '../services/JobService';
+import { handleDeleteJob } from '../services/JobService';
+import { handleFetchCandidates } from '../services/CandidateService';
+import { handleCandidateUpdateStatus } from '../services/CandidateService';
+import { handleGetCandidateById } from '../services/CandidateService';
+import { handleAssignEquipment } from '../services/EmployeeService';
+import { handleUnassignEquipment } from '../services/EmployeeService';
 
 export default function HRHome() {
 
@@ -233,27 +280,27 @@ const [updatedCandidate, setUpdatedCandidate] = useState(null);
 
 const [candidate, setCandidate] = useState(null);
 
-const handleAddDepartment = async (e) => {
-    e.preventDefault();
+// const handleAddDepartment = async (e) => {
+//     e.preventDefault();
 
-    try {
-        const response = await axios.post(
-        "http://localhost:8896/admin/departments",
-        { departmentName },
-        {
-            headers: {
-            Authorization: localStorage.getItem('authToken'),
-            "Content-Type": "application/json",
-            },
-        }
-        );
-        setMessage(`Department added successfully: ${response.data.departmentName}`);
-    } catch (error) {
-        setMessage(
-        error.response?.data?.message || "An error occurred while adding the department."
-        );
-    }
-};
+//     try {
+//         const response = await axios.post(
+//         "http://localhost:8896/admin/departments",
+//         { departmentName },
+//         {
+//             headers: {
+//             Authorization: localStorage.getItem('authToken'),
+//             "Content-Type": "application/json",
+//             },
+//         }
+//         );
+//         setMessage(`Department added successfully: ${response.data.departmentName}`);
+//     } catch (error) {
+//         setMessage(
+//         error.response?.data?.message || "An error occurred while adding the department."
+//         );
+//     }
+// };
 
 // const handleAddEmployee = async (e) => {
 //     e.preventDefault();
@@ -292,1129 +339,1129 @@ const handleAddDepartment = async (e) => {
 //     }
 // };
 
-const handleDeleteEmployee = async (e) => {
-    e.preventDefault();
+// const handleDeleteEmployee = async (e) => {
+//     e.preventDefault();
 
-    if (!employeeId) {
-        alert("Please enter an Employee ID.");
-        return;
-    }
+//     if (!employeeId) {
+//         alert("Please enter an Employee ID.");
+//         return;
+//     }
 
-    if (window.confirm(`Are you sure you want to delete employee with ID ${employeeId}?`)) {
-        try {
-            const token = localStorage.getItem("authToken");
-            const response = await axios.delete(
-                `http://localhost:8896/admin/employees/${employeeId}`,
-                {
-                    headers: {
-                        Authorization: token,
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
-            setMessage(`Employee deleted successfully`);
-            setEmployeeId(""); // Clear the form field
-        } catch (error) {
-            setMessage(
-                error.response?.data?.message || "An error occurred while adding the employee."
-            );
-        }
-    }
-};
+//     if (window.confirm(`Are you sure you want to delete employee with ID ${employeeId}?`)) {
+//         try {
+//             const token = localStorage.getItem("authToken");
+//             const response = await axios.delete(
+//                 `http://localhost:8896/admin/employees/${employeeId}`,
+//                 {
+//                     headers: {
+//                         Authorization: token,
+//                         "Content-Type": "application/json",
+//                     },
+//                 }
+//             );
+//             setMessage(`Employee deleted successfully`);
+//             setEmployeeId(""); // Clear the form field
+//         } catch (error) {
+//             setMessage(
+//                 error.response?.data?.message || "An error occurred while adding the employee."
+//             );
+//         }
+//     }
+// };
 
-const handleGetEmployeeById = async (e) => {    
-    e.preventDefault();
+// const handleGetEmployeeById = async (e) => {    
+//     e.preventDefault();
 
-    try {
-        setLoading(true);
-        setEmployeeData(null);
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get(`http://localhost:8896/admin/employees/byEmployeeId/${employeeId}`, {
-            headers: {
-                Authorization: token,
-                "Content-Type": "application/json",
-            }
-        });
+//     try {
+//         setLoading(true);
+//         setEmployeeData(null);
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get(`http://localhost:8896/admin/employees/byEmployeeId/${employeeId}`, {
+//             headers: {
+//                 Authorization: token,
+//                 "Content-Type": "application/json",
+//             }
+//         });
 
-        // console.log(response)
+//         // console.log(response)
 
-        setEmployeeData(response.data);
-        setLoading(false);
-        // setMessage(`Employee fetched successfully: ${JSON.stringify(response.data)}`);
-    }
-    catch (error) {
-        console.log(error.response.data.message)
-        setEmployeeData(null);
-        setLoading(false);
-        setMessage(error.response.data.message);
-    }
-};
+//         setEmployeeData(response.data);
+//         setLoading(false);
+//         // setMessage(`Employee fetched successfully: ${JSON.stringify(response.data)}`);
+//     }
+//     catch (error) {
+//         console.log(error.response.data.message)
+//         setEmployeeData(null);
+//         setLoading(false);
+//         setMessage(error.response.data.message);
+//     }
+// };
 
-const handleGetEmployeeByUsername = async (e) => { 
-    e.preventDefault();
+// const handleGetEmployeeByUsername = async (e) => { 
+//     e.preventDefault();
 
-    try {
-        setLoading(true);
-        setEmployeeData(null);
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get(`http://localhost:8896/admin/employees/byUserName/${username}`, {
-            headers: {
-                Authorization: token,
-                "Content-Type": "application/json",
-            },
-        });
+//     try {
+//         setLoading(true);
+//         setEmployeeData(null);
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get(`http://localhost:8896/admin/employees/byUserName/${username}`, {
+//             headers: {
+//                 Authorization: token,
+//                 "Content-Type": "application/json",
+//             },
+//         });
 
-        setEmployeeData(response.data);
-        setLoading(false);
-        // setMessage(`Employee fetched successfully: ${JSON.stringify(response.data)}`);
-    } 
-    catch (error) {
-        setEmployeeData(null);
-        setLoading(false);
-        setMessage(`Error fetching employee: ${error.response?.data?.message || error.message}`);
-    }
-};
+//         setEmployeeData(response.data);
+//         setLoading(false);
+//         // setMessage(`Employee fetched successfully: ${JSON.stringify(response.data)}`);
+//     } 
+//     catch (error) {
+//         setEmployeeData(null);
+//         setLoading(false);
+//         setMessage(`Error fetching employee: ${error.response?.data?.message || error.message}`);
+//     }
+// };
 
-const handleViewYourProfile = async (e) => {
-    e.preventDefault();
+// const handleViewYourProfile = async (e) => {
+//     e.preventDefault();
 
-    try {
-        setLoading(true);
-        setEmployeeData(null);
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get(`http://localhost:8896/admin/viewProfile`, {
-            headers: {
-                Authorization: token,
-                "Content-Type": "application/json",
-            },
-        });
+//     try {
+//         setLoading(true);
+//         setEmployeeData(null);
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get(`http://localhost:8896/admin/viewProfile`, {
+//             headers: {
+//                 Authorization: token,
+//                 "Content-Type": "application/json",
+//             },
+//         });
 
-        setEmployeeData(response.data);
-        setLoading(false);
-        // setMessage(`Employee fetched successfully: ${JSON.stringify(response.data)}`);
-    }
-    catch(error) {
-        setEmployeeData(null);
-        setLoading(false);
-        setMessage(`Error fetching employee: ${error.response?.data?.message || error.message}`);
-    }
-};
+//         setEmployeeData(response.data);
+//         setLoading(false);
+//         // setMessage(`Employee fetched successfully: ${JSON.stringify(response.data)}`);
+//     }
+//     catch(error) {
+//         setEmployeeData(null);
+//         setLoading(false);
+//         setMessage(`Error fetching employee: ${error.response?.data?.message || error.message}`);
+//     }
+// };
 
-const handleRegisterHR = async (e) => {
-    e.preventDefault();
+// const handleRegisterHR = async (e) => {
+//     e.preventDefault();
 
-    try
-    {
-        setLoading(true);
-        setEmployeeData(null);
-        const token = localStorage.getItem("authToken");
-        const response = await axios.post(`http://localhost:8896/admin/registerAdmin`,
-            hrFormData, 
-            {
-            headers:{
-                Authorization: token,
-                "Content-Type": "application/json",
-            }
-            });
-            setMessage("Successful")
-    }
-    catch(error)
-    {
-        setHRFormData(null)
-        setLoading(false);
-        setMessage(`Error registering HR`);
-    }
-}
+//     try
+//     {
+//         setLoading(true);
+//         setEmployeeData(null);
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.post(`http://localhost:8896/admin/registerAdmin`,
+//             hrFormData, 
+//             {
+//             headers:{
+//                 Authorization: token,
+//                 "Content-Type": "application/json",
+//             }
+//             });
+//             setMessage("Successful")
+//     }
+//     catch(error)
+//     {
+//         setHRFormData(null)
+//         setLoading(false);
+//         setMessage(`Error registering HR`);
+//     }
+// }
 
-const handleUpdatePassword = async (e) => {
-    e.preventDefault();
+// const handleUpdatePassword = async (e) => {
+//     e.preventDefault();
     
-    try
-    {
-        setLoading(true);
-        setEmployeeData(null);
-        const token = localStorage.getItem("authToken");
-        const response = await axios.put(`http://localhost:8896/admin/updatePassword`,
-            updatePasswordFormData,
-            {
-                headers:{
-                    Authorization: token,
-                    "Content-Type": "application/json",
-                }
-            }
-        )
-        setMessage("Successful");
-    }
-    catch(error)
-    {
-        setUpdatePasswordFormData(null)
-        setLoading(false)
-        setMessage(`Error updating password`);
-    }
-}
-
-const handleGetAllEmployees = async (e) => {
-    e.preventDefault();
-    try
-    {
-        setLoading(true);
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get(`http://localhost:8896/admin/employees`,
-            {
-                headers:{
-                    Authorization: token,
-                    "Content-Type": "application/json",
-                }
-            }
-        )
-        setAllEmployees(response.data)
-    }
-    catch(error)
-    {
-        setMessage(`Error getting all employees`);
-    }
-}
-
-const handleEmployeeChangeRole = async (e) => {
-    e.preventDefault();
-    try
-    {
-        setLoading(true);
-        const token = localStorage.getItem("authToken");
-        const response = await axios.patch(`http://localhost:8896/admin/employees/setNewRole/${changeRole.employeeId}/${changeRole.newRole}`,
-            {},{
-                headers:{
-                    Authorization: token,
-                    "Content-Type": "application/json",
-                }
-            }
-        );
-        // setChangeRole(null);
-        setMessage("Successful");
-    }
-    catch(error)
-    {
-        setMessage(`error: ${error.message}`);
-    }
-}
-
-const handleEmployeeChangeSalary = async (e) => {
-    e.preventDefault();
-    try
-    {
-        setLoading(true);
-        const token = localStorage.getItem("authToken");
-        const response = await axios.patch(`http://localhost:8896/admin/employees/setNewSalary/${changeSalary.employeeId}/${changeSalary.employeeSalary}/${changeSalary.bonusThatYear}/${changeSalary.benefitPoints}`,
-            {},{
-                headers:{
-                    Authorization: token,
-                    "Content-Type": "application/json",
-                }
-            }
-        );
-        // setChangeRole(null);
-        setMessage("Successful");
-    }
-    catch(error)
-    {
-        setMessage(`error: ${error.message}`);
-    }
-}
-
-const handleEmployeeChangeDepartment = async (e) => {
-    e.preventDefault();
-    try
-    {
-        setLoading(true);
-        const token = localStorage.getItem("authToken");
-        const response = await axios.patch(`http://localhost:8896/admin/employees/setNewDepartment/${changeDepartment.employeeId}/${changeDepartment.departmentId}`,
-            {},{
-                headers:{
-                    Authorization: token,
-                    "Content-Type": "application/json",
-                }
-            }
-        );
-        // setChangeRole(null);
-        setMessage("Successful");
-    }
-    catch(error)
-    {
-        setMessage(`error: ${error.message}`);
-    }
-}
-
-const handleUpdateDepartmentName = async (e) => {
-    e.preventDefault();
-    try {
-        setLoading(true);
-
-        const token = localStorage.getItem("authToken");
-        const response = await axios.put(
-            `http://localhost:8896/admin/departments/${updateDept.deptId}`,
-            {
-                departmentName: updateDept.newDeptName, 
-            },
-            {
-                headers: {
-                    Authorization: token,
-                    "Content-Type": "application/json",
-                },
-            }
-        );
-
-        setUpdateDept({
-            deptId: '',
-            newDeptName: '',
-        });
-
-        setMessage(`Department updated successfully`);
-    } catch (error) {
-        setMessage(
-            `Error`
-        );
-    } finally {
-        setLoading(false);
-    }
-};
-
-const handleDeleteDepartment = async (e) => {
-    e.preventDefault();
-    try {
-        setLoading(true);
-
-        const token = localStorage.getItem("authToken");
-        const response = await axios.delete(
-            `http://localhost:8896/admin/departments/${deleteDept.deptId}`,
-            {
-                headers: {
-                    Authorization: token,
-                    "Content-Type": "application/json",
-                },
-            }
-        );
-
-        setDeleteDept({
-            deptId: '',
-        });
-
-        setMessage(`Department deleted successfully`);
-    } catch (error) {
-        setMessage(
-            `Error`
-        );
-    } finally {
-        setLoading(false);
-    }
-};
-
-const handleGetDepartmentById = async (e) => {
-    e.preventDefault();
-    try {
-        setLoading(true);
-        setMessage('');
-        setDepartment(null);
-
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get(
-            `http://localhost:8896/admin/departments/${departmentId}`,
-            {
-                headers: {
-                    Authorization: token,
-                    "Content-Type": "application/json",
-                },
-            }
-        );
-
-        setDepartment(response.data);
-    } catch (error) {
-        setMessage(
-            `Error`
-        );
-    } finally {
-        setLoading(false);
-    }
-};
-
-const handleGetAllDepartments = async () => {
-    try {
-        setLoading(true);
-        setMessage('');
-        setDepartments([]);
-
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get(
-            `http://localhost:8896/admin/departments`,
-            {
-                headers: {
-                    Authorization: token,
-                    "Content-Type": "application/json",
-                },
-            }
-        );
-
-        setDepartments(response.data);
-    } catch (error) {
-        setMessage(
-            `Error: ${error.response?.data?.message || error.message}`
-        );
-    } finally {
-        setLoading(false);
-    }
-};
-
-const handleGetDepartmentByName = async (e) => {
-    e.preventDefault();
-    try {
-        setLoading(true);
-        setMessage('');
-        setDepartment(null);
-
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get(
-            `http://localhost:8896/admin/departments/name/${departmentName}`,
-            {
-                headers: {
-                    Authorization: token,
-                    "Content-Type": "application/json",
-                },
-            }
-        );
-
-        setDepartment(response.data);
-    } catch (error) {
-        setMessage(
-            `Error`
-        );
-    } finally {
-        setLoading(false);
-    }
-};
-
-const fetchDepartmentsSortedByName = async (e) => {
-    e.preventDefault();
-    try {
-        setLoading(true);
-        setMessage('');
-        setDepartment(null);
-
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get(
-            `http://localhost:8896/admin/departments/sortByNameAsc`,
-            {
-                headers: {
-                    Authorization: token,
-                    "Content-Type": "application/json",
-                },
-            }
-        );
-
-        setDepartments(response.data);
-    } catch (error) {
-        setMessage(
-            `Error`
-        );
-    } finally {
-        setLoading(false);
-    }
-}
-
-const fetchDepartmentsSortedByNameDesc = async (e) => {
-    e.preventDefault();
-    try {
-        setLoading(true);
-        setMessage('');
-        setDepartment(null);
-
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get(
-            `http://localhost:8896/admin/departments/sortByNameDesc`,
-            {
-                headers: {
-                    Authorization: token,
-                    "Content-Type": "application/json",
-                },
-            }
-        );
-
-        setDepartments(response.data);
-    } catch (error) {
-        setMessage(
-            `Error`
-        );
-    } finally {
-        setLoading(false);
-    }
-}
-
-const fetchAllLeaves = async () => {    //Need to test
-    try {
-        setLoading(true);
-        setMessage('');
-        setLeaves([]);
-
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get(`http://localhost:8896/admin/allLeaves`, {
-            headers: {
-                Authorization: token,
-                "Content-Type": "application/json",
-            },
-        });
-
-        setLeaves(response.data);
-        setMessage("Leave history fetched successfully.");
-    } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    } finally {
-        setLoading(false);
-    }
-};
-
-const fetchPendingLeaves = async () => {    //need to test
-    try {
-        setLoading(true);
-        setMessage('');
-        setPendingLeaves([]);
-
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get(`http://localhost:8896/admin/allPendingLeaves`, {
-            headers: {
-                Authorization: token,
-                "Content-Type": "application/json",
-            },
-        });
-
-        setPendingLeaves(response.data);
-        setMessage("Pending leaves fetched successfully.");
-    } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    } finally {
-        setLoading(false);
-    }
-};
-
-const fetchLeavesOfEmployee = async (e) => {    //need to test
-    e.preventDefault();
-    try {
-        setLoading(true);
-        setMessage('');
-        setLeaves([]);
-
-        const token = localStorage.getItem("authToken");
-        if (!token) {
-            throw new Error("Authentication token is missing. Please log in again.");
-        }
-
-        const response = await axios.get(`http://localhost:8896/admin/allLeaves/${employeeId}`, {
-            headers: {
-                Authorization: token,
-                "Content-Type": "application/json",
-            },
-        });
-
-        setLeaves(response.data);
-        setMessage("Leaves fetched successfully.");
-    } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    } finally {
-        setLoading(false);
-    }
-};
-
-const handleLeaveResponse = async (e) => {  //need to test
-    e.preventDefault();
-    try {
-        setLoading(true);
-        setMessage('');
-        setResponseLeave(null);
-
-        const token = localStorage.getItem("authToken");
-        if (!token) {
-            throw new Error("Authentication token is missing. Please log in again.");
-        }
-
-        const { leaveId, status } = leaveResponse;
-
-        const response = await axios.patch(
-            `http://localhost:8896/admin/response/${leaveId}/${status}`,
-            {},
-            {
-                headers: {
-                    Authorization: token,
-                    "Content-Type": "application/json",
-                },
-            }
-        );
-
-        setResponseLeave(response.data);
-        setMessage("Response submitted successfully.");
-    } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    } finally {
-        setLoading(false);
-    }
-};
-
-const handleAssignWork = async (e) => {
-    e.preventDefault();
-    try {
-        setLoading(true);
-        setMessage('');
-
-        const token = localStorage.getItem("authToken");
-        if (!token) {
-            throw new Error("Authentication token is missing. Please log in again.");
-        }
-
-        const { empId, name, description, endDate } = workDetails;
-
-        const response = await axios.post(
-            `http://localhost:8896/admin/work/${empId}`,
-            { name, description, endDate },
-            {
-                headers: {
-                    Authorization: token,
-                    "Content-Type": "application/json",
-                },
-            }
-        );
-
-        setMessage(response.data || "Work assigned successfully.");
-        setWorkDetails({ empId: '', name: '', description: '', endDate: '' });
-    } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    } finally {
-        setLoading(false);
-    }
-};
-
-const handleDeleteWork = async (e) => {
-    e.preventDefault();
-    try {
-        setLoading(true);
-        // setError(false);
-        setMessage('');
-
-        const token = localStorage.getItem("authToken");
-        if (!token) {
-            throw new Error("Authentication token is missing. Please log in again.");
-        }
-
-        const response = await axios.delete(`http://localhost:8896/admin/work/${workId}`, {
-            headers: {
-                Authorization: token,
-            },
-        });
-
-        setMessage("Work deleted successfully.");
-        setWorkId('');
-    } catch (error) {
-        // setError(true);
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    } finally {
-        setLoading(false);
-    }
-};
-
-const handleUpdateWork = async (e) => {
-    e.preventDefault();
-    try {
-        setLoading(true);
-        // setError(false);
-        setMessage('');
-
-        const { workId, ...workData } = updateWorkDetails;
-
-        const token = localStorage.getItem("authToken");
-        if (!token) {
-            throw new Error("Authentication token is missing. Please log in again.");
-        }
-
-        const response = await axios.put(`http://localhost:8896/admin/work/${workId}`, workData, {
-            headers: {
-                Authorization: token,
-                "Content-Type": "application/json",
-            },
-        });
-
-        setMessage("Work updated successfully.");
-        setUpdateWorkDetails({
-            workId: '',
-            name: '',
-            description: '',
-            endDate: ''
-        });
-    } catch (error) {
-        // setError(true);
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    } finally {
-        setLoading(false);
-    }
-};
-
-const handleAssignGroupWork = async (e) => {
-    e.preventDefault();
-    try {
-        setLoading(true);
-        // setError(false);
-        setMessage('');
-
-        const { leaderId, employeesId, workName, workDescription, endDate } = groupWorkDetails;
-
-        // Prepare the payload
-        const payload = {
-            leaderId: parseInt(leaderId),
-            employeesId: employeesId.split(',').map((id) => parseInt(id.trim())),
-            work: {
-                name: workName,
-                description: workDescription,
-                endDate,
-            },
-        };
-
-        const token = localStorage.getItem("authToken");
-        if (!token) {
-            throw new Error("Authentication token is missing. Please log in again.");
-        }
-
-        const response = await axios.post("http://localhost:8896/admin/work", payload, {
-            headers: {
-                Authorization: token,
-                "Content-Type": "application/json",
-            },
-        });
-
-        setMessage("Work assigned successfully.");
-        setGroupWorkDetails({
-            leaderId: '',
-            employeesId: '',
-            workName: '',
-            workDescription: '',
-            endDate: '',
-        });
-    } catch (error) {
-        // setError(true);
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    } finally {
-        setLoading(false);
-    }
-};
-
-const fetchAllWorks = async () => {
-    setLoading(true);
-    setMessage('');
-    try {
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get("http://localhost:8896/admin/allWorks", {
-            headers: {
-                Authorization: token,
-                "Content-Type": "application/json",
-            },
-        });
-        console.log(response.data)
-        setWorks(response.data);
-    } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    } finally {
-        setLoading(false);
-    }
-};
-
-const fetchAllIndividualWorks = async () => {
-    setLoading(true);
-    setMessage('');
-    try {
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get("http://localhost:8896/admin/allIndividualWorks", {
-            headers: {
-                Authorization: token,
-                "Content-Type": "application/json",
-            },
-        });
-        setIndividualWorks(response.data);
-    } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    } finally {
-        setLoading(false);
-    }
-};
-
-const fetchAllGroupWorks = async () => {
-    setLoading(true);
-    setMessage('');
-    try {
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get("http://localhost:8896/admin/allGroupWorks", {
-            headers: {
-                Authorization: token,
-                "Content-Type": "application/json",
-            },
-        });
-        setGroupWorks(response.data);
-    } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    } finally {
-        setLoading(false);
-    }
-};
-
-const fetchAllPendingWorks = async () => {
-    setLoading(true);
-    setMessage('');
-    try {
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get("http://localhost:8896/admin/allPendingWorks", {
-            headers: {
-                Authorization: token,
-                "Content-Type": "application/json",
-            },
-        });
-        setPendingWorks(response.data);
-    } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    } finally {
-        setLoading(false);
-    }
-};
-
-const fetchIndividualPendingWorks = async () => {
-    setLoading(true);
-    setMessage('');
-    try {
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get("http://localhost:8896/admin/allIndividualPendingWorks", {
-            headers: {
-                Authorization: token,
-                "Content-Type": "application/json",
-            },
-        });
-        setIndividualPendingWorks(response.data);
-    } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    } finally {
-        setLoading(false);
-    }
-};
-
-const fetchGroupPendingWorks = async () => {
-    setLoading(true);
-    setMessage('');
-    try {
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get("http://localhost:8896/admin/allGroupPendingWorks", {
-            headers: {
-                Authorization: token,
-                "Content-Type": "application/json",
-            },
-        });
-        setGroupPendingWorks(response.data);
-    } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    } finally {
-        setLoading(false);
-    }
-};
-
-const fetchAllCompletedWorks = async () => {    //need to test
-    setLoading(true);
-    setMessage('');
-    try {
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get("http://localhost:8896/admin/allCompletedWorks", {
-            headers: {
-                Authorization: token,
-                "Content-Type": "application/json",
-            },
-        });
-        setAllCompletedWorks(response.data);
-    } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    } finally {
-        setLoading(false);
-    }
-};
-
-const fetchAllIndividualCompletedWorks = async () => {    //need to test
-    setLoading(true);
-    setMessage('');
-    try {
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get("http://localhost:8896/admin/allIndividualCompletedWorks", {
-            headers: {
-                Authorization: token,
-                "Content-Type": "application/json",
-            },
-        });
-        setAllIndividualCompletedWorks(response.data);
-    } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    } finally {
-        setLoading(false);
-    }
-};
-
-const fetchAllGroupCompletedWorks = async () => {    //need to test
-    setLoading(true);
-    setMessage('');
-    try {
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get("http://localhost:8896/admin/allGroupCompletedWorks", {
-            headers: {
-                Authorization: token,
-                "Content-Type": "application/json",
-            },
-        });
-        setAllGroupCompletedWorks(response.data);
-    } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    } finally {
-        setLoading(false);
-    }
-};
-
-const fetchIndividualCompletedWorks = async () => { //Need to test
-    setLoading(true);
-    setMessage('');
-    try {
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get("http://localhost:8896/admin/allIndividualInCompletedWorks", {
-            headers: {
-                Authorization: token,
-                "Content-Type": "application/json",
-            },
-        });
-        setIndividualCompletedWorks(response.data);
-    } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    } finally {
-        setLoading(false);
-    }
-};
-
-const fetchGroupCompletedWorks = async () => {
-    setLoading(true);
-    setMessage('');
-    try {
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get("http://localhost:8896/admin/allGroupInCompletedWorks", {
-            headers: {
-                Authorization: token,
-                "Content-Type": "application/json",
-            },
-        });
-        setGroupCompletedWorks(response.data);
-    } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    } finally {
-        setLoading(false);
-    }
-};
-
-const fetchEmployeeSalaryDetails = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setMessage('');
-    setSalaryDetails([]);
-    try {
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get(`http://localhost:8896/admin/employees/salaryInfo/${employeeId}`, {
-            headers: {
-                Authorization: token,
-                "Content-Type": "application/json",
-            },
-        });
-        setSalaryDetails(response.data);
-    } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    } finally {
-        setLoading(false);
-    }
-};
-
-const fetchEmployeeEquipmentDetails = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setMessage('');
-    setEquipmentDetails([]);
-    try {
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get(`http://localhost:8896/admin/employees/equipmentInfo/${employeeId}`, {
-            headers: {
-                Authorization: token,
-                "Content-Type": "application/json",
-            },
-        });
-        setEquipmentDetails(response.data);
-    } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    } finally {
-        setLoading(false);
-    }
-};
-
-const handleAssignEquipment = async (e) => {
-    e.preventDefault();
-    setMessage('');
-    try {
-        const token = localStorage.getItem("authToken");
-        const response = await axios.post(
-            `http://localhost:8896/admin/equipments/${employeeId}`,
-            equipment,
-            {
-                headers: {
-                    Authorization: token,
-                    "Content-Type": "application/json"
-                }
-            }
-        );
-        setMessage(`Success: ${response.data}`);
-    } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    }
-};
-
-const handleUnassignEquipment = async (e) => {
-    e.preventDefault();
-    setMessage('');
-    try {
-        const token = localStorage.getItem("authToken");
-        const response = await axios.delete(
-            `http://localhost:8896/admin/equipments/${equipmentId}`,
-            {
-                headers: {
-                    Authorization: token,
-                    "Content-Type": "application/json"
-                }
-            }
-        );
-        setMessage(`Success: Equipment unassigned successfully!`);
-    } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    }
-};
-
-const handleCreateJob = async (e) => {
-    e.preventDefault();
-    setMessage('');
-    try {
-        const token = localStorage.getItem("authToken");
-        const response = await axios.post(
-            "http://localhost:8896/admin/jobs/createJob",
-            job,
-            {
-                headers: {
-                    Authorization: token,
-                    "Content-Type": "application/json"
-                },
-            }
-        );
-        setMessage(`Success: Job created successfully with ID ${response.data.jobId}`);
-        setJob({ position: '', description: '', experienceRequired: '' });
-    } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    }
-};
-
-const handleGetJobById = async (e) => {
-    e.preventDefault();
-    setMessage('');
-    setJob(null);
-    try {
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get(`http://localhost:8896/admin/jobs/getJobById/${jobId}`, {
-            headers: {
-                Authorization: token,
-            },
-        });
-        setJob(response.data);
-    } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    }
-};
-
-const handleGetAllJobs = async () => {
-    setMessage('');
-    try {
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get('http://localhost:8896/admin/jobs/getAllJobs', {
-            headers: {
-                Authorization: token,
-            },
-        });
-        setJobs(response.data);
-    } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    }
-};
-
-const handleDeleteJob = async (e) => {
-    e.preventDefault();
-    setMessage('');
-    try {
-        const token = localStorage.getItem("authToken");
-        await axios.delete(`http://localhost:8896/admin/jobs/deleteJob/${jobId}`, {
-            headers: {
-                Authorization: token,
-            },
-        });
-        setMessage('Job deleted successfully!');
-        setJobId(''); // Clear input field after success
-    } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    }
-};
-
-const handleFetchCandidates = async () => {
-    setMessage('');
-    try {
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get(`http://localhost:8896/candidate/job/${jobId}`, {
-            headers: {
-                Authorization: token,
-            },
-        });
-        setCandidates(response.data); // Set candidates data in state
-    } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    }
-};
-
-const handleCandidateUpdateStatus = async () => {
-    setMessage('');
-    try {
-        const token = localStorage.getItem("authToken");
-        const response = await axios.put(
-            `http://localhost:8896/candidate/status/${candidateId}?status=${status}`, 
-            {},
-            {
-                headers: {
-                    Authorization: token,
-                },
-            }
-        );
-        setUpdatedCandidate(response.data); // Set updated candidate details
-    } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    }
-};
-
-const handleGetCandidateById = async () => {
-    setMessage('');
-    try {
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get(
-            `http://localhost:8896/candidate/getCandidateById/${candidateId}`,
-            {
-                headers: {
-                    Authorization: token,
-                },
-            }
-        );
-        setCandidate(response.data); // Set candidate details
-    } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    }
-};
+//     try
+//     {
+//         setLoading(true);
+//         setEmployeeData(null);
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.put(`http://localhost:8896/admin/updatePassword`,
+//             updatePasswordFormData,
+//             {
+//                 headers:{
+//                     Authorization: token,
+//                     "Content-Type": "application/json",
+//                 }
+//             }
+//         )
+//         setMessage("Successful");
+//     }
+//     catch(error)
+//     {
+//         setUpdatePasswordFormData(null)
+//         setLoading(false)
+//         setMessage(`Error updating password`);
+//     }
+// }
+
+// const handleGetAllEmployees = async (e) => {
+//     e.preventDefault();
+//     try
+//     {
+//         setLoading(true);
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get(`http://localhost:8896/admin/employees`,
+//             {
+//                 headers:{
+//                     Authorization: token,
+//                     "Content-Type": "application/json",
+//                 }
+//             }
+//         )
+//         setAllEmployees(response.data)
+//     }
+//     catch(error)
+//     {
+//         setMessage(`Error getting all employees`);
+//     }
+// }
+
+// const handleEmployeeChangeRole = async (e) => {
+//     e.preventDefault();
+//     try
+//     {
+//         setLoading(true);
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.patch(`http://localhost:8896/admin/employees/setNewRole/${changeRole.employeeId}/${changeRole.newRole}`,
+//             {},{
+//                 headers:{
+//                     Authorization: token,
+//                     "Content-Type": "application/json",
+//                 }
+//             }
+//         );
+//         // setChangeRole(null);
+//         setMessage("Successful");
+//     }
+//     catch(error)
+//     {
+//         setMessage(`error: ${error.message}`);
+//     }
+// }
+
+// const handleEmployeeChangeSalary = async (e) => {
+//     e.preventDefault();
+//     try
+//     {
+//         setLoading(true);
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.patch(`http://localhost:8896/admin/employees/setNewSalary/${changeSalary.employeeId}/${changeSalary.employeeSalary}/${changeSalary.bonusThatYear}/${changeSalary.benefitPoints}`,
+//             {},{
+//                 headers:{
+//                     Authorization: token,
+//                     "Content-Type": "application/json",
+//                 }
+//             }
+//         );
+//         // setChangeRole(null);
+//         setMessage("Successful");
+//     }
+//     catch(error)
+//     {
+//         setMessage(`error: ${error.message}`);
+//     }
+// }
+
+// const handleEmployeeChangeDepartment = async (e) => {
+//     e.preventDefault();
+//     try
+//     {
+//         setLoading(true);
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.patch(`http://localhost:8896/admin/employees/setNewDepartment/${changeDepartment.employeeId}/${changeDepartment.departmentId}`,
+//             {},{
+//                 headers:{
+//                     Authorization: token,
+//                     "Content-Type": "application/json",
+//                 }
+//             }
+//         );
+//         // setChangeRole(null);
+//         setMessage("Successful");
+//     }
+//     catch(error)
+//     {
+//         setMessage(`error: ${error.message}`);
+//     }
+// }
+
+// const handleUpdateDepartmentName = async (e) => {
+//     e.preventDefault();
+//     try {
+//         setLoading(true);
+
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.put(
+//             `http://localhost:8896/admin/departments/${updateDept.deptId}`,
+//             {
+//                 departmentName: updateDept.newDeptName, 
+//             },
+//             {
+//                 headers: {
+//                     Authorization: token,
+//                     "Content-Type": "application/json",
+//                 },
+//             }
+//         );
+
+//         setUpdateDept({
+//             deptId: '',
+//             newDeptName: '',
+//         });
+
+//         setMessage(`Department updated successfully`);
+//     } catch (error) {
+//         setMessage(
+//             `Error`
+//         );
+//     } finally {
+//         setLoading(false);
+//     }
+// };
+
+// const handleDeleteDepartment = async (e) => {
+//     e.preventDefault();
+//     try {
+//         setLoading(true);
+
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.delete(
+//             `http://localhost:8896/admin/departments/${deleteDept.deptId}`,
+//             {
+//                 headers: {
+//                     Authorization: token,
+//                     "Content-Type": "application/json",
+//                 },
+//             }
+//         );
+
+//         setDeleteDept({
+//             deptId: '',
+//         });
+
+//         setMessage(`Department deleted successfully`);
+//     } catch (error) {
+//         setMessage(
+//             `Error`
+//         );
+//     } finally {
+//         setLoading(false);
+//     }
+// };
+
+// const handleGetDepartmentById = async (e) => {
+//     e.preventDefault();
+//     try {
+//         setLoading(true);
+//         setMessage('');
+//         setDepartment(null);
+
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get(
+//             `http://localhost:8896/admin/departments/${departmentId}`,
+//             {
+//                 headers: {
+//                     Authorization: token,
+//                     "Content-Type": "application/json",
+//                 },
+//             }
+//         );
+
+//         setDepartment(response.data);
+//     } catch (error) {
+//         setMessage(
+//             `Error`
+//         );
+//     } finally {
+//         setLoading(false);
+//     }
+// };
+
+// const handleGetAllDepartments = async () => {
+//     try {
+//         setLoading(true);
+//         setMessage('');
+//         setDepartments([]);
+
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get(
+//             `http://localhost:8896/admin/departments`,
+//             {
+//                 headers: {
+//                     Authorization: token,
+//                     "Content-Type": "application/json",
+//                 },
+//             }
+//         );
+
+//         setDepartments(response.data);
+//     } catch (error) {
+//         setMessage(
+//             `Error: ${error.response?.data?.message || error.message}`
+//         );
+//     } finally {
+//         setLoading(false);
+//     }
+// };
+
+// const handleGetDepartmentByName = async (e) => {
+//     e.preventDefault();
+//     try {
+//         setLoading(true);
+//         setMessage('');
+//         setDepartment(null);
+
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get(
+//             `http://localhost:8896/admin/departments/name/${departmentName}`,
+//             {
+//                 headers: {
+//                     Authorization: token,
+//                     "Content-Type": "application/json",
+//                 },
+//             }
+//         );
+
+//         setDepartment(response.data);
+//     } catch (error) {
+//         setMessage(
+//             `Error`
+//         );
+//     } finally {
+//         setLoading(false);
+//     }
+// };
+
+// const fetchDepartmentsSortedByName = async (e) => {
+//     e.preventDefault();
+//     try {
+//         setLoading(true);
+//         setMessage('');
+//         setDepartment(null);
+
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get(
+//             `http://localhost:8896/admin/departments/sortByNameAsc`,
+//             {
+//                 headers: {
+//                     Authorization: token,
+//                     "Content-Type": "application/json",
+//                 },
+//             }
+//         );
+
+//         setDepartments(response.data);
+//     } catch (error) {
+//         setMessage(
+//             `Error`
+//         );
+//     } finally {
+//         setLoading(false);
+//     }
+// }
+
+// const fetchDepartmentsSortedByNameDesc = async (e) => {
+//     e.preventDefault();
+//     try {
+//         setLoading(true);
+//         setMessage('');
+//         setDepartment(null);
+
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get(
+//             `http://localhost:8896/admin/departments/sortByNameDesc`,
+//             {
+//                 headers: {
+//                     Authorization: token,
+//                     "Content-Type": "application/json",
+//                 },
+//             }
+//         );
+
+//         setDepartments(response.data);
+//     } catch (error) {
+//         setMessage(
+//             `Error`
+//         );
+//     } finally {
+//         setLoading(false);
+//     }
+// }
+
+// const fetchAllLeaves = async () => {    //Need to test
+//     try {
+//         setLoading(true);
+//         setMessage('');
+//         setLeaves([]);
+
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get(`http://localhost:8896/admin/allLeaves`, {
+//             headers: {
+//                 Authorization: token,
+//                 "Content-Type": "application/json",
+//             },
+//         });
+
+//         setLeaves(response.data);
+//         setMessage("Leave history fetched successfully.");
+//     } catch (error) {
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     } finally {
+//         setLoading(false);
+//     }
+// };
+
+// const fetchPendingLeaves = async () => {    //need to test
+//     try {
+//         setLoading(true);
+//         setMessage('');
+//         setPendingLeaves([]);
+
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get(`http://localhost:8896/admin/allPendingLeaves`, {
+//             headers: {
+//                 Authorization: token,
+//                 "Content-Type": "application/json",
+//             },
+//         });
+
+//         setPendingLeaves(response.data);
+//         setMessage("Pending leaves fetched successfully.");
+//     } catch (error) {
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     } finally {
+//         setLoading(false);
+//     }
+// };
+
+// const fetchLeavesOfEmployee = async (e) => {    //need to test
+//     e.preventDefault();
+//     try {
+//         setLoading(true);
+//         setMessage('');
+//         setLeaves([]);
+
+//         const token = localStorage.getItem("authToken");
+//         if (!token) {
+//             throw new Error("Authentication token is missing. Please log in again.");
+//         }
+
+//         const response = await axios.get(`http://localhost:8896/admin/allLeaves/${employeeId}`, {
+//             headers: {
+//                 Authorization: token,
+//                 "Content-Type": "application/json",
+//             },
+//         });
+
+//         setLeaves(response.data);
+//         setMessage("Leaves fetched successfully.");
+//     } catch (error) {
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     } finally {
+//         setLoading(false);
+//     }
+// };
+
+// const handleLeaveResponse = async (e) => {  //need to test
+//     e.preventDefault();
+//     try {
+//         setLoading(true);
+//         setMessage('');
+//         setResponseLeave(null);
+
+//         const token = localStorage.getItem("authToken");
+//         if (!token) {
+//             throw new Error("Authentication token is missing. Please log in again.");
+//         }
+
+//         const { leaveId, status } = leaveResponse;
+
+//         const response = await axios.patch(
+//             `http://localhost:8896/admin/response/${leaveId}/${status}`,
+//             {},
+//             {
+//                 headers: {
+//                     Authorization: token,
+//                     "Content-Type": "application/json",
+//                 },
+//             }
+//         );
+
+//         setResponseLeave(response.data);
+//         setMessage("Response submitted successfully.");
+//     } catch (error) {
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     } finally {
+//         setLoading(false);
+//     }
+// };
+
+// const handleAssignWork = async (e) => {
+//     e.preventDefault();
+//     try {
+//         setLoading(true);
+//         setMessage('');
+
+//         const token = localStorage.getItem("authToken");
+//         if (!token) {
+//             throw new Error("Authentication token is missing. Please log in again.");
+//         }
+
+//         const { empId, name, description, endDate } = workDetails;
+
+//         const response = await axios.post(
+//             `http://localhost:8896/admin/work/${empId}`,
+//             { name, description, endDate },
+//             {
+//                 headers: {
+//                     Authorization: token,
+//                     "Content-Type": "application/json",
+//                 },
+//             }
+//         );
+
+//         setMessage(response.data || "Work assigned successfully.");
+//         setWorkDetails({ empId: '', name: '', description: '', endDate: '' });
+//     } catch (error) {
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     } finally {
+//         setLoading(false);
+//     }
+// };
+
+// const handleDeleteWork = async (e) => {
+//     e.preventDefault();
+//     try {
+//         setLoading(true);
+//         // setError(false);
+//         setMessage('');
+
+//         const token = localStorage.getItem("authToken");
+//         if (!token) {
+//             throw new Error("Authentication token is missing. Please log in again.");
+//         }
+
+//         const response = await axios.delete(`http://localhost:8896/admin/work/${workId}`, {
+//             headers: {
+//                 Authorization: token,
+//             },
+//         });
+
+//         setMessage("Work deleted successfully.");
+//         setWorkId('');
+//     } catch (error) {
+//         // setError(true);
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     } finally {
+//         setLoading(false);
+//     }
+// };
+
+// const handleUpdateWork = async (e) => {
+//     e.preventDefault();
+//     try {
+//         setLoading(true);
+//         // setError(false);
+//         setMessage('');
+
+//         const { workId, ...workData } = updateWorkDetails;
+
+//         const token = localStorage.getItem("authToken");
+//         if (!token) {
+//             throw new Error("Authentication token is missing. Please log in again.");
+//         }
+
+//         const response = await axios.put(`http://localhost:8896/admin/work/${workId}`, workData, {
+//             headers: {
+//                 Authorization: token,
+//                 "Content-Type": "application/json",
+//             },
+//         });
+
+//         setMessage("Work updated successfully.");
+//         setUpdateWorkDetails({
+//             workId: '',
+//             name: '',
+//             description: '',
+//             endDate: ''
+//         });
+//     } catch (error) {
+//         // setError(true);
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     } finally {
+//         setLoading(false);
+//     }
+// };
+
+// const handleAssignGroupWork = async (e) => {
+//     e.preventDefault();
+//     try {
+//         setLoading(true);
+//         // setError(false);
+//         setMessage('');
+
+//         const { leaderId, employeesId, workName, workDescription, endDate } = groupWorkDetails;
+
+//         // Prepare the payload
+//         const payload = {
+//             leaderId: parseInt(leaderId),
+//             employeesId: employeesId.split(',').map((id) => parseInt(id.trim())),
+//             work: {
+//                 name: workName,
+//                 description: workDescription,
+//                 endDate,
+//             },
+//         };
+
+//         const token = localStorage.getItem("authToken");
+//         if (!token) {
+//             throw new Error("Authentication token is missing. Please log in again.");
+//         }
+
+//         const response = await axios.post("http://localhost:8896/admin/work", payload, {
+//             headers: {
+//                 Authorization: token,
+//                 "Content-Type": "application/json",
+//             },
+//         });
+
+//         setMessage("Work assigned successfully.");
+//         setGroupWorkDetails({
+//             leaderId: '',
+//             employeesId: '',
+//             workName: '',
+//             workDescription: '',
+//             endDate: '',
+//         });
+//     } catch (error) {
+//         // setError(true);
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     } finally {
+//         setLoading(false);
+//     }
+// };
+
+// const fetchAllWorks = async () => {
+//     setLoading(true);
+//     setMessage('');
+//     try {
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get("http://localhost:8896/admin/allWorks", {
+//             headers: {
+//                 Authorization: token,
+//                 "Content-Type": "application/json",
+//             },
+//         });
+//         console.log(response.data)
+//         setWorks(response.data);
+//     } catch (error) {
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     } finally {
+//         setLoading(false);
+//     }
+// };
+
+// const fetchAllIndividualWorks = async () => {
+//     setLoading(true);
+//     setMessage('');
+//     try {
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get("http://localhost:8896/admin/allIndividualWorks", {
+//             headers: {
+//                 Authorization: token,
+//                 "Content-Type": "application/json",
+//             },
+//         });
+//         setIndividualWorks(response.data);
+//     } catch (error) {
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     } finally {
+//         setLoading(false);
+//     }
+// };
+
+// const fetchAllGroupWorks = async () => {
+//     setLoading(true);
+//     setMessage('');
+//     try {
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get("http://localhost:8896/admin/allGroupWorks", {
+//             headers: {
+//                 Authorization: token,
+//                 "Content-Type": "application/json",
+//             },
+//         });
+//         setGroupWorks(response.data);
+//     } catch (error) {
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     } finally {
+//         setLoading(false);
+//     }
+// };
+
+// const fetchAllPendingWorks = async () => {
+//     setLoading(true);
+//     setMessage('');
+//     try {
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get("http://localhost:8896/admin/allPendingWorks", {
+//             headers: {
+//                 Authorization: token,
+//                 "Content-Type": "application/json",
+//             },
+//         });
+//         setPendingWorks(response.data);
+//     } catch (error) {
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     } finally {
+//         setLoading(false);
+//     }
+// };
+
+// const fetchIndividualPendingWorks = async () => {
+//     setLoading(true);
+//     setMessage('');
+//     try {
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get("http://localhost:8896/admin/allIndividualPendingWorks", {
+//             headers: {
+//                 Authorization: token,
+//                 "Content-Type": "application/json",
+//             },
+//         });
+//         setIndividualPendingWorks(response.data);
+//     } catch (error) {
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     } finally {
+//         setLoading(false);
+//     }
+// };
+
+// const fetchGroupPendingWorks = async () => {
+//     setLoading(true);
+//     setMessage('');
+//     try {
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get("http://localhost:8896/admin/allGroupPendingWorks", {
+//             headers: {
+//                 Authorization: token,
+//                 "Content-Type": "application/json",
+//             },
+//         });
+//         setGroupPendingWorks(response.data);
+//     } catch (error) {
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     } finally {
+//         setLoading(false);
+//     }
+// };
+
+// const fetchAllCompletedWorks = async () => {    //need to test
+//     setLoading(true);
+//     setMessage('');
+//     try {
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get("http://localhost:8896/admin/allCompletedWorks", {
+//             headers: {
+//                 Authorization: token,
+//                 "Content-Type": "application/json",
+//             },
+//         });
+//         setAllCompletedWorks(response.data);
+//     } catch (error) {
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     } finally {
+//         setLoading(false);
+//     }
+// };
+
+// const fetchAllIndividualCompletedWorks = async () => {    //need to test
+//     setLoading(true);
+//     setMessage('');
+//     try {
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get("http://localhost:8896/admin/allIndividualCompletedWorks", {
+//             headers: {
+//                 Authorization: token,
+//                 "Content-Type": "application/json",
+//             },
+//         });
+//         setAllIndividualCompletedWorks(response.data);
+//     } catch (error) {
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     } finally {
+//         setLoading(false);
+//     }
+// };
+
+// const fetchAllGroupCompletedWorks = async () => {    //need to test
+//     setLoading(true);
+//     setMessage('');
+//     try {
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get("http://localhost:8896/admin/allGroupCompletedWorks", {
+//             headers: {
+//                 Authorization: token,
+//                 "Content-Type": "application/json",
+//             },
+//         });
+//         setAllGroupCompletedWorks(response.data);
+//     } catch (error) {
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     } finally {
+//         setLoading(false);
+//     }
+// };
+
+// const fetchIndividualCompletedWorks = async () => { //Need to test
+//     setLoading(true);
+//     setMessage('');
+//     try {
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get("http://localhost:8896/admin/allIndividualInCompletedWorks", {
+//             headers: {
+//                 Authorization: token,
+//                 "Content-Type": "application/json",
+//             },
+//         });
+//         setIndividualCompletedWorks(response.data);
+//     } catch (error) {
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     } finally {
+//         setLoading(false);
+//     }
+// };
+
+// const fetchGroupCompletedWorks = async () => {
+//     setLoading(true);
+//     setMessage('');
+//     try {
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get("http://localhost:8896/admin/allGroupInCompletedWorks", {
+//             headers: {
+//                 Authorization: token,
+//                 "Content-Type": "application/json",
+//             },
+//         });
+//         setGroupCompletedWorks(response.data);
+//     } catch (error) {
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     } finally {
+//         setLoading(false);
+//     }
+// };
+
+// const fetchEmployeeSalaryDetails = async (e) => {
+//     e.preventDefault();
+//     setLoading(true);
+//     setMessage('');
+//     setSalaryDetails([]);
+//     try {
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get(`http://localhost:8896/admin/employees/salaryInfo/${employeeId}`, {
+//             headers: {
+//                 Authorization: token,
+//                 "Content-Type": "application/json",
+//             },
+//         });
+//         setSalaryDetails(response.data);
+//     } catch (error) {
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     } finally {
+//         setLoading(false);
+//     }
+// };
+
+// const fetchEmployeeEquipmentDetails = async (e) => {
+//     e.preventDefault();
+//     setLoading(true);
+//     setMessage('');
+//     setEquipmentDetails([]);
+//     try {
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get(`http://localhost:8896/admin/employees/equipmentInfo/${employeeId}`, {
+//             headers: {
+//                 Authorization: token,
+//                 "Content-Type": "application/json",
+//             },
+//         });
+//         setEquipmentDetails(response.data);
+//     } catch (error) {
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     } finally {
+//         setLoading(false);
+//     }
+// };
+
+// const handleAssignEquipment = async (e) => {
+//     e.preventDefault();
+//     setMessage('');
+//     try {
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.post(
+//             `http://localhost:8896/admin/equipments/${employeeId}`,
+//             equipment,
+//             {
+//                 headers: {
+//                     Authorization: token,
+//                     "Content-Type": "application/json"
+//                 }
+//             }
+//         );
+//         setMessage(`Success: ${response.data}`);
+//     } catch (error) {
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     }
+// };
+
+// const handleUnassignEquipment = async (e) => {
+//     e.preventDefault();
+//     setMessage('');
+//     try {
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.delete(
+//             `http://localhost:8896/admin/equipments/${equipmentId}`,
+//             {
+//                 headers: {
+//                     Authorization: token,
+//                     "Content-Type": "application/json"
+//                 }
+//             }
+//         );
+//         setMessage(`Success: Equipment unassigned successfully!`);
+//     } catch (error) {
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     }
+// };
+
+// const handleCreateJob = async (e) => {
+//     e.preventDefault();
+//     setMessage('');
+//     try {
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.post(
+//             "http://localhost:8896/admin/jobs/createJob",
+//             job,
+//             {
+//                 headers: {
+//                     Authorization: token,
+//                     "Content-Type": "application/json"
+//                 },
+//             }
+//         );
+//         setMessage(`Success: Job created successfully with ID ${response.data.jobId}`);
+//         setJob({ position: '', description: '', experienceRequired: '' });
+//     } catch (error) {
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     }
+// };
+
+// const handleGetJobById = async (e) => {
+//     e.preventDefault();
+//     setMessage('');
+//     setJob(null);
+//     try {
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get(`http://localhost:8896/admin/jobs/getJobById/${jobId}`, {
+//             headers: {
+//                 Authorization: token,
+//             },
+//         });
+//         setJob(response.data);
+//     } catch (error) {
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     }
+// };
+
+// const handleGetAllJobs = async () => {
+//     setMessage('');
+//     try {
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get('http://localhost:8896/admin/jobs/getAllJobs', {
+//             headers: {
+//                 Authorization: token,
+//             },
+//         });
+//         setJobs(response.data);
+//     } catch (error) {
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     }
+// };
+
+// const handleDeleteJob = async (e) => {
+//     e.preventDefault();
+//     setMessage('');
+//     try {
+//         const token = localStorage.getItem("authToken");
+//         await axios.delete(`http://localhost:8896/admin/jobs/deleteJob/${jobId}`, {
+//             headers: {
+//                 Authorization: token,
+//             },
+//         });
+//         setMessage('Job deleted successfully!');
+//         setJobId(''); // Clear input field after success
+//     } catch (error) {
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     }
+// };
+
+// const handleFetchCandidates = async () => {
+//     setMessage('');
+//     try {
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get(`http://localhost:8896/candidate/job/${jobId}`, {
+//             headers: {
+//                 Authorization: token,
+//             },
+//         });
+//         setCandidates(response.data); // Set candidates data in state
+//     } catch (error) {
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     }
+// };
+
+// const handleCandidateUpdateStatus = async () => {
+//     setMessage('');
+//     try {
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.put(
+//             `http://localhost:8896/candidate/status/${candidateId}?status=${status}`, 
+//             {},
+//             {
+//                 headers: {
+//                     Authorization: token,
+//                 },
+//             }
+//         );
+//         setUpdatedCandidate(response.data); // Set updated candidate details
+//     } catch (error) {
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     }
+// };
+
+// const handleGetCandidateById = async () => {
+//     setMessage('');
+//     try {
+//         const token = localStorage.getItem("authToken");
+//         const response = await axios.get(
+//             `http://localhost:8896/candidate/getCandidateById/${candidateId}`,
+//             {
+//                 headers: {
+//                     Authorization: token,
+//                 },
+//             }
+//         );
+//         setCandidate(response.data); // Set candidate details
+//     } catch (error) {
+//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
+//     }
+// };
 
   const renderForm = () => {
     switch (selectedFeature) {
