@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
+import { handleAddEmployee } from '../services/EmployeeService';
 
 export default function HRHome() {
 
@@ -254,42 +255,42 @@ const handleAddDepartment = async (e) => {
     }
 };
 
-const handleAddEmployee = async (e) => {
-    e.preventDefault();
+// const handleAddEmployee = async (e) => {
+//     e.preventDefault();
 
-    const employeeData = {
-        name: document.getElementById("employeeName").value,
-        role: document.getElementById("role").value,
-        gender: document.getElementById("gender").value,
-        salary: parseFloat(document.getElementById("salary").value),
-        phoneNo: document.getElementById("phoneNo").value,
-        dateOfBirth: document.getElementById("dateOfBirth").value,
-        email: document.getElementById("email").value
-    };
+//     const employeeData = {
+//         name: document.getElementById("employeeName").value,
+//         role: document.getElementById("role").value,
+//         gender: document.getElementById("gender").value,
+//         salary: parseFloat(document.getElementById("salary").value),
+//         phoneNo: document.getElementById("phoneNo").value,
+//         dateOfBirth: document.getElementById("dateOfBirth").value,
+//         email: document.getElementById("email").value
+//     };
 
-    const departmentId = document.getElementById("departmentId").value;
+//     const departmentId = document.getElementById("departmentId").value;
 
-    try {
-        const token = localStorage.getItem("authToken"); // Retrieve stored token
+//     try {
+//         const token = localStorage.getItem("authToken"); // Retrieve stored token
 
-        const response = await axios.post(
-            `http://localhost:8896/admin/employees/${departmentId}`,
-            employeeData,
-            {
-                headers: {
-                    Authorization: token,
-                    "Content-Type": "application/json",
-                },
-            }
-        );
-        setMessage(`Employee added successfully`);
-        document.getElementById("addEmployeeForm").reset();
-    } catch (error) {
-        setMessage(
-            error.response?.data?.message || "An error occurred while adding the employee."
-        );
-    }
-};
+//         const response = await axios.post(
+//             `http://localhost:8896/admin/employees/${departmentId}`,
+//             employeeData,
+//             {
+//                 headers: {
+//                     Authorization: token,
+//                     "Content-Type": "application/json",
+//                 },
+//             }
+//         );
+//         setMessage(`Employee added successfully`);
+//         document.getElementById("addEmployeeForm").reset();
+//     } catch (error) {
+//         setMessage(
+//             error.response?.data?.message || "An error occurred while adding the employee."
+//         );
+//     }
+// };
 
 const handleDeleteEmployee = async (e) => {
     e.preventDefault();
@@ -1444,7 +1445,7 @@ const handleGetCandidateById = async () => {
             );
         case 'addEmployee':
             return (
-                <form id="addEmployeeForm" className="mt-4" onSubmit={handleAddEmployee}>
+                <form id="addEmployeeForm" className="mt-4" onSubmit={(e) => handleAddEmployee(e, setMessage)}>
                     <h3>Add Employee</h3>
                     
                     <div className="mb-3">
