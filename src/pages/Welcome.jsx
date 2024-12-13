@@ -18,6 +18,16 @@ export default function Welcome() {
               Sign In as Employee
             </button>
           </Link>
+          <Link to="/sign-in-external">
+            <button className="btn btn-primary btn-lg px-4 py-2 w-100">
+              Sign In as Candidate
+            </button>
+          </Link>
+          <Link to="/sign-up-external">
+            <button className="btn btn-primary btn-lg px-4 py-2 w-100">
+              Sign Up as Candidate
+            </button>
+          </Link>
         </div>
       </div>
     </div>

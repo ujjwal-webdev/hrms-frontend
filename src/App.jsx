@@ -6,6 +6,9 @@ import Header from './components/Header';
 import EmployeeHome from './pages/EmployeeHome';
 import HRHome from './pages/HRHome';
 import Welcome from './pages/Welcome';
+import SignUpExternal from './pages/SignUpExternal';
+import SignInExternal from './pages/SignInExternal';
+import CandidateHome from './pages/CandidateHome';
 
 export default function App() {
   return (
@@ -17,9 +20,9 @@ export default function App() {
         <Route path='/sign-in-employee' element={<SignInEmployee />} />
         <Route path='/hr-home' element={<HRHome />} />
         <Route path='/employee-home' element={<EmployeeHome />} />
-        {/* <Route path='/sign-up' element={<SignUp />} />
-        <Route path='/about' element={<About />} />
-        <Route path='/profile' element={<Profile />} /> */}
+        <Route path="/sign-up-external" element={<SignUpExternal />} />
+        <Route path="/sign-in-external" element={<SignInExternal />} />
+        <Route path="/candidate-home" element={<CandidateHome />} />
       </Routes>
     </BrowserRouter>
   )
