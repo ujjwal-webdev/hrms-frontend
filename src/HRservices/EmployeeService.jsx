@@ -39,7 +39,7 @@ export const handleAddEmployee = async (e, setMessage) => {
     }
 };
 
-export const handleDeleteEmployee = async (e, setMessage, setEmployeeId) => {
+export const handleDeleteEmployee = async (e, setMessage, employeeId, setEmployeeId) => {
     e.preventDefault();
 
     if (!employeeId) {
@@ -69,7 +69,7 @@ export const handleDeleteEmployee = async (e, setMessage, setEmployeeId) => {
     }
 };
 
-export const handleGetEmployeeById = async (e, setMessage, setEmployeeData, setLoading) => {    
+export const handleGetEmployeeById = async (e, setMessage, employeeId, setEmployeeData, setLoading) => {    
     e.preventDefault();
 
     try {
@@ -97,7 +97,7 @@ export const handleGetEmployeeById = async (e, setMessage, setEmployeeData, setL
     }
 };
 
-export const handleGetEmployeeByUsername = async (e, setMessage, setEmployeeData, setLoading) => { 
+export const handleGetEmployeeByUsername = async (e, setMessage, username, setEmployeeData, setLoading) => { 
     e.preventDefault();
 
     try {
@@ -144,7 +144,7 @@ export const handleGetAllEmployees = async (e, setMessage, setLoading, setAllEmp
     }
 }
 
-export const handleEmployeeChangeRole = async (e, setMessage, setLoading) => {
+export const handleEmployeeChangeRole = async (e, setMessage, setLoading, changeRole) => {
     e.preventDefault();
     try
     {
@@ -167,7 +167,7 @@ export const handleEmployeeChangeRole = async (e, setMessage, setLoading) => {
     }
 }
 
-export const handleEmployeeChangeSalary = async (e, setMessage, setLoading) => {
+export const handleEmployeeChangeSalary = async (e, setMessage, setLoading, changeSalary) => {
     e.preventDefault();
     try
     {
@@ -190,13 +190,14 @@ export const handleEmployeeChangeSalary = async (e, setMessage, setLoading) => {
     }
 }
 
-export const handleEmployeeChangeDepartment = async (e, setMessage, setLoading) => {
+export const handleEmployeeChangeDepartment = async (e, setMessage, setLoading, changeDepartment) => {
     e.preventDefault();
+
     try
     {
         setLoading(true);
         const token = localStorage.getItem("authToken");
-        const response = await axios.patch(`${BASE_URL}/setNewDepartment/${changeDepartment.employeeId}/${changeDepartment.departmentId}`,
+        const response = await axios.patch(`${BASE_URL}/admin/employees/setNewDepartment/${changeDepartment.employeeId}/${changeDepartment.departmentId}`,
             {},{
                 headers:{
                     Authorization: token,

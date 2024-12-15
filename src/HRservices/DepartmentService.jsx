@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { BASE_URL } from '../apiConfig';
 
-export const handleAddDepartment = async (e, setMessage) => {
+export const handleAddDepartment = async (e, setMessage, departmentName) => {
     e.preventDefault();
 
     try {
@@ -18,20 +18,21 @@ export const handleAddDepartment = async (e, setMessage) => {
         );
         setMessage(`Department added successfully: ${response.data.departmentName}`);
     } catch (error) {
+        console.log(error)
         setMessage(
         error.response?.data?.message || "An error occurred while adding the department."
         );
     }
 };
 
-export const handleUpdateDepartmentName = async (e, setMessage, setLoading, setUpdateDept) => {
+export const handleUpdateDepartmentName = async (e, setMessage, setLoading, updateDept, setUpdateDept) => {
     e.preventDefault();
     try {
         setLoading(true);
 
         const token = localStorage.getItem("authToken");
         const response = await axios.put(
-            `${BASE_URL}/${updateDept.deptId}`,
+            `${BASE_URL}/admin/departments/${updateDept.deptId}`,
             {
                 departmentName: updateDept.newDeptName, 
             },
@@ -50,6 +51,7 @@ export const handleUpdateDepartmentName = async (e, setMessage, setLoading, setU
 
         setMessage(`Department updated successfully`);
     } catch (error) {
+        console.log(error)
         setMessage(
             `Error`
         );
@@ -58,14 +60,14 @@ export const handleUpdateDepartmentName = async (e, setMessage, setLoading, setU
     }
 };
 
-export const handleDeleteDepartment = async (e, setMessage, setLoading, setDeleteDept) => {
+export const handleDeleteDepartment = async (e, setMessage, setLoading, deleteDept, setDeleteDept) => {
     e.preventDefault();
     try {
         setLoading(true);
 
         const token = localStorage.getItem("authToken");
         const response = await axios.delete(
-            `${BASE_URL}/${deleteDept.deptId}`,
+            `${BASE_URL}/admin/departments/${deleteDept.deptId}`,
             {
                 headers: {
                     Authorization: token,
@@ -88,8 +90,9 @@ export const handleDeleteDepartment = async (e, setMessage, setLoading, setDelet
     }
 };
 
-export const handleGetDepartmentById = async (e, setMessage, setLoading, setDepartment) => {
+export const handleGetDepartmentById = async (e, setMessage, setLoading, departmentId, setDepartmentId, setDepartment) => {
     e.preventDefault();
+
     try {
         setLoading(true);
         setMessage('');
@@ -143,7 +146,7 @@ export const handleGetAllDepartments = async (setLoading, setMessage, setDepartm
     }
 };
 
-export const handleGetDepartmentByName = async (e, setLoading, setMessage, setDepartment) => {
+export const handleGetDepartmentByName = async (e, setLoading, setMessage, departmentName, setDepartment) => {
     e.preventDefault();
     try {
         setLoading(true);
@@ -171,12 +174,12 @@ export const handleGetDepartmentByName = async (e, setLoading, setMessage, setDe
     }
 };
 //departments???
-export const fetchDepartmentsSortedByName = async (e, setLoading, setMessage, setDepartment) => {
+export const fetchDepartmentsSortedByName = async (e, setLoading, setMessage, setDepartments) => {
     e.preventDefault();
     try {
         setLoading(true);
         setMessage('');
-        setDepartment(null);
+        setDepartments(null);
 
         const token = localStorage.getItem("authToken");
         const response = await axios.get(
@@ -199,12 +202,12 @@ export const fetchDepartmentsSortedByName = async (e, setLoading, setMessage, se
     }
 }
 //depts??
-export const fetchDepartmentsSortedByNameDesc = async (e, setLoading, setMessage, setDepartment) => {
+export const fetchDepartmentsSortedByNameDesc = async (e, setLoading, setMessage, setDepartments) => {
     e.preventDefault();
     try {
         setLoading(true);
         setMessage('');
-        setDepartment(null);
+        setDepartments(null);
 
         const token = localStorage.getItem("authToken");
         const response = await axios.get(

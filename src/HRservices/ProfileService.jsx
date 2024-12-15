@@ -27,7 +27,7 @@ export const handleViewYourProfile = async (e, setMessage, setEmployeeData, setL
     }
 };
 
-export const handleRegisterHR = async (e, setMessage, setLoading, setEmployeeData, setHRFormData) => {
+export const handleRegisterHR = async (e, setMessage, setLoading, hrFormData, setEmployeeData, setHRFormData) => {
     e.preventDefault();
 
     try
@@ -53,7 +53,7 @@ export const handleRegisterHR = async (e, setMessage, setLoading, setEmployeeDat
     }
 }
 
-export const handleUpdatePassword = async (e, setMessage, setLoading, setEmployeeData, setUpdatePasswordFormData) => {
+export const handleUpdatePassword = async (e, setMessage, setLoading, updatePasswordFormData, setEmployeeData, setUpdatePasswordFormData) => {
     e.preventDefault();
     
     try

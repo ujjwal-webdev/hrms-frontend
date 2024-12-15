@@ -1,54 +1,54 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
-import { handleViewYourProfile } from '../services/ProfileService';
-import { handleRegisterHR } from '../services/ProfileService';
-import { handleUpdatePassword } from '../services/ProfileService';
-import { handleAddEmployee } from '../services/EmployeeService';
-import { handleDeleteEmployee } from '../services/EmployeeService';
-import { handleGetEmployeeById } from '../services/EmployeeService';
-import { handleGetEmployeeByUsername } from '../services/EmployeeService';
-import { handleGetAllEmployees } from '../services/EmployeeService';
-import { handleEmployeeChangeRole } from '../services/EmployeeService';
-import { handleEmployeeChangeSalary } from '../services/EmployeeService';
-import { handleEmployeeChangeDepartment } from '../services/EmployeeService';
-import { fetchEmployeeSalaryDetails } from '../services/EmployeeService';
-import { fetchEmployeeEquipmentDetails } from '../services/EmployeeService';
-import { handleAddDepartment } from '../services/DepartmentService';
-import { handleUpdateDepartmentName } from '../services/DepartmentService';
-import { handleDeleteDepartment } from '../services/DepartmentService';
-import { handleGetDepartmentById } from '../services/DepartmentService';
-import { handleGetAllDepartments } from '../services/DepartmentService';
-import { handleGetDepartmentByName } from '../services/DepartmentService';
-import { fetchDepartmentsSortedByName } from '../services/DepartmentService';
-import { fetchDepartmentsSortedByNameDesc } from '../services/DepartmentService';
-import { fetchPendingLeaves } from '../services/LeaveService';
-import { fetchLeavesOfEmployee } from '../services/LeaveService';
-import { handleLeaveResponse } from '../services/LeaveService';
-import { handleAssignWork } from '../services/WorkService';
-import { handleDeleteWork } from '../services/WorkService';
-import { handleUpdateWork } from '../services/WorkService';
-import { handleAssignGroupWork } from '../services/WorkService';
-import { fetchAllWorks } from '../services/WorkService';
-import { fetchAllIndividualWorks } from '../services/WorkService';
-import { fetchAllGroupWorks } from '../services/WorkService';
-import { fetchAllPendingWorks } from '../services/WorkService';
-import { fetchIndividualPendingWorks } from '../services/WorkService';
-import { fetchGroupPendingWorks } from '../services/WorkService';
-import { fetchAllCompletedWorks } from '../services/WorkService';
-import { fetchAllIndividualCompletedWorks } from '../services/WorkService';
-import { fetchAllGroupCompletedWorks } from '../services/WorkService';
-import { fetchIndividualCompletedWorks } from '../services/WorkService';
-import { fetchGroupCompletedWorks } from '../services/WorkService';
-import { handleCreateJob } from '../services/JobService';
-import { handleGetJobById } from '../services/JobService';
-import { handleGetAllJobs } from '../services/JobService';
-import { handleDeleteJob } from '../services/JobService';
-import { handleFetchCandidates } from '../services/CandidateService';
-import { handleCandidateUpdateStatus } from '../services/CandidateService';
-import { handleGetCandidateById } from '../services/CandidateService';
-import { handleAssignEquipment } from '../services/EmployeeService';
-import { handleUnassignEquipment } from '../services/EmployeeService';
+import { handleViewYourProfile } from '../HRservices/ProfileService';
+import { handleRegisterHR } from '../HRservices/ProfileService';
+import { handleUpdatePassword } from '../HRservices/ProfileService';
+import { handleAddEmployee } from '../HRservices/EmployeeService';
+import { handleDeleteEmployee } from '../HRservices/EmployeeService';
+import { handleGetEmployeeById } from '../HRservices/EmployeeService';
+import { handleGetEmployeeByUsername } from '../HRservices/EmployeeService';
+import { handleGetAllEmployees } from '../HRservices/EmployeeService';
+import { handleEmployeeChangeRole } from '../HRservices/EmployeeService';
+import { handleEmployeeChangeSalary } from '../HRservices/EmployeeService';
+import { handleEmployeeChangeDepartment } from '../HRservices/EmployeeService';
+import { fetchEmployeeSalaryDetails } from '../HRservices/EmployeeService';
+import { fetchEmployeeEquipmentDetails } from '../HRservices/EmployeeService';
+import { handleAddDepartment } from '../HRservices/DepartmentService';
+import { handleUpdateDepartmentName } from '../HRservices/DepartmentService';
+import { handleDeleteDepartment } from '../HRservices/DepartmentService';
+import { handleGetDepartmentById } from '../HRservices/DepartmentService';
+import { handleGetAllDepartments } from '../HRservices/DepartmentService';
+import { handleGetDepartmentByName } from '../HRservices/DepartmentService';
+import { fetchDepartmentsSortedByName } from '../HRservices/DepartmentService';
+import { fetchDepartmentsSortedByNameDesc } from '../HRservices/DepartmentService';
+import { fetchPendingLeaves } from '../HRservices/LeaveService';
+import { fetchLeavesOfEmployee } from '../HRservices/LeaveService';
+import { handleLeaveResponse } from '../HRservices/LeaveService';
+import { handleAssignWork } from '../HRservices/WorkService';
+import { handleDeleteWork } from '../HRservices/WorkService';
+import { handleUpdateWork } from '../HRservices/WorkService';
+import { handleAssignGroupWork } from '../HRservices/WorkService';
+import { fetchAllWorks } from '../HRservices/WorkService';
+import { fetchAllIndividualWorks } from '../HRservices/WorkService';
+import { fetchAllGroupWorks } from '../HRservices/WorkService';
+import { fetchAllPendingWorks } from '../HRservices/WorkService';
+import { fetchIndividualPendingWorks } from '../HRservices/WorkService';
+import { fetchGroupPendingWorks } from '../HRservices/WorkService';
+import { fetchAllCompletedWorks } from '../HRservices/WorkService';
+import { fetchAllIndividualCompletedWorks } from '../HRservices/WorkService';
+import { fetchAllGroupCompletedWorks } from '../HRservices/WorkService';
+import { fetchIndividualCompletedWorks } from '../HRservices/WorkService';
+import { fetchGroupCompletedWorks } from '../HRservices/WorkService';
+import { handleCreateJob } from '../HRservices/JobService';
+import { handleGetJobById } from '../HRservices/JobService';
+import { handleGetAllJobs } from '../HRservices/JobService';
+import { handleDeleteJob } from '../HRservices/JobService';
+import { handleFetchCandidates } from '../HRservices/CandidateService';
+import { handleCandidateUpdateStatus } from '../HRservices/CandidateService';
+import { handleGetCandidateById } from '../HRservices/CandidateService';
+import { handleAssignEquipment } from '../HRservices/EmployeeService';
+import { handleUnassignEquipment } from '../HRservices/EmployeeService';
 
 export default function HRHome() {
 
@@ -1469,7 +1469,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                   <h3>Add Department</h3>
-                  <form onSubmit={(e)=>handleAddDepartment (e, setMessage)}>
+                  <form onSubmit={(e)=>handleAddDepartment (e, setMessage, departmentName)}>
                     <div className="mb-3">
                       <label htmlFor="departmentName" className="form-label">
                         Department Name
@@ -1586,7 +1586,7 @@ const [candidate, setCandidate] = useState(null);
         );            
         case 'deleteEmployee':
             return (
-                <form className="mt-4" onSubmit={(e) => handleDeleteEmployee(e, setMessage, setEmployeeId)}>
+                <form className="mt-4" onSubmit={(e) => handleDeleteEmployee(e, setMessage, employeeId,setEmployeeId)}>
                     <h3>Delete Employee</h3>
                     <div className="mb-3">
                         <label htmlFor="employeeId" className="form-label">Employee ID</label>
@@ -1607,7 +1607,7 @@ const [candidate, setCandidate] = useState(null);
         case 'getEmployeeByID': //test from here
             return (
                 <div className="mt-4">
-                    <form className="mt-4" onSubmit={(e) => handleGetEmployeeById(e, setMessage, setEmployeeData, setLoading)}>
+                    <form className="mt-4" onSubmit={(e) => handleGetEmployeeById(e, setMessage, employeeId, setEmployeeData, setLoading)}>
                         <h3>Get Employee by ID</h3>
                         <div className="mb-3">
                             <label htmlFor="employeeId" className="form-label">Employee ID</label>
@@ -1649,7 +1649,7 @@ const [candidate, setCandidate] = useState(null);
         case 'getEmployeeByUsername': 
             return (
                 <div>
-                    <form className="mt-4" onSubmit={(e) => handleGetEmployeeByUsername (e, setMessage, setEmployeeData, setLoading)}>
+                    <form className="mt-4" onSubmit={(e) => handleGetEmployeeByUsername (e, setMessage, username, setEmployeeData, setLoading)}>
                         <h3>Get Employee by Username</h3>
                         <div className="mb-3">
                             <label htmlFor="username" className="form-label">Username</label>
@@ -1718,7 +1718,7 @@ const [candidate, setCandidate] = useState(null);
             );
         case 'registerAnotherHR':
             return (
-                <form onSubmit={(e) => handleRegisterHR (e, setMessage, setLoading, setEmployeeData, setHRFormData)} className="border p-4 rounded shadow">
+                <form onSubmit={(e) => handleRegisterHR (e, setMessage, setLoading, hrFormData, setEmployeeData, setHRFormData)} className="border p-4 rounded shadow">
                     <h3>Employee Form</h3>
                     <div className="mb-3">
                         <label className="form-label">Name</label>
@@ -1803,7 +1803,7 @@ const [candidate, setCandidate] = useState(null);
             );
         case 'updatePassword':
             return (
-                <form onSubmit={(e) => handleUpdatePassword (e, setMessage, setLoading, setEmployeeData, setUpdatePasswordFormData)} className="mt-4 border p-4 rounded shadow">
+                <form onSubmit={(e) => handleUpdatePassword (e, setMessage, setLoading, updatePasswordFormData, setEmployeeData, setUpdatePasswordFormData)} className="mt-4 border p-4 rounded shadow">
                     <h3>Update Password</h3>
                     <div className="mb-3">
                         <label htmlFor="newPassword" className="form-label">New Password</label>
@@ -1880,7 +1880,7 @@ const [candidate, setCandidate] = useState(null);
             );
         case 'changeEmployeeRole':
             return (
-                <form onSubmit={(e) => handleEmployeeChangeRole (e, setMessage, setLoading)} className="border p-4 rounded shadow mt-4">
+                <form onSubmit={(e) => handleEmployeeChangeRole (e, setMessage, setLoading, changeRole)} className="border p-4 rounded shadow mt-4">
                     <h3>Change Employee Role</h3>
                     <div className="mb-3">
                         <label className="form-label">Employee ID</label>
@@ -1918,7 +1918,7 @@ const [candidate, setCandidate] = useState(null);
             );
         case 'setEmployeeSalary':
             return (
-                <form onSubmit={(e) => handleEmployeeChangeSalary (e, setMessage, setLoading)} className="border p-4 rounded shadow mt-4">
+                <form onSubmit={(e) => handleEmployeeChangeSalary (e, setMessage, setLoading, changeSalary)} className="border p-4 rounded shadow mt-4">
                     <h3>Change Employee Salary</h3>
                     <div className="mb-3">
                         <label className="form-label">Employee ID</label>
@@ -1976,7 +1976,7 @@ const [candidate, setCandidate] = useState(null);
             );
         case 'changeEmployeeDepartment':
             return (
-                <form onSubmit={(e) => handleEmployeeChangeDepartment (e, setMessage, setLoading)} className="border p-4 rounded shadow mt-4">
+                <form onSubmit={(e) => handleEmployeeChangeDepartment (e, setMessage, setLoading, changeDepartment)} className="border p-4 rounded shadow mt-4">
                     <h3>Change Employee Role</h3>
                     <div className="mb-3">
                         <label className="form-label">Employee ID</label>
@@ -2010,7 +2010,7 @@ const [candidate, setCandidate] = useState(null);
             );
         case 'updateDepartmentName':
             return (
-                <form onSubmit={(e) => handleUpdateDepartmentName (e, setMessage, setLoading, setUpdateDept)} className="border p-4 rounded shadow mt-4">
+                <form onSubmit={(e) => handleUpdateDepartmentName (e, setMessage, setLoading, updateDept, setUpdateDept)} className="border p-4 rounded shadow mt-4">
                     <h3>Update Department Name</h3>
                     <div className="mb-3">
                         <label className="form-label">Department ID</label>
@@ -2044,7 +2044,7 @@ const [candidate, setCandidate] = useState(null);
             );
         case 'deleteDepartment':
             return (
-                <form onSubmit={(e) => handleDeleteDepartment (e, setMessage, setLoading, setDeleteDept)} className="border p-4 rounded shadow mt-4">
+                <form onSubmit={(e) => handleDeleteDepartment (e, setMessage, setLoading, deleteDept, setDeleteDept)} className="border p-4 rounded shadow mt-4">
                     <h3>Delete Department</h3>
                     <div className="mb-3">
                         <label className="form-label">Department ID</label>
@@ -2066,7 +2066,7 @@ const [candidate, setCandidate] = useState(null);
             );
         case 'getDepartmentbyID':
             return (
-                <form onSubmit={(e) => handleGetDepartmentById (e, setMessage, setLoading, setDepartment)} className="border p-4 rounded shadow mt-4">
+                <form onSubmit={(e) => handleGetDepartmentById (e, setMessage, setLoading, departmentId, setDepartmentId, setDepartment)} className="border p-4 rounded shadow mt-4">
                     <h3>Get Department by ID</h3>
                     <div className="mb-3">
                         <label className="form-label">Department ID</label>
@@ -2131,7 +2131,7 @@ const [candidate, setCandidate] = useState(null);
                 return (
                     <div className="mt-4">
                         <h3>Get Department by Name</h3>
-                        <form onSubmit={(e) => handleGetDepartmentByName (e, setLoading, setMessage, setDepartment) } className="border p-4 rounded shadow">
+                        <form onSubmit={(e) => handleGetDepartmentByName (e, setLoading, setMessage, departmentName, setDepartment) } className="border p-4 rounded shadow">
                             <div className="mb-3">
                                 <label className="form-label">Department Name</label>
                                 <input
@@ -2160,12 +2160,12 @@ const [candidate, setCandidate] = useState(null);
                 return (
                     <div className="mt-4">
                         <h3>Get Departments in Alphabetical Order (ASC)</h3>
-                        <button onClick={(e) => fetchDepartmentsSortedByName (e, setLoading, setMessage, setDepartment)} className="btn btn-primary">
+                        <button onClick={(e) => fetchDepartmentsSortedByName (e, setLoading, setMessage, setDepartments)} className="btn btn-primary">
                             Fetch Departments
                         </button>
                         {loading && <p>Loading...</p>}
                         {message && <p className="text-danger">{message}</p>}
-                        {departments.length > 0 && (
+                        {departments && departments.length > 0 && (
                             <div className="mt-4">
                                 <h4>Departments List</h4>
                                 <ul className="list-group">
@@ -2184,12 +2184,12 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                         <h3>Get Departments in Alphabetical Order (Desc)</h3>
-                        <button onClick={(e) => fetchDepartmentsSortedByNameDesc (e, setLoading, setMessage, setDepartment)} className="btn btn-primary">
+                        <button onClick={(e) => fetchDepartmentsSortedByNameDesc (e, setLoading, setMessage, setDepartments)} className="btn btn-primary">
                             Fetch Departments
                         </button>
                         {loading && <p>Loading...</p>}
                         {message && <p className="text-danger">{message}</p>}
-                        {departments.length > 0 && (
+                        {departments && departments.length > 0 && (
                             <div className="mt-4">
                                 <h4>Departments List</h4>
                                 <ul className="list-group">
@@ -2203,7 +2203,7 @@ const [candidate, setCandidate] = useState(null);
                         )}
                     </div>
             );
-            //fetchallleave ???
+
         case 'viewPending/CompletedLeaves':
             return (
                 <div className="mt-4">
