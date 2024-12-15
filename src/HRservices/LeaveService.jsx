@@ -53,7 +53,7 @@ export const fetchLeavesOfEmployee = async (e, setMessage, setLoading, setLeaves
     }
 };
 
-export const handleLeaveResponse = async (e, setMessage, setLoading, setResponseLeave) => {  //need to test
+export const handleLeaveResponse = async (e, setMessage, setLoading, leaveResponse, setResponseLeave) => {  //need to test
     e.preventDefault();
     try {
         setLoading(true);
@@ -80,6 +80,29 @@ export const handleLeaveResponse = async (e, setMessage, setLoading, setResponse
 
         setResponseLeave(response.data);
         setMessage("Response submitted successfully.");
+    } catch (error) {
+        setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    } finally {
+        setLoading(false);
+    }
+};
+
+export const fetchAllLeaves = async (e, setMessage, setLoading, setLeaves) => {    //Need to test
+    try {
+        setLoading(true);
+        setMessage('');
+        setLeaves([]);
+
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get(`http://localhost:8896/admin/allLeaves`, {
+            headers: {
+                Authorization: token,
+                "Content-Type": "application/json",
+            },
+        });
+
+        setLeaves(response.data);
+        setMessage("Leave history fetched successfully.");
     } catch (error) {
         setMessage(`Error: ${error.response?.data?.message || error.message}`);
     } finally {

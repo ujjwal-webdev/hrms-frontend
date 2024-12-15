@@ -214,7 +214,7 @@ export const handleEmployeeChangeDepartment = async (e, setMessage, setLoading, 
     }
 }
 
-export const fetchEmployeeSalaryDetails = async (e, setMessage, setLoading, setSalaryDetails) => {
+export const fetchEmployeeSalaryDetails = async (e, setMessage, setLoading, employeeId, setSalaryDetails) => {
     e.preventDefault();
     setLoading(true);
     setMessage('');
@@ -235,7 +235,7 @@ export const fetchEmployeeSalaryDetails = async (e, setMessage, setLoading, setS
     }
 };
 
-export const fetchEmployeeEquipmentDetails = async (e, setMessage, setLoading, setEquipmentDetails) => {
+export const fetchEmployeeEquipmentDetails = async (e, setMessage, setLoading, employeeId, setEquipmentDetails) => {
     e.preventDefault();
     setLoading(true);
     setMessage('');
@@ -256,7 +256,7 @@ export const fetchEmployeeEquipmentDetails = async (e, setMessage, setLoading, s
     }
 };
 
-export const handleAssignEquipment = async (e, setMessage) => {
+export const handleAssignEquipment = async (e, setMessage, employeeId, equipment) => {
     e.preventDefault();
     setMessage('');
     try {
@@ -277,7 +277,7 @@ export const handleAssignEquipment = async (e, setMessage) => {
     }
 };
 
-export const handleUnassignEquipment = async (e, setMessage) => {
+export const handleUnassignEquipment = async (e, setMessage, equipmentId) => {
     e.preventDefault();
     setMessage('');
     try {

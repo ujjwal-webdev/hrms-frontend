@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { BASE_URL } from '../apiConfig';
 
-export const handleAssignWork = async (e, setMessage, setLoading, setWorkDetails) => {
+export const handleAssignWork = async (e, setMessage, setLoading, workDetails, setWorkDetails) => {
     e.preventDefault();
     try {
         setLoading(true);
@@ -35,7 +35,7 @@ export const handleAssignWork = async (e, setMessage, setLoading, setWorkDetails
     }
 };
 
-export const handleDeleteWork = async (e, setMessage, setLoading, setWorkId) => {
+export const handleDeleteWork = async (e, setMessage, setLoading, workId, setWorkId) => {
     e.preventDefault();
     try {
         setLoading(true);
@@ -63,7 +63,7 @@ export const handleDeleteWork = async (e, setMessage, setLoading, setWorkId) => 
     }
 };
 
-export const handleUpdateWork = async (e, setMessage, setLoading, setUpdateWorkDetails) => {
+export const handleUpdateWork = async (e, setMessage, setLoading, updateWorkDetails, setUpdateWorkDetails) => {
     e.preventDefault();
     try {
         setLoading(true);
@@ -99,7 +99,7 @@ export const handleUpdateWork = async (e, setMessage, setLoading, setUpdateWorkD
     }
 };
 
-export const handleAssignGroupWork = async (e, setLoading, setMessage, setGroupWorkDetails) => {
+export const handleAssignGroupWork = async (e, setLoading, setMessage, groupWorkDetails, setGroupWorkDetails) => {
     e.preventDefault();
     try {
         setLoading(true);

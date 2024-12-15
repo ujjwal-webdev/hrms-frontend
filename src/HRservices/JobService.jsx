@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { BASE_URL } from '../apiConfig';
 
-export const handleCreateJob = async (e, setMessage, setJob) => {
+export const handleCreateJob = async (e, setMessage, job, setJob) => {
     e.preventDefault();
     setMessage('');
     try {
@@ -24,7 +24,7 @@ export const handleCreateJob = async (e, setMessage, setJob) => {
     }
 };
 
-export const handleGetJobById = async (e, setMessage, setJob) => {
+export const handleGetJobById = async (e, setMessage, jobId, setJob) => {
     e.preventDefault();
     setMessage('');
     setJob(null);
@@ -56,7 +56,7 @@ export const handleGetAllJobs = async (setMessage, setJobs) => {
     }
 };
 
-export const handleDeleteJob = async (e, setMessage, setJobId) => {
+export const handleDeleteJob = async (e, setMessage, jobId, setJobId) => {
     e.preventDefault();
     setMessage('');
     try {
