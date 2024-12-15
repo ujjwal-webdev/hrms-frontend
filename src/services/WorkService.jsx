@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { BASE_URL } from '../apiConfig';
 
-export const handleAssignWork = async (e, setMessage) => {
+export const handleAssignWork = async (e, setMessage, setLoading, setWorkDetails) => {
     e.preventDefault();
     try {
         setLoading(true);
@@ -35,7 +35,7 @@ export const handleAssignWork = async (e, setMessage) => {
     }
 };
 
-export const handleDeleteWork = async (e, setMessage) => {
+export const handleDeleteWork = async (e, setMessage, setLoading, setWorkId) => {
     e.preventDefault();
     try {
         setLoading(true);
@@ -63,7 +63,7 @@ export const handleDeleteWork = async (e, setMessage) => {
     }
 };
 
-export const handleUpdateWork = async (e) => {
+export const handleUpdateWork = async (e, setMessage, setLoading, setUpdateWorkDetails) => {
     e.preventDefault();
     try {
         setLoading(true);
@@ -99,7 +99,7 @@ export const handleUpdateWork = async (e) => {
     }
 };
 
-export const handleAssignGroupWork = async (e) => {
+export const handleAssignGroupWork = async (e, setLoading, setMessage, setGroupWorkDetails) => {
     e.preventDefault();
     try {
         setLoading(true);
@@ -147,7 +147,7 @@ export const handleAssignGroupWork = async (e) => {
     }
 };
 
-export const fetchAllWorks = async () => {
+export const fetchAllWorks = async (setLoading, setMessage, setWorks) => {
     setLoading(true);
     setMessage('');
     try {
@@ -167,7 +167,7 @@ export const fetchAllWorks = async () => {
     }
 };
 
-export const fetchAllIndividualWorks = async () => {
+export const fetchAllIndividualWorks = async (setLoading, setMessage, setIndividualWorks) => {
     setLoading(true);
     setMessage('');
     try {
@@ -186,7 +186,7 @@ export const fetchAllIndividualWorks = async () => {
     }
 };
 
-export const fetchAllGroupWorks = async () => {
+export const fetchAllGroupWorks = async (setMessage, setLoading, setGroupWorks) => {
     setLoading(true);
     setMessage('');
     try {
@@ -205,7 +205,7 @@ export const fetchAllGroupWorks = async () => {
     }
 };
 
-export const fetchAllPendingWorks = async () => {
+export const fetchAllPendingWorks = async (setLoading, setMessage, setPendingWorks) => {
     setLoading(true);
     setMessage('');
     try {
@@ -224,7 +224,7 @@ export const fetchAllPendingWorks = async () => {
     }
 };
 
-export const fetchIndividualPendingWorks = async () => {
+export const fetchIndividualPendingWorks = async (setLoading, setMessage, setIndividualPendingWorks) => {
     setLoading(true);
     setMessage('');
     try {
@@ -243,7 +243,7 @@ export const fetchIndividualPendingWorks = async () => {
     }
 };
 
-export const fetchGroupPendingWorks = async () => {
+export const fetchGroupPendingWorks = async (setLoading, setMessage, setGroupPendingWorks) => {
     setLoading(true);
     setMessage('');
     try {
@@ -262,7 +262,7 @@ export const fetchGroupPendingWorks = async () => {
     }
 };
 
-export const fetchAllCompletedWorks = async () => {    //need to test
+export const fetchAllCompletedWorks = async (setLoading, setMessage, setAllCompletedWorks) => {    //need to test
     setLoading(true);
     setMessage('');
     try {
@@ -281,7 +281,7 @@ export const fetchAllCompletedWorks = async () => {    //need to test
     }
 };
 
-export const fetchAllIndividualCompletedWorks = async () => {    //need to test
+export const fetchAllIndividualCompletedWorks = async (setLoading, setMessage, setAllIndividualCompletedWorks) => {    //need to test
     setLoading(true);
     setMessage('');
     try {
@@ -300,7 +300,7 @@ export const fetchAllIndividualCompletedWorks = async () => {    //need to test
     }
 };
 
-export const fetchAllGroupCompletedWorks = async () => {    //need to test
+export const fetchAllGroupCompletedWorks = async (setLoading, setMessage, setAllGroupCompletedWorks) => {    //need to test
     setLoading(true);
     setMessage('');
     try {
@@ -319,7 +319,7 @@ export const fetchAllGroupCompletedWorks = async () => {    //need to test
     }
 };
 
-export const fetchIndividualCompletedWorks = async () => { //Need to test
+export const fetchIndividualCompletedWorks = async (setLoading, setMessage, setIndividualCompletedWorks) => { //Need to test
     setLoading(true);
     setMessage('');
     try {
@@ -338,7 +338,7 @@ export const fetchIndividualCompletedWorks = async () => { //Need to test
     }
 };
 
-export const fetchGroupCompletedWorks = async () => {
+export const fetchGroupCompletedWorks = async (setLoading, setMessage, setGroupCompletedWorks) => {
     setLoading(true);
     setMessage('');
     try {

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { BASE_URL } from '../apiConfig';
 
-export const fetchPendingLeaves = async (setMessage) => {    //need to test
+export const fetchPendingLeaves = async (setMessage, setLoading, setPendingLeaves) => {    //need to test
     try {
         setLoading(true);
         setMessage('');
@@ -25,7 +25,7 @@ export const fetchPendingLeaves = async (setMessage) => {    //need to test
     }
 };
 
-export const fetchLeavesOfEmployee = async (e, setMessage) => {    //need to test
+export const fetchLeavesOfEmployee = async (e, setMessage, setLoading, setLeaves) => {    //need to test
     e.preventDefault();
     try {
         setLoading(true);
@@ -53,7 +53,7 @@ export const fetchLeavesOfEmployee = async (e, setMessage) => {    //need to tes
     }
 };
 
-export const handleLeaveResponse = async (e, setMessage) => {  //need to test
+export const handleLeaveResponse = async (e, setMessage, setLoading, setResponseLeave) => {  //need to test
     e.preventDefault();
     try {
         setLoading(true);

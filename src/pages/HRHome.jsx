@@ -1469,7 +1469,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                   <h3>Add Department</h3>
-                  <form onSubmit={handleAddDepartment}>
+                  <form onSubmit={(e)=>handleAddDepartment (e, setMessage)}>
                     <div className="mb-3">
                       <label htmlFor="departmentName" className="form-label">
                         Department Name
@@ -1586,7 +1586,7 @@ const [candidate, setCandidate] = useState(null);
         );            
         case 'deleteEmployee':
             return (
-                <form className="mt-4" onSubmit={handleDeleteEmployee}>
+                <form className="mt-4" onSubmit={(e) => handleDeleteEmployee(e, setMessage, setEmployeeId)}>
                     <h3>Delete Employee</h3>
                     <div className="mb-3">
                         <label htmlFor="employeeId" className="form-label">Employee ID</label>
@@ -1607,7 +1607,7 @@ const [candidate, setCandidate] = useState(null);
         case 'getEmployeeByID': //test from here
             return (
                 <div className="mt-4">
-                    <form className="mt-4" onSubmit={handleGetEmployeeById}>
+                    <form className="mt-4" onSubmit={(e) => handleGetEmployeeById(e, setMessage, setEmployeeData, setLoading)}>
                         <h3>Get Employee by ID</h3>
                         <div className="mb-3">
                             <label htmlFor="employeeId" className="form-label">Employee ID</label>
@@ -1649,7 +1649,7 @@ const [candidate, setCandidate] = useState(null);
         case 'getEmployeeByUsername': 
             return (
                 <div>
-                    <form className="mt-4" onSubmit={handleGetEmployeeByUsername}>
+                    <form className="mt-4" onSubmit={(e) => handleGetEmployeeByUsername (e, setMessage, setEmployeeData, setLoading)}>
                         <h3>Get Employee by Username</h3>
                         <div className="mb-3">
                             <label htmlFor="username" className="form-label">Username</label>
@@ -1693,7 +1693,7 @@ const [candidate, setCandidate] = useState(null);
                 <div className="mt-4 border p-3 rounded shadow">
                     {loading && <p>Loading...</p>}
 
-                    <form className="mt-4" onSubmit={handleViewYourProfile}>
+                    <form className="mt-4" onSubmit={(e) => handleViewYourProfile (e, setMessage, setEmployeeData, setLoading)}>
                         <button type="submit" className="btn btn-primary">View my Profile</button>
                     </form>
 
@@ -1718,7 +1718,7 @@ const [candidate, setCandidate] = useState(null);
             );
         case 'registerAnotherHR':
             return (
-                <form onSubmit={handleRegisterHR} className="border p-4 rounded shadow">
+                <form onSubmit={(e) => handleRegisterHR (e, setMessage, setLoading, setEmployeeData, setHRFormData)} className="border p-4 rounded shadow">
                     <h3>Employee Form</h3>
                     <div className="mb-3">
                         <label className="form-label">Name</label>
@@ -1803,7 +1803,7 @@ const [candidate, setCandidate] = useState(null);
             );
         case 'updatePassword':
             return (
-                <form onSubmit={handleUpdatePassword} className="mt-4 border p-4 rounded shadow">
+                <form onSubmit={(e) => handleUpdatePassword (e, setMessage, setLoading, setEmployeeData, setUpdatePasswordFormData)} className="mt-4 border p-4 rounded shadow">
                     <h3>Update Password</h3>
                     <div className="mb-3">
                         <label htmlFor="newPassword" className="form-label">New Password</label>
@@ -1839,7 +1839,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4 border p-4 rounded shadow">
                     {allEmployees.length === 0 ? (
-                        <button className="btn btn-primary" onClick={handleGetAllEmployees}>Get all employees</button>
+                        <button className="btn btn-primary" onClick={(e) => handleGetAllEmployees(e, setMessage, setLoading, setAllEmployees)}>Get all employees</button>
                     ) : (
                         <table className="table table-striped">
                             <thead>
@@ -1880,7 +1880,7 @@ const [candidate, setCandidate] = useState(null);
             );
         case 'changeEmployeeRole':
             return (
-                <form onSubmit={handleEmployeeChangeRole} className="border p-4 rounded shadow mt-4">
+                <form onSubmit={(e) => handleEmployeeChangeRole (e, setMessage, setLoading)} className="border p-4 rounded shadow mt-4">
                     <h3>Change Employee Role</h3>
                     <div className="mb-3">
                         <label className="form-label">Employee ID</label>
@@ -1918,7 +1918,7 @@ const [candidate, setCandidate] = useState(null);
             );
         case 'setEmployeeSalary':
             return (
-                <form onSubmit={handleEmployeeChangeSalary} className="border p-4 rounded shadow mt-4">
+                <form onSubmit={(e) => handleEmployeeChangeSalary (e, setMessage, setLoading)} className="border p-4 rounded shadow mt-4">
                     <h3>Change Employee Salary</h3>
                     <div className="mb-3">
                         <label className="form-label">Employee ID</label>
@@ -1976,7 +1976,7 @@ const [candidate, setCandidate] = useState(null);
             );
         case 'changeEmployeeDepartment':
             return (
-                <form onSubmit={handleEmployeeChangeDepartment} className="border p-4 rounded shadow mt-4">
+                <form onSubmit={(e) => handleEmployeeChangeDepartment (e, setMessage, setLoading)} className="border p-4 rounded shadow mt-4">
                     <h3>Change Employee Role</h3>
                     <div className="mb-3">
                         <label className="form-label">Employee ID</label>
@@ -2010,7 +2010,7 @@ const [candidate, setCandidate] = useState(null);
             );
         case 'updateDepartmentName':
             return (
-                <form onSubmit={handleUpdateDepartmentName} className="border p-4 rounded shadow mt-4">
+                <form onSubmit={(e) => handleUpdateDepartmentName (e, setMessage, setLoading, setUpdateDept)} className="border p-4 rounded shadow mt-4">
                     <h3>Update Department Name</h3>
                     <div className="mb-3">
                         <label className="form-label">Department ID</label>
@@ -2044,7 +2044,7 @@ const [candidate, setCandidate] = useState(null);
             );
         case 'deleteDepartment':
             return (
-                <form onSubmit={handleDeleteDepartment} className="border p-4 rounded shadow mt-4">
+                <form onSubmit={(e) => handleDeleteDepartment (e, setMessage, setLoading, setDeleteDept)} className="border p-4 rounded shadow mt-4">
                     <h3>Delete Department</h3>
                     <div className="mb-3">
                         <label className="form-label">Department ID</label>
@@ -2066,7 +2066,7 @@ const [candidate, setCandidate] = useState(null);
             );
         case 'getDepartmentbyID':
             return (
-                <form onSubmit={handleGetDepartmentById} className="border p-4 rounded shadow mt-4">
+                <form onSubmit={(e) => handleGetDepartmentById (e, setMessage, setLoading, setDepartment)} className="border p-4 rounded shadow mt-4">
                     <h3>Get Department by ID</h3>
                     <div className="mb-3">
                         <label className="form-label">Department ID</label>
@@ -2098,7 +2098,7 @@ const [candidate, setCandidate] = useState(null);
                 <div className="mt-4">
                     <h3>All Departments</h3>
                     <button
-                        onClick={handleGetAllDepartments}
+                        onClick={() => handleGetAllDepartments (setLoading, setMessage, setDepartments) }
                         className="btn btn-primary mb-3"
                     >
                         Fetch All Departments
@@ -2131,7 +2131,7 @@ const [candidate, setCandidate] = useState(null);
                 return (
                     <div className="mt-4">
                         <h3>Get Department by Name</h3>
-                        <form onSubmit={handleGetDepartmentByName} className="border p-4 rounded shadow">
+                        <form onSubmit={(e) => handleGetDepartmentByName (e, setLoading, setMessage, setDepartment) } className="border p-4 rounded shadow">
                             <div className="mb-3">
                                 <label className="form-label">Department Name</label>
                                 <input
@@ -2160,7 +2160,7 @@ const [candidate, setCandidate] = useState(null);
                 return (
                     <div className="mt-4">
                         <h3>Get Departments in Alphabetical Order (ASC)</h3>
-                        <button onClick={fetchDepartmentsSortedByName} className="btn btn-primary">
+                        <button onClick={(e) => fetchDepartmentsSortedByName (e, setLoading, setMessage, setDepartment)} className="btn btn-primary">
                             Fetch Departments
                         </button>
                         {loading && <p>Loading...</p>}
@@ -2184,7 +2184,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                         <h3>Get Departments in Alphabetical Order (Desc)</h3>
-                        <button onClick={fetchDepartmentsSortedByNameDesc} className="btn btn-primary">
+                        <button onClick={(e) => fetchDepartmentsSortedByNameDesc (e, setLoading, setMessage, setDepartment)} className="btn btn-primary">
                             Fetch Departments
                         </button>
                         {loading && <p>Loading...</p>}
@@ -2203,6 +2203,7 @@ const [candidate, setCandidate] = useState(null);
                         )}
                     </div>
             );
+            //fetchallleave ???
         case 'viewPending/CompletedLeaves':
             return (
                 <div className="mt-4">
@@ -2246,7 +2247,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                     <h3>View Pending Leaves</h3>
-                    <button onClick={fetchPendingLeaves} className="btn btn-primary">
+                    <button onClick={fetchPendingLeaves(setMessage, setLoading, setPendingLeaves)} className="btn btn-primary">
                         Fetch Pending Leaves
                     </button>
                     {/* {loading && <p>Loading...</p>}
@@ -2283,7 +2284,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                     <h3>View Leaves of an Employee</h3>
-                    <form onSubmit={fetchLeavesOfEmployee} className="border p-4 rounded shadow">
+                    <form onSubmit={(e) => fetchLeavesOfEmployee (e, setMessage, setLoading, setLeaves)} className="border p-4 rounded shadow">
                         <div className="mb-3">
                             <label className="form-label">Employee ID</label>
                             <input
@@ -2336,7 +2337,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                     <h3>Respond to Leave Request</h3>
-                    <form onSubmit={handleLeaveResponse} className="border p-4 rounded shadow">
+                    <form onSubmit={(e) => handleLeaveResponse (e, setMessage, setLoading, setResponseLeave)} className="border p-4 rounded shadow">
                         <div className="mb-3">
                             <label className="form-label">Leave ID</label>
                             <input
@@ -2384,7 +2385,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                     <h3>Assign Individual Work</h3>
-                    <form onSubmit={handleAssignWork} className="border p-4 rounded shadow">
+                    <form onSubmit={(e) => handleAssignWork (e, setMessage, setLoading, setWorkDetails)} className="border p-4 rounded shadow">
                         <div className="mb-3">
                             <label className="form-label">Employee ID</label>
                             <input
@@ -2445,7 +2446,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                     <h3>Delete Work</h3>
-                    <form onSubmit={handleDeleteWork} className="border p-4 rounded shadow">
+                    <form onSubmit={(e) => handleDeleteWork (e, setMessage, setLoading, setWorkId)} className="border p-4 rounded shadow">
                         <div className="mb-3">
                             <label className="form-label">Work ID</label>
                             <input
@@ -2471,7 +2472,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                     <h3>Update Work</h3>
-                    <form onSubmit={handleUpdateWork} className="border p-4 rounded shadow">
+                    <form onSubmit={(e) => handleUpdateWork (e, setMessage, setLoading, setUpdateWorkDetails) } className="border p-4 rounded shadow">
                         <div className="mb-3">
                             <label className="form-label">Work ID</label>
                             <input
@@ -2532,7 +2533,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                     <h3>Assign Group Work</h3>
-                    <form onSubmit={handleAssignGroupWork} className="border p-4 rounded shadow">
+                    <form onSubmit={(e) => handleAssignGroupWork (e, setLoading, setMessage, setGroupWorkDetails)} className="border p-4 rounded shadow">
                         <div className="mb-3">
                             <label className="form-label">Leader ID</label>
                             <input
@@ -2603,7 +2604,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                     <h3>All Works</h3>
-                    <button onClick={fetchAllWorks} className="btn btn-primary mb-3">
+                    <button onClick={fetchAllWorks (setLoading, setMessage, setWorks)} className="btn btn-primary mb-3">
                         Load Works
                     </button>
                     {loading && <p>Loading...</p>}
@@ -2645,7 +2646,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                     <h3>All Individual Works</h3>
-                    <button onClick={fetchAllIndividualWorks} className="btn btn-primary mb-3">
+                    <button onClick={fetchAllIndividualWorks (setLoading, setMessage, setIndividualWorks)} className="btn btn-primary mb-3">
                         Load Individual Works
                     </button>
                     {loading && <p>Loading...</p>}
@@ -2687,7 +2688,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                     <h3>All Group Works</h3>
-                    <button onClick={fetchAllGroupWorks} className="btn btn-primary mb-3">
+                    <button onClick={fetchAllGroupWorks (setMessage, setLoading, setGroupWorks)} className="btn btn-primary mb-3">
                         Load Group Works
                     </button>
                     {loading && <p>Loading...</p>}
@@ -2729,7 +2730,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                     <h3>All Pending Works</h3>
-                    <button onClick={fetchAllPendingWorks} className="btn btn-primary mb-3">
+                    <button onClick={fetchAllPendingWorks (setLoading, setMessage, setPendingWorks)} className="btn btn-primary mb-3">
                         Load Pending Works
                     </button>
                     {loading && <p>Loading...</p>}
@@ -2771,7 +2772,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                     <h3>All Individual Pending Works</h3>
-                    <button onClick={fetchIndividualPendingWorks} className="btn btn-primary mb-3">
+                    <button onClick={fetchIndividualPendingWorks (setLoading, setMessage, setIndividualPendingWorks)} className="btn btn-primary mb-3">
                         Load Individual Pending Works
                     </button>
                     {loading && <p>Loading...</p>}
@@ -2813,7 +2814,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                     <h3>All Group Pending Works</h3>
-                    <button onClick={fetchGroupPendingWorks} className="btn btn-primary mb-3">
+                    <button onClick={fetchGroupPendingWorks (setLoading, setMessage, setGroupPendingWorks)} className="btn btn-primary mb-3">
                         Load Group Pending Works
                     </button>
                     {loading && <p>Loading...</p>}
@@ -2855,7 +2856,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                     <h3>All Completed Works</h3>
-                    <button onClick={fetchAllCompletedWorks} className="btn btn-primary mb-3">
+                    <button onClick={fetchAllCompletedWorks (setLoading, setMessage, setAllCompletedWorks)} className="btn btn-primary mb-3">
                         Load All Completed Works
                     </button>
                     {loading && <p>Loading...</p>}
@@ -2897,7 +2898,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                     <h3>All Individual Completed Works</h3>
-                    <button onClick={fetchAllIndividualCompletedWorks} className="btn btn-primary mb-3">
+                    <button onClick={fetchAllIndividualCompletedWorks (setLoading, setMessage, setAllIndividualCompletedWorks) } className="btn btn-primary mb-3">
                         Load All Individual Completed Works
                     </button>
                     {loading && <p>Loading...</p>}
@@ -2939,7 +2940,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                     <h3>All Group Completed Works</h3>
-                    <button onClick={fetchAllGroupCompletedWorks} className="btn btn-primary mb-3">
+                    <button onClick={fetchAllGroupCompletedWorks (setLoading, setMessage, setAllGroupCompletedWorks) } className="btn btn-primary mb-3">
                         Load All Group Completed Works
                     </button>
                     {loading && <p>Loading...</p>}
@@ -2981,7 +2982,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                     <h3>Individual Completed Works</h3>
-                    <button onClick={fetchIndividualCompletedWorks} className="btn btn-primary mb-3">
+                    <button onClick={fetchIndividualCompletedWorks (setLoading, setMessage, setIndividualCompletedWorks)} className="btn btn-primary mb-3">
                         Load Individual Completed Works
                     </button>
                     {loading && <p>Loading...</p>}
@@ -3023,7 +3024,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                     <h3>Group Completed Works</h3>
-                    <button onClick={fetchGroupCompletedWorks} className="btn btn-primary mb-3">
+                    <button onClick={fetchGroupCompletedWorks (setLoading, setMessage, setGroupCompletedWorks)} className="btn btn-primary mb-3">
                         Load Group Completed Works
                     </button>
                     {loading && <p>Loading...</p>}
@@ -3065,7 +3066,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                     <h3>Salary Details of Employee</h3>
-                    <form onSubmit={fetchEmployeeSalaryDetails} className="mb-3">
+                    <form onSubmit={(e) => fetchEmployeeSalaryDetails (e, setMessage, setLoading, setSalaryDetails)} className="mb-3">
                         <div className="mb-2">
                             <label htmlFor="employeeId" className="form-label">Employee ID:</label>
                             <input
@@ -3113,7 +3114,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                     <h3>Equipment Details of Employee</h3>
-                    <form onSubmit={fetchEmployeeEquipmentDetails} className="mb-3">
+                    <form onSubmit={(e) => fetchEmployeeEquipmentDetails (e, setMessage, setLoading, setEquipmentDetails)} className="mb-3">
                         <div className="mb-2">
                             <label htmlFor="employeeId" className="form-label">Employee ID:</label>
                             <input
@@ -3161,7 +3162,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                     <h3>Assign Equipment to Employee</h3>
-                    <form onSubmit={handleAssignEquipment} className="mb-3">
+                    <form onSubmit={(e) => handleAssignEquipment (e, setMessage) } className="mb-3">
                         <div className="mb-2">
                             <label htmlFor="employeeId" className="form-label">Employee ID:</label>
                             <input
@@ -3232,7 +3233,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                     <h3>Unassign Equipment</h3>
-                    <form onSubmit={handleUnassignEquipment} className="mb-3">
+                    <form onSubmit={(e) => handleUnassignEquipment (e, setMessage) } className="mb-3">
                         <div className="mb-2">
                             <label htmlFor="equipmentId" className="form-label">Equipment ID:</label>
                             <input
@@ -3255,7 +3256,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                     <h3>Create Job Position</h3>
-                    <form onSubmit={handleCreateJob} className="mb-3">
+                    <form onSubmit={(e)=> handleCreateJob (e, setMessage, setJob)} className="mb-3">
                         <div className="mb-2">
                             <label htmlFor="position" className="form-label">Position:</label>
                             <input
@@ -3302,7 +3303,7 @@ const [candidate, setCandidate] = useState(null);
                 <div className="mt-4">
 
                     <h3>All Job Positions</h3>
-                    <button onClick={handleGetAllJobs} className="btn btn-primary mb-3">
+                    <button onClick={ handleGetAllJobs (setMessage, setJobs)} className="btn btn-primary mb-3">
                         Load Individual Completed Works
                     </button>
                     {loading && <p>Loading...</p>}
@@ -3339,7 +3340,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                     <h3>Get Job Details by ID</h3>
-                    <form onSubmit={handleGetJobById} className="mb-3">
+                    <form onSubmit={(e)=>handleGetJobById (e, setMessage, setJob)} className="mb-3">
                         <div className="mb-2">
                             <label htmlFor="jobId" className="form-label">Job ID:</label>
                             <input
@@ -3371,7 +3372,7 @@ const [candidate, setCandidate] = useState(null);
             return (
                 <div className="mt-4">
                     <h3>Delete Job Position</h3>
-                    <form onSubmit={handleDeleteJob}>
+                    <form onSubmit={(e)=>handleDeleteJob (e, setMessage, setJobId)}>
                         <div className="form-group">
                             <label htmlFor="jobId">Job ID</label>
                             <input
@@ -3406,7 +3407,7 @@ const [candidate, setCandidate] = useState(null);
                     </div>
                     <button
                         className="btn btn-primary mt-3"
-                        onClick={handleFetchCandidates}
+                        onClick={handleFetchCandidates (setCandidates, setMessage) }
                     >
                         Get Candidates
                     </button>
@@ -3507,7 +3508,7 @@ const [candidate, setCandidate] = useState(null);
                     </div>
                     <button
                         className="btn btn-primary mt-3"
-                        onClick={handleCandidateUpdateStatus}
+                        onClick={handleCandidateUpdateStatus (setUpdatedCandidate, setMessage) }
                     >
                         Update Status
                     </button>
@@ -3541,7 +3542,7 @@ const [candidate, setCandidate] = useState(null);
                     </div>
                     <button
                         className="btn btn-primary mt-3"
-                        onClick={handleGetCandidateById}
+                        onClick={handleGetCandidateById (setCandidate, setMessage)}
                     >
                         Get Candidate Details
                     </button>

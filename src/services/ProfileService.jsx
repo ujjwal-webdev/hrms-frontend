@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { BASE_URL } from '../apiConfig';
 
-export const handleViewYourProfile = async (e, setMessage) => {
+export const handleViewYourProfile = async (e, setMessage, setEmployeeData, setLoading) => {
     e.preventDefault();
 
     try {
@@ -27,7 +27,7 @@ export const handleViewYourProfile = async (e, setMessage) => {
     }
 };
 
-export const handleRegisterHR = async (e, setMessage) => {
+export const handleRegisterHR = async (e, setMessage, setLoading, setEmployeeData, setHRFormData) => {
     e.preventDefault();
 
     try
@@ -53,7 +53,7 @@ export const handleRegisterHR = async (e, setMessage) => {
     }
 }
 
-export const handleUpdatePassword = async (e, setMessage) => {
+export const handleUpdatePassword = async (e, setMessage, setLoading, setEmployeeData, setUpdatePasswordFormData) => {
     e.preventDefault();
     
     try

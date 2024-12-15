@@ -39,7 +39,7 @@ export const handleAddEmployee = async (e, setMessage) => {
     }
 };
 
-export const handleDeleteEmployee = async (e, setMessage) => {
+export const handleDeleteEmployee = async (e, setMessage, setEmployeeId) => {
     e.preventDefault();
 
     if (!employeeId) {
@@ -122,7 +122,7 @@ export const handleGetEmployeeByUsername = async (e, setMessage, setEmployeeData
     }
 };
 
-export const handleGetAllEmployees = async (e, setMessage) => {
+export const handleGetAllEmployees = async (e, setMessage, setLoading, setAllEmployees) => {
     e.preventDefault();
     try
     {
@@ -144,7 +144,7 @@ export const handleGetAllEmployees = async (e, setMessage) => {
     }
 }
 
-export const handleEmployeeChangeRole = async (e, setMessage) => {
+export const handleEmployeeChangeRole = async (e, setMessage, setLoading) => {
     e.preventDefault();
     try
     {
@@ -167,7 +167,7 @@ export const handleEmployeeChangeRole = async (e, setMessage) => {
     }
 }
 
-export const handleEmployeeChangeSalary = async (e, setMessage) => {
+export const handleEmployeeChangeSalary = async (e, setMessage, setLoading) => {
     e.preventDefault();
     try
     {
@@ -190,7 +190,7 @@ export const handleEmployeeChangeSalary = async (e, setMessage) => {
     }
 }
 
-export const handleEmployeeChangeDepartment = async (e, setMessage) => {
+export const handleEmployeeChangeDepartment = async (e, setMessage, setLoading) => {
     e.preventDefault();
     try
     {
@@ -213,7 +213,7 @@ export const handleEmployeeChangeDepartment = async (e, setMessage) => {
     }
 }
 
-export const fetchEmployeeSalaryDetails = async (e, setMessage) => {
+export const fetchEmployeeSalaryDetails = async (e, setMessage, setLoading, setSalaryDetails) => {
     e.preventDefault();
     setLoading(true);
     setMessage('');
@@ -234,7 +234,7 @@ export const fetchEmployeeSalaryDetails = async (e, setMessage) => {
     }
 };
 
-export const fetchEmployeeEquipmentDetails = async (e, setMessage) => {
+export const fetchEmployeeEquipmentDetails = async (e, setMessage, setLoading, setEquipmentDetails) => {
     e.preventDefault();
     setLoading(true);
     setMessage('');

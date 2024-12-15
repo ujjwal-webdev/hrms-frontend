@@ -24,7 +24,7 @@ export const handleAddDepartment = async (e, setMessage) => {
     }
 };
 
-export const handleUpdateDepartmentName = async (e, setMessage) => {
+export const handleUpdateDepartmentName = async (e, setMessage, setLoading, setUpdateDept) => {
     e.preventDefault();
     try {
         setLoading(true);
@@ -58,7 +58,7 @@ export const handleUpdateDepartmentName = async (e, setMessage) => {
     }
 };
 
-export const handleDeleteDepartment = async (e, setMessage) => {
+export const handleDeleteDepartment = async (e, setMessage, setLoading, setDeleteDept) => {
     e.preventDefault();
     try {
         setLoading(true);
@@ -88,7 +88,7 @@ export const handleDeleteDepartment = async (e, setMessage) => {
     }
 };
 
-export const handleGetDepartmentById = async (e, setMessage) => {
+export const handleGetDepartmentById = async (e, setMessage, setLoading, setDepartment) => {
     e.preventDefault();
     try {
         setLoading(true);
@@ -116,7 +116,7 @@ export const handleGetDepartmentById = async (e, setMessage) => {
     }
 };
 
-export const handleGetAllDepartments = async () => {
+export const handleGetAllDepartments = async (setLoading, setMessage, setDepartments) => {
     try {
         setLoading(true);
         setMessage('');
@@ -143,7 +143,7 @@ export const handleGetAllDepartments = async () => {
     }
 };
 
-export const handleGetDepartmentByName = async (e) => {
+export const handleGetDepartmentByName = async (e, setLoading, setMessage, setDepartment) => {
     e.preventDefault();
     try {
         setLoading(true);
@@ -170,8 +170,8 @@ export const handleGetDepartmentByName = async (e) => {
         setLoading(false);
     }
 };
-
-export const fetchDepartmentsSortedByName = async (e) => {
+//departments???
+export const fetchDepartmentsSortedByName = async (e, setLoading, setMessage, setDepartment) => {
     e.preventDefault();
     try {
         setLoading(true);
@@ -198,8 +198,8 @@ export const fetchDepartmentsSortedByName = async (e) => {
         setLoading(false);
     }
 }
-
-export const fetchDepartmentsSortedByNameDesc = async (e) => {
+//depts??
+export const fetchDepartmentsSortedByNameDesc = async (e, setLoading, setMessage, setDepartment) => {
     e.preventDefault();
     try {
         setLoading(true);

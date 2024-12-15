@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { BASE_URL } from '../apiConfig';
 
-export const handleFetchCandidates = async () => {
+export const handleFetchCandidates = async (setCandidates, setMessage) => {
     setMessage('');
     try {
         const token = localStorage.getItem("authToken");
@@ -17,7 +17,7 @@ export const handleFetchCandidates = async () => {
     }
 };
 
-export const handleCandidateUpdateStatus = async () => {
+export const handleCandidateUpdateStatus = async (setUpdatedCandidate, setMessage) => {
     setMessage('');
     try {
         const token = localStorage.getItem("authToken");
@@ -36,7 +36,7 @@ export const handleCandidateUpdateStatus = async () => {
     }
 };
 
-export const handleGetCandidateById = async () => {
+export const handleGetCandidateById = async (setCandidate, setMessage) => {
     setMessage('');
     try {
         const token = localStorage.getItem("authToken");

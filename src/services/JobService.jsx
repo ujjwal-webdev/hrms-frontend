@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { BASE_URL } from '../apiConfig';
 
-export const handleCreateJob = async (e, setMessage) => {
+export const handleCreateJob = async (e, setMessage, setJob) => {
     e.preventDefault();
     setMessage('');
     try {
@@ -24,7 +24,7 @@ export const handleCreateJob = async (e, setMessage) => {
     }
 };
 
-export const handleGetJobById = async (e) => {
+export const handleGetJobById = async (e, setMessage, setJob) => {
     e.preventDefault();
     setMessage('');
     setJob(null);
@@ -41,7 +41,7 @@ export const handleGetJobById = async (e) => {
     }
 };
 
-export const handleGetAllJobs = async () => {
+export const handleGetAllJobs = async (setMessage, setJobs) => {
     setMessage('');
     try {
         const token = localStorage.getItem("authToken");
@@ -56,7 +56,7 @@ export const handleGetAllJobs = async () => {
     }
 };
 
-export const handleDeleteJob = async (e, setMessage) => {
+export const handleDeleteJob = async (e, setMessage, setJobId) => {
     e.preventDefault();
     setMessage('');
     try {
