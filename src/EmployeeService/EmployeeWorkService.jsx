@@ -14,17 +14,17 @@ export const getAllWorksHandler = async (setMessage, setWorkList) => {    //need
         setWorkList(response.data);
         setMessage("All works fetched successfully!");
     } catch (error) {
-        console.error("Error fetching all works:", error);
+        console.log("Error fetching all works:", error);
         setMessage("Failed to fetch all works.");
     }
 };
 
-export const changeWorkStatusHandler = async (setMessage, workId) => {   //need to test
+export const changeWorkStatusHandler = async (e, setMessage, workId) => {   //need to test
     if (!workId) {
         alert('Please enter a valid work ID.');
         return;
     }
-
+    
     try {
         const token = localStorage.getItem('authToken'); // Assuming token is stored in localStorage
         const response = await axios.put(`${BASE_URL}/employee/changeStatus/${workId}`, {}, {
@@ -32,11 +32,12 @@ export const changeWorkStatusHandler = async (setMessage, workId) => {   //need 
                 Authorization: token,
             },
         });
+        console.log("respone: ", response)
 
         // Show success message
         setMessage(response.data); // Assuming the response contains a success message
     } catch (error) {
-        console.error('Error changing work status:', error);
+        console.log('Error changing work status:', error);
         setMessage('Failed to change work status.');
     }
 };
@@ -66,7 +67,7 @@ export const addEducationHandler = async (e, setMessage, education, setEducation
     }
 };
 
-export const addWorkExperienceHandler = async (e, workExperience, setWorkExperience) => {
+export const addWorkExperienceHandler = async (e, setMessage, workExperience, setWorkExperience) => {
     e.preventDefault();
     try {
         const token = localStorage.getItem("authToken");
@@ -94,7 +95,7 @@ export const addWorkExperienceHandler = async (e, workExperience, setWorkExperie
     }
 };
 
-export const addSkillHandler = async (e, setMessage,setSkill) => {
+export const addSkillHandler = async (e, setMessage, skill, setSkill) => {
     e.preventDefault();
     try {
         const token = localStorage.getItem("authToken");

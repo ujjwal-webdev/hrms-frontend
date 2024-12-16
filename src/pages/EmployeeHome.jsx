@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { BASE_URL } from "../apiConfig";
 import axios from "axios";
+import { handleViewProfile } from "../EmployeeService/EmployeeProfileService";
 import { handleUpdateProfile } from "../EmployeeService/EmployeeProfileService";
 import { handleUpdatePassword } from "../EmployeeService/EmployeeProfileService";
 import { handleAddAddress } from "../EmployeeService/EmployeeProfileService";
@@ -479,7 +480,7 @@ export default function EmployeeHome() {
                         <h3>Employee Profile</h3>
                         <button
                             className="btn btn-primary mt-3"
-                            onClick={(e) => handleViewProfile (setMessage, setEmployee)}
+                            onClick={(e) => handleViewProfile (e, setMessage, setEmployee)}
                         >
                             View Profile
                         </button>
@@ -734,7 +735,7 @@ export default function EmployeeHome() {
                 return (
                     <div className="mt-4">
                         <h3>All Addresses</h3>
-                        <button className="btn btn-primary mb-3" onClick={(e) => fetchAllAddresses (setAddresses)}>
+                        <button className="btn btn-primary mb-3" onClick={(e) => fetchAllAddresses (e, setAddresses)}>
                             Load Addresses
                         </button>
                         {addresses.length > 0 ? (
@@ -773,7 +774,7 @@ export default function EmployeeHome() {
                 return (
                     <div className="mt-4">
                         <h3>All Addresses</h3>
-                        <button className="btn btn-primary mb-3" onClick={(e) => fetchAllAddresses (addressId)}>
+                        <button className="btn btn-primary mb-3" onClick={(e) => fetchAllAddresses (e, setAddresses)}>
                             Load Addresses
                         </button>
                         {addresses.length > 0 ? (
@@ -801,7 +802,7 @@ export default function EmployeeHome() {
                                             <td>
                                                 <button
                                                     className="btn btn-danger"
-                                                    onClick={() => deleteAddress(address.addressId)}
+                                                    onClick={(e) => deleteAddress(e, address.addressId, setAddresses)}
                                                 >
                                                     Delete
                                                 </button>
@@ -1051,7 +1052,7 @@ export default function EmployeeHome() {
                         </div>
                         <button
                             className="btn btn-primary"
-                            onClick={(e)=>changeWorkStatusHandler (setMessage, workId)} // Call the handler when the button is clicked
+                            onClick={(e)=>changeWorkStatusHandler(e, setMessage, workId)} // Call the handler when the button is clicked
                         >
                             Mark Work as Completed
                         </button>
@@ -1104,7 +1105,7 @@ export default function EmployeeHome() {
                 return (
                     <div className="mt-4">
                         <h3>Add Work Experience</h3>
-                        <form onSubmit={(e)=> addWorkExperienceHandler (e, workExperience, setWorkExperience)}>
+                        <form onSubmit={(e)=> addWorkExperienceHandler (e, setMessage, workExperience, setWorkExperience)}>
                             <div className="form-group">
                                 <label htmlFor="companyName">Company Name</label>
                                 <input
@@ -1180,7 +1181,7 @@ export default function EmployeeHome() {
                 return (
                     <div className="mt-4">
                         <h3>Add Skill</h3>
-                        <form onSubmit={(e) => addSkillHandler (e, setMessage,setSkill)}>
+                        <form onSubmit={(e) => addSkillHandler (e, setMessage, skill, setSkill)}>
                             <div className="form-group">
                                 <label htmlFor="name">Skill Name</label>
                                 <input

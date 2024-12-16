@@ -3,7 +3,7 @@ import { useState } from "react";
 import { BASE_URL } from "../apiConfig";
 import axios from "axios";
 
-export const handleViewProfile = async (setMessage, setEmployee) => {
+export const handleViewProfile = async (e, setMessage, setEmployee) => {
     setMessage('');
     try {
         const token = localStorage.getItem("authToken");
@@ -126,7 +126,7 @@ export const handleUpdateAddress = async (e, setMessage, addressData) => {
     }
 };
 
-export const fetchAllAddresses = async (setAddresses) => {
+export const fetchAllAddresses = async (e, setAddresses) => {
     try {
         const token = localStorage.getItem("authToken");
         const response = await axios.get(`${BASE_URL}/employee/address`, {
@@ -140,7 +140,7 @@ export const fetchAllAddresses = async (setAddresses) => {
     }
 };
 
-export const deleteAddress = async (addressId) => {
+export const deleteAddress = async (e, addressId, setAddresses) => {
     try {
         const token = localStorage.getItem("authToken");
         const response = await axios.delete(`${BASE_URL}/employee/address/${addressId}`, {
@@ -149,7 +149,7 @@ export const deleteAddress = async (addressId) => {
             },
         });
         alert("Address deleted successfully!");
-        fetchAllAddresses(); // Refresh the list
+        fetchAllAddresses(e, setAddresses); // Refresh the list
     } catch (error) {
         console.error("Error deleting address:", error);
     }

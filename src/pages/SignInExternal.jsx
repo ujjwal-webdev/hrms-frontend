@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 export default function SignInExternal() {
   const navigate = useNavigate();
 
+  const [myId, setMyId] = useState("")
+
   const [credentials, setCredentials] = useState({
     userName: '',
     password: '',
@@ -29,10 +31,12 @@ export default function SignInExternal() {
           'Content-Type': 'application/json',
         },
       });
-
+      
+      setMyId(response.data.jobCandidateId);
+      console.log(myId);
       setMessage('Sign in successful!');
       setMessageType('success');
-      navigate('/candidate-home');
+      navigate('/candidate-home', { state: { sharedState: response.data.jobCandidateId } });
     } catch (error) {
       setMessage('Sign in failed. Please check your credentials and try again.');
       setMessageType('danger');

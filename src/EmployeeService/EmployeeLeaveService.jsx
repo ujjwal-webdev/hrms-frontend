@@ -19,6 +19,7 @@ export const submitLeaveRequest = async (e, setMessage, setLeaveData, leaveData)
             leaveEndDate: "",
         });
     } catch (error) {
+        console.log(error);
         console.error("Error submitting leave request:", error);
         setMessage("Failed to submit leave request.");
     }
