@@ -280,1311 +280,190 @@ const [status, setStatus] = useState('PENDING');
 const [updatedCandidate, setUpdatedCandidate] = useState(null);
 
 const [candidate, setCandidate] = useState(null);
-
-// const handleAddDepartment = async (e) => {
-//     e.preventDefault();
-
-//     try {
-//         const response = await axios.post(
-//         "http://localhost:8896/admin/departments",
-//         { departmentName },
-//         {
-//             headers: {
-//             Authorization: localStorage.getItem('authToken'),
-//             "Content-Type": "application/json",
-//             },
-//         }
-//         );
-//         setMessage(`Department added successfully: ${response.data.departmentName}`);
-//     } catch (error) {
-//         setMessage(
-//         error.response?.data?.message || "An error occurred while adding the department."
-//         );
-//     }
-// };
-
-// const handleAddEmployee = async (e) => {
-//     e.preventDefault();
-
-//     const employeeData = {
-//         name: document.getElementById("employeeName").value,
-//         role: document.getElementById("role").value,
-//         gender: document.getElementById("gender").value,
-//         salary: parseFloat(document.getElementById("salary").value),
-//         phoneNo: document.getElementById("phoneNo").value,
-//         dateOfBirth: document.getElementById("dateOfBirth").value,
-//         email: document.getElementById("email").value
-//     };
-
-//     const departmentId = document.getElementById("departmentId").value;
-
-//     try {
-//         const token = localStorage.getItem("authToken"); // Retrieve stored token
-
-//         const response = await axios.post(
-//             `http://localhost:8896/admin/employees/${departmentId}`,
-//             employeeData,
-//             {
-//                 headers: {
-//                     Authorization: token,
-//                     "Content-Type": "application/json",
-//                 },
-//             }
-//         );
-//         setMessage(`Employee added successfully`);
-//         document.getElementById("addEmployeeForm").reset();
-//     } catch (error) {
-//         setMessage(
-//             error.response?.data?.message || "An error occurred while adding the employee."
-//         );
-//     }
-// };
-
-// const handleDeleteEmployee = async (e) => {
-//     e.preventDefault();
-
-//     if (!employeeId) {
-//         alert("Please enter an Employee ID.");
-//         return;
-//     }
-
-//     if (window.confirm(`Are you sure you want to delete employee with ID ${employeeId}?`)) {
-//         try {
-//             const token = localStorage.getItem("authToken");
-//             const response = await axios.delete(
-//                 `http://localhost:8896/admin/employees/${employeeId}`,
-//                 {
-//                     headers: {
-//                         Authorization: token,
-//                         "Content-Type": "application/json",
-//                     },
-//                 }
-//             );
-//             setMessage(`Employee deleted successfully`);
-//             setEmployeeId(""); // Clear the form field
-//         } catch (error) {
-//             setMessage(
-//                 error.response?.data?.message || "An error occurred while adding the employee."
-//             );
-//         }
-//     }
-// };
-
-// const handleGetEmployeeById = async (e) => {    
-//     e.preventDefault();
-
-//     try {
-//         setLoading(true);
-//         setEmployeeData(null);
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get(`http://localhost:8896/admin/employees/byEmployeeId/${employeeId}`, {
-//             headers: {
-//                 Authorization: token,
-//                 "Content-Type": "application/json",
-//             }
-//         });
-
-//         // console.log(response)
-
-//         setEmployeeData(response.data);
-//         setLoading(false);
-//         // setMessage(`Employee fetched successfully: ${JSON.stringify(response.data)}`);
-//     }
-//     catch (error) {
-//         console.log(error.response.data.message)
-//         setEmployeeData(null);
-//         setLoading(false);
-//         setMessage(error.response.data.message);
-//     }
-// };
-
-// const handleGetEmployeeByUsername = async (e) => { 
-//     e.preventDefault();
-
-//     try {
-//         setLoading(true);
-//         setEmployeeData(null);
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get(`http://localhost:8896/admin/employees/byUserName/${username}`, {
-//             headers: {
-//                 Authorization: token,
-//                 "Content-Type": "application/json",
-//             },
-//         });
-
-//         setEmployeeData(response.data);
-//         setLoading(false);
-//         // setMessage(`Employee fetched successfully: ${JSON.stringify(response.data)}`);
-//     } 
-//     catch (error) {
-//         setEmployeeData(null);
-//         setLoading(false);
-//         setMessage(`Error fetching employee: ${error.response?.data?.message || error.message}`);
-//     }
-// };
-
-// const handleViewYourProfile = async (e) => {
-//     e.preventDefault();
-
-//     try {
-//         setLoading(true);
-//         setEmployeeData(null);
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get(`http://localhost:8896/admin/viewProfile`, {
-//             headers: {
-//                 Authorization: token,
-//                 "Content-Type": "application/json",
-//             },
-//         });
-
-//         setEmployeeData(response.data);
-//         setLoading(false);
-//         // setMessage(`Employee fetched successfully: ${JSON.stringify(response.data)}`);
-//     }
-//     catch(error) {
-//         setEmployeeData(null);
-//         setLoading(false);
-//         setMessage(`Error fetching employee: ${error.response?.data?.message || error.message}`);
-//     }
-// };
-
-// const handleRegisterHR = async (e) => {
-//     e.preventDefault();
-
-//     try
-//     {
-//         setLoading(true);
-//         setEmployeeData(null);
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.post(`http://localhost:8896/admin/registerAdmin`,
-//             hrFormData, 
-//             {
-//             headers:{
-//                 Authorization: token,
-//                 "Content-Type": "application/json",
-//             }
-//             });
-//             setMessage("Successful")
-//     }
-//     catch(error)
-//     {
-//         setHRFormData(null)
-//         setLoading(false);
-//         setMessage(`Error registering HR`);
-//     }
-// }
-
-// const handleUpdatePassword = async (e) => {
-//     e.preventDefault();
-    
-//     try
-//     {
-//         setLoading(true);
-//         setEmployeeData(null);
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.put(`http://localhost:8896/admin/updatePassword`,
-//             updatePasswordFormData,
-//             {
-//                 headers:{
-//                     Authorization: token,
-//                     "Content-Type": "application/json",
-//                 }
-//             }
-//         )
-//         setMessage("Successful");
-//     }
-//     catch(error)
-//     {
-//         setUpdatePasswordFormData(null)
-//         setLoading(false)
-//         setMessage(`Error updating password`);
-//     }
-// }
-
-// const handleGetAllEmployees = async (e) => {
-//     e.preventDefault();
-//     try
-//     {
-//         setLoading(true);
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get(`http://localhost:8896/admin/employees`,
-//             {
-//                 headers:{
-//                     Authorization: token,
-//                     "Content-Type": "application/json",
-//                 }
-//             }
-//         )
-//         setAllEmployees(response.data)
-//     }
-//     catch(error)
-//     {
-//         setMessage(`Error getting all employees`);
-//     }
-// }
-
-// const handleEmployeeChangeRole = async (e) => {
-//     e.preventDefault();
-//     try
-//     {
-//         setLoading(true);
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.patch(`http://localhost:8896/admin/employees/setNewRole/${changeRole.employeeId}/${changeRole.newRole}`,
-//             {},{
-//                 headers:{
-//                     Authorization: token,
-//                     "Content-Type": "application/json",
-//                 }
-//             }
-//         );
-//         // setChangeRole(null);
-//         setMessage("Successful");
-//     }
-//     catch(error)
-//     {
-//         setMessage(`error: ${error.message}`);
-//     }
-// }
-
-// const handleEmployeeChangeSalary = async (e) => {
-//     e.preventDefault();
-//     try
-//     {
-//         setLoading(true);
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.patch(`http://localhost:8896/admin/employees/setNewSalary/${changeSalary.employeeId}/${changeSalary.employeeSalary}/${changeSalary.bonusThatYear}/${changeSalary.benefitPoints}`,
-//             {},{
-//                 headers:{
-//                     Authorization: token,
-//                     "Content-Type": "application/json",
-//                 }
-//             }
-//         );
-//         // setChangeRole(null);
-//         setMessage("Successful");
-//     }
-//     catch(error)
-//     {
-//         setMessage(`error: ${error.message}`);
-//     }
-// }
-
-// const handleEmployeeChangeDepartment = async (e) => {
-//     e.preventDefault();
-//     try
-//     {
-//         setLoading(true);
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.patch(`http://localhost:8896/admin/employees/setNewDepartment/${changeDepartment.employeeId}/${changeDepartment.departmentId}`,
-//             {},{
-//                 headers:{
-//                     Authorization: token,
-//                     "Content-Type": "application/json",
-//                 }
-//             }
-//         );
-//         // setChangeRole(null);
-//         setMessage("Successful");
-//     }
-//     catch(error)
-//     {
-//         setMessage(`error: ${error.message}`);
-//     }
-// }
-
-// const handleUpdateDepartmentName = async (e) => {
-//     e.preventDefault();
-//     try {
-//         setLoading(true);
-
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.put(
-//             `http://localhost:8896/admin/departments/${updateDept.deptId}`,
-//             {
-//                 departmentName: updateDept.newDeptName, 
-//             },
-//             {
-//                 headers: {
-//                     Authorization: token,
-//                     "Content-Type": "application/json",
-//                 },
-//             }
-//         );
-
-//         setUpdateDept({
-//             deptId: '',
-//             newDeptName: '',
-//         });
-
-//         setMessage(`Department updated successfully`);
-//     } catch (error) {
-//         setMessage(
-//             `Error`
-//         );
-//     } finally {
-//         setLoading(false);
-//     }
-// };
-
-// const handleDeleteDepartment = async (e) => {
-//     e.preventDefault();
-//     try {
-//         setLoading(true);
-
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.delete(
-//             `http://localhost:8896/admin/departments/${deleteDept.deptId}`,
-//             {
-//                 headers: {
-//                     Authorization: token,
-//                     "Content-Type": "application/json",
-//                 },
-//             }
-//         );
-
-//         setDeleteDept({
-//             deptId: '',
-//         });
-
-//         setMessage(`Department deleted successfully`);
-//     } catch (error) {
-//         setMessage(
-//             `Error`
-//         );
-//     } finally {
-//         setLoading(false);
-//     }
-// };
-
-// const handleGetDepartmentById = async (e) => {
-//     e.preventDefault();
-//     try {
-//         setLoading(true);
-//         setMessage('');
-//         setDepartment(null);
-
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get(
-//             `http://localhost:8896/admin/departments/${departmentId}`,
-//             {
-//                 headers: {
-//                     Authorization: token,
-//                     "Content-Type": "application/json",
-//                 },
-//             }
-//         );
-
-//         setDepartment(response.data);
-//     } catch (error) {
-//         setMessage(
-//             `Error`
-//         );
-//     } finally {
-//         setLoading(false);
-//     }
-// };
-
-// const handleGetAllDepartments = async () => {
-//     try {
-//         setLoading(true);
-//         setMessage('');
-//         setDepartments([]);
-
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get(
-//             `http://localhost:8896/admin/departments`,
-//             {
-//                 headers: {
-//                     Authorization: token,
-//                     "Content-Type": "application/json",
-//                 },
-//             }
-//         );
-
-//         setDepartments(response.data);
-//     } catch (error) {
-//         setMessage(
-//             `Error: ${error.response?.data?.message || error.message}`
-//         );
-//     } finally {
-//         setLoading(false);
-//     }
-// };
-
-// const handleGetDepartmentByName = async (e) => {
-//     e.preventDefault();
-//     try {
-//         setLoading(true);
-//         setMessage('');
-//         setDepartment(null);
-
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get(
-//             `http://localhost:8896/admin/departments/name/${departmentName}`,
-//             {
-//                 headers: {
-//                     Authorization: token,
-//                     "Content-Type": "application/json",
-//                 },
-//             }
-//         );
-
-//         setDepartment(response.data);
-//     } catch (error) {
-//         setMessage(
-//             `Error`
-//         );
-//     } finally {
-//         setLoading(false);
-//     }
-// };
-
-// const fetchDepartmentsSortedByName = async (e) => {
-//     e.preventDefault();
-//     try {
-//         setLoading(true);
-//         setMessage('');
-//         setDepartment(null);
-
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get(
-//             `http://localhost:8896/admin/departments/sortByNameAsc`,
-//             {
-//                 headers: {
-//                     Authorization: token,
-//                     "Content-Type": "application/json",
-//                 },
-//             }
-//         );
-
-//         setDepartments(response.data);
-//     } catch (error) {
-//         setMessage(
-//             `Error`
-//         );
-//     } finally {
-//         setLoading(false);
-//     }
-// }
-
-// const fetchDepartmentsSortedByNameDesc = async (e) => {
-//     e.preventDefault();
-//     try {
-//         setLoading(true);
-//         setMessage('');
-//         setDepartment(null);
-
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get(
-//             `http://localhost:8896/admin/departments/sortByNameDesc`,
-//             {
-//                 headers: {
-//                     Authorization: token,
-//                     "Content-Type": "application/json",
-//                 },
-//             }
-//         );
-
-//         setDepartments(response.data);
-//     } catch (error) {
-//         setMessage(
-//             `Error`
-//         );
-//     } finally {
-//         setLoading(false);
-//     }
-// }
-
-// const fetchAllLeaves = async () => {    //Need to test
-//     try {
-//         setLoading(true);
-//         setMessage('');
-//         setLeaves([]);
-
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get(`http://localhost:8896/admin/allLeaves`, {
-//             headers: {
-//                 Authorization: token,
-//                 "Content-Type": "application/json",
-//             },
-//         });
-
-//         setLeaves(response.data);
-//         setMessage("Leave history fetched successfully.");
-//     } catch (error) {
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     } finally {
-//         setLoading(false);
-//     }
-// };
-
-// const fetchPendingLeaves = async () => {    //need to test
-//     try {
-//         setLoading(true);
-//         setMessage('');
-//         setPendingLeaves([]);
-
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get(`http://localhost:8896/admin/allPendingLeaves`, {
-//             headers: {
-//                 Authorization: token,
-//                 "Content-Type": "application/json",
-//             },
-//         });
-
-//         setPendingLeaves(response.data);
-//         setMessage("Pending leaves fetched successfully.");
-//     } catch (error) {
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     } finally {
-//         setLoading(false);
-//     }
-// };
-
-// const fetchLeavesOfEmployee = async (e) => {    //need to test
-//     e.preventDefault();
-//     try {
-//         setLoading(true);
-//         setMessage('');
-//         setLeaves([]);
-
-//         const token = localStorage.getItem("authToken");
-//         if (!token) {
-//             throw new Error("Authentication token is missing. Please log in again.");
-//         }
-
-//         const response = await axios.get(`http://localhost:8896/admin/allLeaves/${employeeId}`, {
-//             headers: {
-//                 Authorization: token,
-//                 "Content-Type": "application/json",
-//             },
-//         });
-
-//         setLeaves(response.data);
-//         setMessage("Leaves fetched successfully.");
-//     } catch (error) {
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     } finally {
-//         setLoading(false);
-//     }
-// };
-
-// const handleLeaveResponse = async (e) => {  //need to test
-//     e.preventDefault();
-//     try {
-//         setLoading(true);
-//         setMessage('');
-//         setResponseLeave(null);
-
-//         const token = localStorage.getItem("authToken");
-//         if (!token) {
-//             throw new Error("Authentication token is missing. Please log in again.");
-//         }
-
-//         const { leaveId, status } = leaveResponse;
-
-//         const response = await axios.patch(
-//             `http://localhost:8896/admin/response/${leaveId}/${status}`,
-//             {},
-//             {
-//                 headers: {
-//                     Authorization: token,
-//                     "Content-Type": "application/json",
-//                 },
-//             }
-//         );
-
-//         setResponseLeave(response.data);
-//         setMessage("Response submitted successfully.");
-//     } catch (error) {
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     } finally {
-//         setLoading(false);
-//     }
-// };
-
-// const handleAssignWork = async (e) => {
-//     e.preventDefault();
-//     try {
-//         setLoading(true);
-//         setMessage('');
-
-//         const token = localStorage.getItem("authToken");
-//         if (!token) {
-//             throw new Error("Authentication token is missing. Please log in again.");
-//         }
-
-//         const { empId, name, description, endDate } = workDetails;
-
-//         const response = await axios.post(
-//             `http://localhost:8896/admin/work/${empId}`,
-//             { name, description, endDate },
-//             {
-//                 headers: {
-//                     Authorization: token,
-//                     "Content-Type": "application/json",
-//                 },
-//             }
-//         );
-
-//         setMessage(response.data || "Work assigned successfully.");
-//         setWorkDetails({ empId: '', name: '', description: '', endDate: '' });
-//     } catch (error) {
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     } finally {
-//         setLoading(false);
-//     }
-// };
-
-// const handleDeleteWork = async (e) => {
-//     e.preventDefault();
-//     try {
-//         setLoading(true);
-//         // setError(false);
-//         setMessage('');
-
-//         const token = localStorage.getItem("authToken");
-//         if (!token) {
-//             throw new Error("Authentication token is missing. Please log in again.");
-//         }
-
-//         const response = await axios.delete(`http://localhost:8896/admin/work/${workId}`, {
-//             headers: {
-//                 Authorization: token,
-//             },
-//         });
-
-//         setMessage("Work deleted successfully.");
-//         setWorkId('');
-//     } catch (error) {
-//         // setError(true);
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     } finally {
-//         setLoading(false);
-//     }
-// };
-
-// const handleUpdateWork = async (e) => {
-//     e.preventDefault();
-//     try {
-//         setLoading(true);
-//         // setError(false);
-//         setMessage('');
-
-//         const { workId, ...workData } = updateWorkDetails;
-
-//         const token = localStorage.getItem("authToken");
-//         if (!token) {
-//             throw new Error("Authentication token is missing. Please log in again.");
-//         }
-
-//         const response = await axios.put(`http://localhost:8896/admin/work/${workId}`, workData, {
-//             headers: {
-//                 Authorization: token,
-//                 "Content-Type": "application/json",
-//             },
-//         });
-
-//         setMessage("Work updated successfully.");
-//         setUpdateWorkDetails({
-//             workId: '',
-//             name: '',
-//             description: '',
-//             endDate: ''
-//         });
-//     } catch (error) {
-//         // setError(true);
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     } finally {
-//         setLoading(false);
-//     }
-// };
-
-// const handleAssignGroupWork = async (e) => {
-//     e.preventDefault();
-//     try {
-//         setLoading(true);
-//         // setError(false);
-//         setMessage('');
-
-//         const { leaderId, employeesId, workName, workDescription, endDate } = groupWorkDetails;
-
-//         // Prepare the payload
-//         const payload = {
-//             leaderId: parseInt(leaderId),
-//             employeesId: employeesId.split(',').map((id) => parseInt(id.trim())),
-//             work: {
-//                 name: workName,
-//                 description: workDescription,
-//                 endDate,
-//             },
-//         };
-
-//         const token = localStorage.getItem("authToken");
-//         if (!token) {
-//             throw new Error("Authentication token is missing. Please log in again.");
-//         }
-
-//         const response = await axios.post("http://localhost:8896/admin/work", payload, {
-//             headers: {
-//                 Authorization: token,
-//                 "Content-Type": "application/json",
-//             },
-//         });
-
-//         setMessage("Work assigned successfully.");
-//         setGroupWorkDetails({
-//             leaderId: '',
-//             employeesId: '',
-//             workName: '',
-//             workDescription: '',
-//             endDate: '',
-//         });
-//     } catch (error) {
-//         // setError(true);
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     } finally {
-//         setLoading(false);
-//     }
-// };
-
-// const fetchAllWorks = async () => {
-//     setLoading(true);
-//     setMessage('');
-//     try {
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get("http://localhost:8896/admin/allWorks", {
-//             headers: {
-//                 Authorization: token,
-//                 "Content-Type": "application/json",
-//             },
-//         });
-//         console.log(response.data)
-//         setWorks(response.data);
-//     } catch (error) {
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     } finally {
-//         setLoading(false);
-//     }
-// };
-
-// const fetchAllIndividualWorks = async () => {
-//     setLoading(true);
-//     setMessage('');
-//     try {
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get("http://localhost:8896/admin/allIndividualWorks", {
-//             headers: {
-//                 Authorization: token,
-//                 "Content-Type": "application/json",
-//             },
-//         });
-//         setIndividualWorks(response.data);
-//     } catch (error) {
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     } finally {
-//         setLoading(false);
-//     }
-// };
-
-// const fetchAllGroupWorks = async () => {
-//     setLoading(true);
-//     setMessage('');
-//     try {
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get("http://localhost:8896/admin/allGroupWorks", {
-//             headers: {
-//                 Authorization: token,
-//                 "Content-Type": "application/json",
-//             },
-//         });
-//         setGroupWorks(response.data);
-//     } catch (error) {
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     } finally {
-//         setLoading(false);
-//     }
-// };
-
-// const fetchAllPendingWorks = async () => {
-//     setLoading(true);
-//     setMessage('');
-//     try {
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get("http://localhost:8896/admin/allPendingWorks", {
-//             headers: {
-//                 Authorization: token,
-//                 "Content-Type": "application/json",
-//             },
-//         });
-//         setPendingWorks(response.data);
-//     } catch (error) {
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     } finally {
-//         setLoading(false);
-//     }
-// };
-
-// const fetchIndividualPendingWorks = async () => {
-//     setLoading(true);
-//     setMessage('');
-//     try {
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get("http://localhost:8896/admin/allIndividualPendingWorks", {
-//             headers: {
-//                 Authorization: token,
-//                 "Content-Type": "application/json",
-//             },
-//         });
-//         setIndividualPendingWorks(response.data);
-//     } catch (error) {
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     } finally {
-//         setLoading(false);
-//     }
-// };
-
-// const fetchGroupPendingWorks = async () => {
-//     setLoading(true);
-//     setMessage('');
-//     try {
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get("http://localhost:8896/admin/allGroupPendingWorks", {
-//             headers: {
-//                 Authorization: token,
-//                 "Content-Type": "application/json",
-//             },
-//         });
-//         setGroupPendingWorks(response.data);
-//     } catch (error) {
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     } finally {
-//         setLoading(false);
-//     }
-// };
-
-// const fetchAllCompletedWorks = async () => {    //need to test
-//     setLoading(true);
-//     setMessage('');
-//     try {
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get("http://localhost:8896/admin/allCompletedWorks", {
-//             headers: {
-//                 Authorization: token,
-//                 "Content-Type": "application/json",
-//             },
-//         });
-//         setAllCompletedWorks(response.data);
-//     } catch (error) {
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     } finally {
-//         setLoading(false);
-//     }
-// };
-
-// const fetchAllIndividualCompletedWorks = async () => {    //need to test
-//     setLoading(true);
-//     setMessage('');
-//     try {
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get("http://localhost:8896/admin/allIndividualCompletedWorks", {
-//             headers: {
-//                 Authorization: token,
-//                 "Content-Type": "application/json",
-//             },
-//         });
-//         setAllIndividualCompletedWorks(response.data);
-//     } catch (error) {
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     } finally {
-//         setLoading(false);
-//     }
-// };
-
-// const fetchAllGroupCompletedWorks = async () => {    //need to test
-//     setLoading(true);
-//     setMessage('');
-//     try {
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get("http://localhost:8896/admin/allGroupCompletedWorks", {
-//             headers: {
-//                 Authorization: token,
-//                 "Content-Type": "application/json",
-//             },
-//         });
-//         setAllGroupCompletedWorks(response.data);
-//     } catch (error) {
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     } finally {
-//         setLoading(false);
-//     }
-// };
-
-// const fetchIndividualCompletedWorks = async () => { //Need to test
-//     setLoading(true);
-//     setMessage('');
-//     try {
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get("http://localhost:8896/admin/allIndividualInCompletedWorks", {
-//             headers: {
-//                 Authorization: token,
-//                 "Content-Type": "application/json",
-//             },
-//         });
-//         setIndividualCompletedWorks(response.data);
-//     } catch (error) {
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     } finally {
-//         setLoading(false);
-//     }
-// };
-
-// const fetchGroupCompletedWorks = async () => {
-//     setLoading(true);
-//     setMessage('');
-//     try {
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get("http://localhost:8896/admin/allGroupInCompletedWorks", {
-//             headers: {
-//                 Authorization: token,
-//                 "Content-Type": "application/json",
-//             },
-//         });
-//         setGroupCompletedWorks(response.data);
-//     } catch (error) {
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     } finally {
-//         setLoading(false);
-//     }
-// };
-
-// const fetchEmployeeSalaryDetails = async (e) => {
-//     e.preventDefault();
-//     setLoading(true);
-//     setMessage('');
-//     setSalaryDetails([]);
-//     try {
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get(`http://localhost:8896/admin/employees/salaryInfo/${employeeId}`, {
-//             headers: {
-//                 Authorization: token,
-//                 "Content-Type": "application/json",
-//             },
-//         });
-//         setSalaryDetails(response.data);
-//     } catch (error) {
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     } finally {
-//         setLoading(false);
-//     }
-// };
-
-// const fetchEmployeeEquipmentDetails = async (e) => {
-//     e.preventDefault();
-//     setLoading(true);
-//     setMessage('');
-//     setEquipmentDetails([]);
-//     try {
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get(`http://localhost:8896/admin/employees/equipmentInfo/${employeeId}`, {
-//             headers: {
-//                 Authorization: token,
-//                 "Content-Type": "application/json",
-//             },
-//         });
-//         setEquipmentDetails(response.data);
-//     } catch (error) {
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     } finally {
-//         setLoading(false);
-//     }
-// };
-
-// const handleAssignEquipment = async (e) => {
-//     e.preventDefault();
-//     setMessage('');
-//     try {
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.post(
-//             `http://localhost:8896/admin/equipments/${employeeId}`,
-//             equipment,
-//             {
-//                 headers: {
-//                     Authorization: token,
-//                     "Content-Type": "application/json"
-//                 }
-//             }
-//         );
-//         setMessage(`Success: ${response.data}`);
-//     } catch (error) {
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     }
-// };
-
-// const handleUnassignEquipment = async (e) => {
-//     e.preventDefault();
-//     setMessage('');
-//     try {
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.delete(
-//             `http://localhost:8896/admin/equipments/${equipmentId}`,
-//             {
-//                 headers: {
-//                     Authorization: token,
-//                     "Content-Type": "application/json"
-//                 }
-//             }
-//         );
-//         setMessage(`Success: Equipment unassigned successfully!`);
-//     } catch (error) {
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     }
-// };
-
-// const handleCreateJob = async (e) => {
-//     e.preventDefault();
-//     setMessage('');
-//     try {
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.post(
-//             "http://localhost:8896/admin/jobs/createJob",
-//             job,
-//             {
-//                 headers: {
-//                     Authorization: token,
-//                     "Content-Type": "application/json"
-//                 },
-//             }
-//         );
-//         setMessage(`Success: Job created successfully with ID ${response.data.jobId}`);
-//         setJob({ position: '', description: '', experienceRequired: '' });
-//     } catch (error) {
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     }
-// };
-
-// const handleGetJobById = async (e) => {
-//     e.preventDefault();
-//     setMessage('');
-//     setJob(null);
-//     try {
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get(`http://localhost:8896/admin/jobs/getJobById/${jobId}`, {
-//             headers: {
-//                 Authorization: token,
-//             },
-//         });
-//         setJob(response.data);
-//     } catch (error) {
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     }
-// };
-
-// const handleGetAllJobs = async () => {
-//     setMessage('');
-//     try {
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get('http://localhost:8896/admin/jobs/getAllJobs', {
-//             headers: {
-//                 Authorization: token,
-//             },
-//         });
-//         setJobs(response.data);
-//     } catch (error) {
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     }
-// };
-
-// const handleDeleteJob = async (e) => {
-//     e.preventDefault();
-//     setMessage('');
-//     try {
-//         const token = localStorage.getItem("authToken");
-//         await axios.delete(`http://localhost:8896/admin/jobs/deleteJob/${jobId}`, {
-//             headers: {
-//                 Authorization: token,
-//             },
-//         });
-//         setMessage('Job deleted successfully!');
-//         setJobId(''); // Clear input field after success
-//     } catch (error) {
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     }
-// };
-
-// const handleFetchCandidates = async () => {
-//     setMessage('');
-//     try {
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get(`http://localhost:8896/candidate/job/${jobId}`, {
-//             headers: {
-//                 Authorization: token,
-//             },
-//         });
-//         setCandidates(response.data); // Set candidates data in state
-//     } catch (error) {
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     }
-// };
-
-// const handleCandidateUpdateStatus = async () => {
-//     setMessage('');
-//     try {
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.put(
-//             `http://localhost:8896/candidate/status/${candidateId}?status=${status}`, 
-//             {},
-//             {
-//                 headers: {
-//                     Authorization: token,
-//                 },
-//             }
-//         );
-//         setUpdatedCandidate(response.data); // Set updated candidate details
-//     } catch (error) {
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     }
-// };
-
-// const handleGetCandidateById = async () => {
-//     setMessage('');
-//     try {
-//         const token = localStorage.getItem("authToken");
-//         const response = await axios.get(
-//             `http://localhost:8896/candidate/getCandidateById/${candidateId}`,
-//             {
-//                 headers: {
-//                     Authorization: token,
-//                 },
-//             }
-//         );
-//         setCandidate(response.data); // Set candidate details
-//     } catch (error) {
-//         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-//     }
-// };
-
   const renderForm = () => {
     switch (selectedFeature) {
         case 'addDepartment':
             return (
                 <div className="mt-4">
-                  <h3>Add Department</h3>
-                  <form onSubmit={(e)=>handleAddDepartment (e, setMessage, departmentName)}>
-                    <div className="mb-3">
-                      <label htmlFor="departmentName" className="form-label">
-                        Department Name
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="departmentName"
-                        placeholder="Enter department name"
-                        value={departmentName}
-                        onChange={(e) => setDepartmentName(e.target.value)}
-                      />
+                    <div className="card shadow-sm">
+                        <div className="card-header bg-primary text-white">
+                            <h4 className="mb-0 text-center">Add Department</h4>
+                        </div>
+                        <div className="card-body">
+                            <form onSubmit={(e) => handleAddDepartment(e, setMessage, departmentName)}>
+                                {/* Department Name Input */}
+                                <div className="mb-3">
+                                    <label htmlFor="departmentName" className="form-label">
+                                        Department Name
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="departmentName"
+                                        placeholder="Enter department name"
+                                        value={departmentName}
+                                        onChange={(e) => setDepartmentName(e.target.value)}
+                                        required
+                                    />
+                                </div>
+        
+                                {/* Submit Button */}
+                                <div className="d-grid">
+                                    <button type="submit" className="btn btn-success">
+                                        Add Department
+                                    </button>
+                                </div>
+                            </form>
+        
+                            {/* Feedback Message */}
+                            {message && (
+                                <div className="alert alert-info mt-3" role="alert">
+                                    {message}
+                                </div>
+                            )}
+                        </div>
                     </div>
-                    <button type="submit" className="btn btn-success">
-                      Submit
-                    </button>
-                  </form>
-                  {message && <p className="mt-3">{message}</p>}
                 </div>
             );
         case 'addEmployee':
             return (
-                <form id="addEmployeeForm" className="mt-4" onSubmit={(e) => handleAddEmployee(e, setMessage)}>
-                    <h3>Add Employee</h3>
-                    
-                    <div className="mb-3">
-                        <label htmlFor="employeeName" className="form-label">Employee Name</label>
-                        <input 
-                            type="text" 
-                            className="form-control" 
-                            id="employeeName" 
-                            placeholder="Enter employee name" 
-                            required 
-                        />
+                <div className="mt-4">
+                    <div className="card shadow-sm">
+                        <div className="card-header bg-primary text-white">
+                            <h4 className="mb-0 text-center">Add Employee</h4>
+                        </div>
+                        <div className="card-body">
+                            <form
+                                id="addEmployeeForm"
+                                onSubmit={(e) => handleAddEmployee(e, setMessage)}
+                            >
+                                {/* Employee Name */}
+                                <div className="mb-3">
+                                    <label htmlFor="employeeName" className="form-label">
+                                        Employee Name
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="employeeName"
+                                        placeholder="Enter employee name"
+                                        required
+                                    />
+                                </div>
+        
+                                {/* Department ID */}
+                                <div className="mb-3">
+                                    <label htmlFor="departmentId" className="form-label">
+                                        Department ID
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="departmentId"
+                                        placeholder="Enter department ID"
+                                        required
+                                    />
+                                </div>
+        
+                                {/* Email ID */}
+                                <div className="mb-3">
+                                    <label htmlFor="email" className="form-label">
+                                        Email ID
+                                    </label>
+                                    <input
+                                        type="email"
+                                        className="form-control"
+                                        id="email"
+                                        placeholder="Enter email ID"
+                                        required
+                                    />
+                                </div>
+        
+                                {/* Role */}
+                                <div className="mb-3">
+                                    <label htmlFor="role" className="form-label">
+                                        Role
+                                    </label>
+                                    <select className="form-select" id="role" required>
+                                        <option value="">Select Role</option>
+                                        <option value="CODER">Coder</option>
+                                        <option value="TESTER">Tester</option>
+                                        <option value="DEBUGGER">Debugger</option>
+                                        <option value="HR">HR</option>
+                                    </select>
+                                </div>
+        
+                                {/* Gender */}
+                                <div className="mb-3">
+                                    <label htmlFor="gender" className="form-label">
+                                        Gender
+                                    </label>
+                                    <select className="form-select" id="gender" required>
+                                        <option value="">Select Gender</option>
+                                        <option value="MALE">Male</option>
+                                        <option value="FEMALE">Female</option>
+                                    </select>
+                                </div>
+        
+                                {/* Salary */}
+                                <div className="mb-3">
+                                    <label htmlFor="salary" className="form-label">
+                                        Salary
+                                    </label>
+                                    <input
+                                        type="number"
+                                        className="form-control"
+                                        id="salary"
+                                        placeholder="Enter salary"
+                                        required
+                                    />
+                                </div>
+        
+                                {/* Phone Number */}
+                                <div className="mb-3">
+                                    <label htmlFor="phoneNo" className="form-label">
+                                        Phone Number
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="phoneNo"
+                                        placeholder="Enter phone number"
+                                        required
+                                    />
+                                </div>
+        
+                                {/* Date of Birth */}
+                                <div className="mb-3">
+                                    <label htmlFor="dateOfBirth" className="form-label">
+                                        Date of Birth
+                                    </label>
+                                    <input
+                                        type="date"
+                                        className="form-control"
+                                        id="dateOfBirth"
+                                        required
+                                    />
+                                </div>
+        
+                                {/* Submit Button */}
+                                <div className="d-grid">
+                                    <button type="submit" className="btn btn-success">
+                                        Submit
+                                    </button>
+                                </div>
+        
+                                {/* Feedback Message */}
+                                {message && (
+                                    <div className="alert alert-info mt-3" role="alert">
+                                        {message}
+                                    </div>
+                                )}
+                            </form>
+                        </div>
                     </div>
-                    
-                    <div className="mb-3">
-                        <label htmlFor="departmentId" className="form-label">Department ID</label>
-                        <input 
-                            type="text" 
-                            className="form-control" 
-                            id="departmentId" 
-                            placeholder="Enter department ID" 
-                            required 
-                        />
-                    </div>
-
-                    <div className="mb-3">
-                        <label htmlFor="email" className="form-label">Email ID</label>
-                        <input 
-                            type="text" 
-                            className="form-control" 
-                            id="email" 
-                            placeholder="Enter Email ID" 
-                            required 
-                        />
-                    </div>
-                    
-                    <div className="mb-3">
-                        <label htmlFor="role" className="form-label">Role</label>
-                        <select className="form-select" id="role" required>
-                            <option value="">Select Role</option>
-                            <option value="CODER">Coder</option>
-                            <option value="TESTER">Tester</option>
-                            <option value="DEBUGGER">Debugger</option>
-                            <option value="HR">HR</option>
-                        </select>
-                    </div>
-                    
-                    <div className="mb-3">
-                        <label htmlFor="gender" className="form-label">Gender</label>
-                        <select className="form-select" id="gender" required>
-                            <option value="">Select Gender</option>
-                            <option value="MALE">Male</option>
-                            <option value="FEMALE">Female</option>
-                        </select>
-                    </div>
-                    
-                    <div className="mb-3">
-                        <label htmlFor="salary" className="form-label">Salary</label>
-                        <input 
-                            type="number" 
-                            className="form-control" 
-                            id="salary" 
-                            placeholder="Enter salary" 
-                            required 
-                        />
-                    </div>
-                    
-                    <div className="mb-3">
-                        <label htmlFor="phoneNo" className="form-label">Phone Number</label>
-                        <input 
-                            type="text" 
-                            className="form-control" 
-                            id="phoneNo" 
-                            placeholder="Enter phone number" 
-                            required 
-                        />
-                    </div>
-                    
-                    <div className="mb-3">
-                        <label htmlFor="dateOfBirth" className="form-label">Date of Birth</label>
-                        <input 
-                            type="date" 
-                            className="form-control" 
-                            id="dateOfBirth" 
-                            required 
-                        />
-                    </div>
-                    
-                    <button type="submit" className="btn btn-success">Submit</button>
-                    {message && <p className="mt-3">{message}</p>}
-                </form>
-        );            
+                </div>
+            );  
         case 'deleteEmployee':
             return (
                 <form className="mt-4" onSubmit={(e) => handleDeleteEmployee(e, setMessage, employeeId,setEmployeeId)}>
@@ -3592,25 +2471,147 @@ const [candidate, setCandidate] = useState(null);
 
 
   return (
-    <div>
-        {/* <Link to="/sign-in"> */}
-            <h1>HR Home</h1>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('addDepartment')}>
+    //<div>
+        <div className="container mt-5">
+            <h1 className="text-center mb-4">HR Home</h1>
+            <div className="row gy-4">
+            <div className="col-md-6">
+                    <div className="card shadow-sm">
+                        <div className="card-body">
+                            <h5 className="card-title">HR Profile Management</h5>
+                            <p className="card-text">HR Profile and related information.</p>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('viewYourProfile')}>View your profile</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('registerAnotherHR')}>Register Another HR</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('updatePassword')}>Update your password</button>
+                        </div>
+                    </div>
+                </div>
+
+               <div className="col-md-6">
+                    <div className="card shadow-sm">
+                        <div className="card-body">
+                            <h5 className="card-title">Employee Management</h5>
+                            <p className="card-text">Manage Employee and related information.</p>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('addEmployee')}>Add Employee (via DepartmentID)</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('getEmployeeByID')}>Get Employee by ID</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('getEmployeeByUsername')}>Get Employee by Username</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('getAllEmployees')}>Get All employees</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('changeEmployeeRole')}>Change employee Role</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('changeEmployeeDepartment')}>Change Employee's Department</button>
+                            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('salaryDetailsOfEmployee')}>Salary details of employee</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('setEmployeeSalary')}>Set Employee's Salary</button>
+                            <button className="btn btn-danger btn-sm me-2" onClick={() => setSelectedFeature('deleteEmployee')}>Delete Employee</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="col-md-6">
+                    <div className="card shadow-sm">
+                        <div className="card-body">
+                            <h5 className="card-title">Department Management</h5>
+                            <p className="card-text">Manage Department and related information.</p>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('addDepartment')}>Add Department</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('updateDepartmentName')}>Update Department Name</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('getDepartmentbyID')}>Get Department by ID</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('getAllDepartments')}>Get All Departments</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('getDepartmentByName')}>Get Department by Name</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('getDepartmentByName(ASC)')}>Get Department by Name (ASC)</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('getDepartmentByName(DESC)')}>Get Department by Name  (DESC)</button>
+                            <button className="btn btn-danger btn-sm me-2" onClick={() => setSelectedFeature('deleteDepartment')}>Delete Department</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="col-md-6">
+                    <div className="card shadow-sm">
+                        <div className="card-body">
+                            <h5 className="card-title">Leave Management</h5>
+                            <p className="card-text">Manage Leave and related information.</p>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('viewAllLeavesOfEmployee')}>View all leaves of the employee (via DepartmentID)</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('viewPending/CompletedLeaves')}>View Pending/Completed leaves</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('viewPendingStatusLeavesOfEmployee')}>View pending status leaves of the employee</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('respondToLeave')}>Respond to a leave</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="col-md-6">
+                    <div className="card shadow-sm">
+                        <div className="card-body">
+                            <h5 className="card-title">Equipment Management</h5>
+                            <p className="card-text">Manage Equipment and related information.</p>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('assignEquipment')}>Assign Equipment</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('equipmentDetailsOfEmployee')}>Equipment details of employee</button>
+                            <button className="btn btn-danger btn-sm me-2" onClick={() => setSelectedFeature('unassignEquipment')}>Unassign Equipment</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="col-md-6">
+                    <div className="card shadow-sm">
+                        <div className="card-body">
+                            <h5 className="card-title">Job Management</h5>
+                            <p className="card-text">Manage Job and related information.</p>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('createJob')}>Create a job</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllJobs')}>Get All Jobs</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listJobByID')}>Get Job by ID</button>
+                            <button className="btn btn-danger btn-sm me-2" onClick={() => setSelectedFeature('deleteJob')}>Delete Job</button>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-md-6">
+                    <div className="card shadow-sm">
+                        <div className="card-body">
+                            <h5 className="card-title">Candidate Management</h5>
+                            <p className="card-text">Manage Candidate and related information.</p>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listCandidatesForJob')}>Get candidates for a job</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('updateCandidateStatus')}>Update Status of Candidate</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('candidateByID')}>Get Candidate By ID</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="col-md-6">
+                    <div className="card shadow-sm">
+                        <div className="card-body">
+                            <h5 className="card-title">Project Management</h5>
+                            <p className="card-text">Manage Project/Work and related information.</p>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('assignIndividualWork')}>Assign Individual work</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('updateWork')}>Update work</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('assignGroupWork')}>Assign group work</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllWork')}>List all works</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllIndividualWork')}>List all Individual work</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllGroupWork')}>List all Group work</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllPendingWork')}>List all pending work</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listIndividualPendingWork')}>List Individual Pending work</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listGroupPendingWork')}>List Group Pending work</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllCompletedWork')}>List All completed work</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllIndividualCompletedWork')}>List Individual's completed work</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllGroupCompletedWork')}>List Group's completed work</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listIndividualsInCompletedWork')}>List Individuals in completed work</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('ListGroupsInCompletedWork')}>List Groups in completed work</button>
+                            <button className="btn btn-danger btn-sm me-2" onClick={() => setSelectedFeature('deleteWork')}>Delete Work</button>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>    
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('addDepartment')}>
                 Add Department
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('addEmployee')}>
+            </button> */}
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('addEmployee')}>
                 Add Employee (via DepartmentID)
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('deleteEmployee')}>
+            </button> */}
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('deleteEmployee')}>
                 Delete Employee
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getEmployeeByID')}>
+            </button> */}
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getEmployeeByID')}>
                 Get Employee by ID
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getEmployeeByUsername')}>
+            </button> */}
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getEmployeeByUsername')}>
                 Get Employee by Username
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('viewYourProfile')}>
+            </button> */}
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('viewYourProfile')}>
                 View your profile
             </button>
             <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('registerAnotherHR')}>
@@ -3618,53 +2619,53 @@ const [candidate, setCandidate] = useState(null);
             </button>
             <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('updatePassword')}>
                 Update your password
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getAllEmployees')}>
+            </button> */}
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getAllEmployees')}>
                 Get All employees
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('changeEmployeeRole')}>
+            </button> */}
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('changeEmployeeRole')}>
                 Change employee Role
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('setEmployeeSalary')}>
+            </button> */}
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('setEmployeeSalary')}>
                 Set Employee's Salary
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('changeEmployeeDepartment')}>
+            </button> */}
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('changeEmployeeDepartment')}>
                 Change Employee's Department
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('updateDepartmentName')}>
+            </button> */}
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('updateDepartmentName')}>
                 Update Department Name
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('deleteDepartment')}>
+            </button> */}
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('deleteDepartment')}>
                 Delete Department
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getDepartmentbyID')}>
+            </button> */}
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getDepartmentbyID')}>
                 Get Department by ID
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getAllDepartments')}>
+            </button> */}
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getAllDepartments')}>
                 Get All Departments
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getDepartmentByName')}>
+            </button> */}
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getDepartmentByName')}>
                 Get Department by Name
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getDepartmentByName(ASC)')}>
+            </button> */}
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getDepartmentByName(ASC)')}>
                 Get Department by Name (ASC)
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getDepartmentByName(DESC)')}>
+            </button> */}
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getDepartmentByName(DESC)')}>
                 Get Department by Name  (DESC)
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('viewPending/CompletedLeaves')}>
+            </button> */}
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('viewPending/CompletedLeaves')}>
                 View Pending/Completed leaves
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('viewAllLeavesOfEmployee')}>
+            </button> */}
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('viewAllLeavesOfEmployee')}>
                 View all leaves of the employee
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('viewPendingStatusLeavesOfEmployee')}>
+            </button> */}
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('viewPendingStatusLeavesOfEmployee')}>
                 View pending status leaves of the employee
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('respondToLeave')}>
+            </button> */}
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('respondToLeave')}>
                 Respond to a leave
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('assignIndividualWork')}>
+            </button> */}
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('assignIndividualWork')}>
                 Assign Individual work
             </button>
             <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('deleteWork')}>
@@ -3708,20 +2709,20 @@ const [candidate, setCandidate] = useState(null);
             </button>
             <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('ListGroupsInCompletedWork')}>
                 List Groups in completed work
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('salaryDetailsOfEmployee')}>
+            </button> */}
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('salaryDetailsOfEmployee')}>
                 Salary details of employee
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('equipmentDetailsOfEmployee')}>
+            </button> */}
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('equipmentDetailsOfEmployee')}>
                 Equipment details of employee
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('assignEquipment')}>
+            </button> */}
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('assignEquipment')}>
                 Assign Equipment
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('unassignEquipment')}>
+            </button> */}
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('unassignEquipment')}>
                 Unassign Equipment
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('createJob')}>
+            </button> */}
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('createJob')}>
                 Create a job
             </button>
             <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listAllJobs')}>
@@ -3732,8 +2733,8 @@ const [candidate, setCandidate] = useState(null);
             </button>
             <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('deleteJob')}>
                 Delete Job
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listCandidatesForJob')}>
+            </button> */}
+            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listCandidatesForJob')}>
                 Get candidates for a job
             </button>
             <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('updateCandidateStatus')}>
@@ -3741,9 +2742,8 @@ const [candidate, setCandidate] = useState(null);
             </button>
             <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('candidateByID')}>
                 Get Candidate By ID
-            </button>
+            </button> */}
             {renderForm()}
-        {/* </Link> */}
     </div>
   );
 }
