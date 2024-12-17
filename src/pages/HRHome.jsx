@@ -2576,21 +2576,21 @@ const [candidate, setCandidate] = useState(null);
                         <div className="card-body">
                             <h5 className="card-title">Project Management</h5>
                             <p className="card-text">Manage Project/Work and related information.</p>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('assignIndividualWork')}>Assign Individual work</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('updateWork')}>Update work</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('assignGroupWork')}>Assign group work</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllWork')}>List all works</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllIndividualWork')}>List all Individual work</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllGroupWork')}>List all Group work</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllPendingWork')}>List all pending work</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listIndividualPendingWork')}>List Individual Pending work</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listGroupPendingWork')}>List Group Pending work</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllCompletedWork')}>List All completed work</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllIndividualCompletedWork')}>List Individual's completed work</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllGroupCompletedWork')}>List Group's completed work</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listIndividualsInCompletedWork')}>List Individuals in completed work</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('ListGroupsInCompletedWork')}>List Groups in completed work</button>
-                            <button className="btn btn-danger btn-sm me-2" onClick={() => setSelectedFeature('deleteWork')}>Delete Work</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('assignIndividualProject')}>Assign Individual Project</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('updateProject')}>Update Project</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('assignGroupProject')}>Assign group Project</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllProjects')}>List all Projects</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllIndividualProject')}>List all Individual Project</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllGroupProject')}>List all Group Project</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllPendingProject')}>List all pending Project</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listIndividualPendingProject')}>List Individual Pending Project</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listGroupPendingProject')}>List Group Pending Project</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllCompletedProject')}>List All completed Project</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllIndividualCompletedProject')}>List Individual's completed Project</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllGroupCompletedProject')}>List Group's completed Project</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listIndividualsInCompletedProject')}>List Individuals in completed Project</button>
+                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('ListGroupsInCompletedProject')}>List Groups in completed Project</button>
+                            <button className="btn btn-danger btn-sm me-2" onClick={() => setSelectedFeature('deleteProject')}>Delete Project</button>
                         </div>
                     </div>
                 </div>
