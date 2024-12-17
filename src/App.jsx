@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, HashRouter } from 'react-router-dom';
 import SignIn from './pages/signin';
 import SignInEmployee from './pages/SignInEmployee';
 import Header from './components/Header';
@@ -12,7 +12,7 @@ import CandidateHome from './pages/CandidateHome';
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Header />
       <Routes>
         <Route path='/' element={<Welcome />} />
@@ -24,6 +24,6 @@ export default function App() {
         <Route path="/sign-in-external" element={<SignInExternal />} />
         <Route path="/candidate-home" element={<CandidateHome />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
