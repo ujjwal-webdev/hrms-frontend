@@ -7,5 +7,5 @@ export default defineConfig({
   server:{
     port:3000,
   },
-  base:"/hrms-frontend"
+  // base:"/hrms-frontend"
 });

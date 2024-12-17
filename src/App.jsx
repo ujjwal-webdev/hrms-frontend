@@ -12,7 +12,7 @@ import CandidateHome from './pages/CandidateHome';
 
 export default function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Header />
       <Routes>
         <Route path='/' element={<Welcome />} />
@@ -24,6 +24,6 @@ export default function App() {
         <Route path="/sign-in-external" element={<SignInExternal />} />
         <Route path="/candidate-home" element={<CandidateHome />} />
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   )
 }
