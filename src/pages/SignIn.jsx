@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { BASE_URL } from '../apiConfig';
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
@@ -19,7 +20,7 @@ export default function SignIn() {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await axios.post('http://localhost:8896/admin/login', formData, {
+      const res = await axios.post(`${BASE_URL}/admin/login`, formData, {
         headers: {
           'Content-Type': 'application/json',
         },

@@ -169,7 +169,7 @@ const handleGetAllJobs = async () => {
                             type="text"
                             name="firstName"
                             value={candidate.firstName}
-                            onChange={handleChange}
+                            onChange={handleApplyJobChange}
                             className="form-control"
                             required
                         />
@@ -180,7 +180,7 @@ const handleGetAllJobs = async () => {
                             type="text"
                             name="lastName"
                             value={candidate.lastName}
-                            onChange={handleChange}
+                            onChange={handleApplyJobChange}
                             className="form-control"
                             required
                         />
@@ -193,7 +193,7 @@ const handleGetAllJobs = async () => {
                             type="number"
                             name="age"
                             value={candidate.age}
-                            onChange={handleChange}
+                            onChange={handleApplyJobChange}
                             className="form-control"
                             required
                         />
@@ -203,7 +203,7 @@ const handleGetAllJobs = async () => {
                         <select
                             name="gender"
                             value={candidate.gender}
-                            onChange={handleChange}
+                            onChange={handleApplyJobChange}
                             className="form-select"
                             required
                         >
@@ -220,7 +220,7 @@ const handleGetAllJobs = async () => {
                             type="text"
                             name="phoneNo"
                             value={candidate.phoneNo}
-                            onChange={handleChange}
+                            onChange={handleApplyJobChange}
                             className="form-control"
                             required
                         />
@@ -232,7 +232,7 @@ const handleGetAllJobs = async () => {
                         type="date"
                         name="dateOfBirth"
                         value={candidate.dateOfBirth}
-                        onChange={handleChange}
+                        onChange={handleApplyJobChange}
                         className="form-control"
                         required
                     />
@@ -245,7 +245,7 @@ const handleGetAllJobs = async () => {
                             type="email"
                             name="email"
                             value={candidate.email}
-                            onChange={handleChange}
+                            onChange={handleApplyJobChange}
                             className="form-control"
                             required
                         />
@@ -256,7 +256,7 @@ const handleGetAllJobs = async () => {
                             type="text"
                             name="userName"
                             value={candidate.userName}
-                            onChange={handleChange}
+                            onChange={handleApplyJobChange}
                             className="form-control"
                             required
                         />
@@ -268,7 +268,7 @@ const handleGetAllJobs = async () => {
                         type="password"
                         name="password"
                         value={candidate.password}
-                        onChange={handleChange}
+                        onChange={handleApplyJobChange}
                         className="form-control"
                         required
                     />
@@ -280,7 +280,7 @@ const handleGetAllJobs = async () => {
                         type="text"
                         name="workCompany1"
                         value={candidate.workCompany1}
-                        onChange={handleChange}
+                        onChange={handleApplyJobChange}
                         placeholder="Company name"
                         className="form-control"
                     />
@@ -291,7 +291,7 @@ const handleGetAllJobs = async () => {
                         type="text"
                         name="workCompany1Skills"
                         value={candidate.workCompany1Skills}
-                        onChange={handleChange}
+                        onChange={handleApplyJobChange}
                         placeholder="Skills used"
                         className="form-control"
                     />
@@ -301,7 +301,7 @@ const handleGetAllJobs = async () => {
                     <textarea
                         name="workCompany1Description"
                         value={candidate.workCompany1Description}
-                        onChange={handleChange}
+                        onChange={handleApplyJobChange}
                         placeholder="Describe your role"
                         className="form-control"
                         rows="3"
@@ -313,7 +313,7 @@ const handleGetAllJobs = async () => {
                         type="text"
                         name="workCompany2"
                         value={candidate.workCompany2}
-                        onChange={handleChange}
+                        onChange={handleApplyJobChange}
                         placeholder="Company name"
                         className="form-control"
                     />
@@ -324,7 +324,7 @@ const handleGetAllJobs = async () => {
                         type="text"
                         name="workCompany2Skills"
                         value={candidate.workCompany2Skills}
-                        onChange={handleChange}
+                        onChange={handleApplyJobChange}
                         placeholder="Skills used"
                         className="form-control"
                     />
@@ -334,7 +334,7 @@ const handleGetAllJobs = async () => {
                     <textarea
                         name="workCompany2Description"
                         value={candidate.workCompany2Description}
-                        onChange={handleChange}
+                        onChange={handleApplyJobChange}
                         placeholder="Describe your role"
                         className="form-control"
                         rows="3"
@@ -347,7 +347,7 @@ const handleGetAllJobs = async () => {
                         type="text"
                         name="education1"
                         value={candidate.education1}
-                        onChange={handleChange}
+                        onChange={handleApplyJobChange}
                         placeholder="Institution name"
                         className="form-control"
                     />
@@ -357,7 +357,7 @@ const handleGetAllJobs = async () => {
                     <textarea
                         name="education1Description"
                         value={candidate.education1Description}
-                        onChange={handleChange}
+                        onChange={handleApplyJobChange}
                         placeholder="Describe your education"
                         className="form-control"
                         rows="3"
@@ -369,7 +369,7 @@ const handleGetAllJobs = async () => {
                         type="text"
                         name="education2"
                         value={candidate.education2}
-                        onChange={handleChange}
+                        onChange={handleApplyJobChange}
                         placeholder="Institution name"
                         className="form-control"
                     />
@@ -379,7 +379,7 @@ const handleGetAllJobs = async () => {
                     <textarea
                         name="education2Description"
                         value={candidate.education2Description}
-                        onChange={handleChange}
+                        onChange={handleApplyJobChange}
                         placeholder="Describe your education"
                         className="form-control"
                         rows="3"
@@ -391,7 +391,7 @@ const handleGetAllJobs = async () => {
                         <textarea
                             name="address"
                             value={candidate.address}
-                            onChange={handleChange}
+                            onChange={handleApplyJobChange}
                             placeholder="Enter your address"
                             className="form-control"
                             rows="3"
