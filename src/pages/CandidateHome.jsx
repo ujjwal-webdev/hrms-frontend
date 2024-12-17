@@ -161,248 +161,241 @@ const handleGetAllJobs = async () => {
             <div className="mt-4">
                 <h3>Apply for Job</h3>
                 <form onSubmit={applyJobHandler}>
-                    <div className="form-group">
-                        <label htmlFor="firstName">First Name</label>
+                <h5 className="text-primary">Apply for Job</h5>
+                <div className="row g-3">
+                    <div className="col-md-6">
+                        <label className="form-label">First Name</label>
                         <input
                             type="text"
-                            id="firstName"
                             name="firstName"
-                            className="form-control"
                             value={candidate.firstName}
-                            onChange={handleApplyJobChange}
+                            onChange={handleChange}
+                            className="form-control"
                             required
                         />
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="lastName">Last Name</label>
+                    <div className="col-md-6">
+                        <label className="form-label">Last Name</label>
                         <input
                             type="text"
-                            id="lastName"
                             name="lastName"
-                            className="form-control"
                             value={candidate.lastName}
-                            onChange={handleApplyJobChange}
+                            onChange={handleChange}
+                            className="form-control"
                             required
                         />
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="age">Age</label>
+                </div>
+                <div className="row g-3 mt-3">
+                    <div className="col-md-4">
+                        <label className="form-label">Age</label>
                         <input
                             type="number"
-                            id="age"
                             name="age"
-                            className="form-control"
                             value={candidate.age}
-                            onChange={handleApplyJobChange}
+                            onChange={handleChange}
+                            className="form-control"
                             required
                         />
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="gender">Gender</label>
+                    <div className="col-md-4">
+                        <label className="form-label">Gender</label>
                         <select
-                            id="gender"
                             name="gender"
-                            className="form-control"
                             value={candidate.gender}
-                            onChange={handleApplyJobChange}
+                            onChange={handleChange}
+                            className="form-select"
                             required
                         >
-                            <option value="">Select Gender</option>
+                            <option value="" disabled>
+                                 Select Gender
+                            </option>
                             <option value="MALE">Male</option>
                             <option value="FEMALE">Female</option>
                         </select>
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="phoneNo">Phone Number</label>
+                    <div className="col-md-4">
+                        <label className="form-label">Phone Number</label>
                         <input
                             type="text"
-                            id="phoneNo"
                             name="phoneNo"
-                            className="form-control"
                             value={candidate.phoneNo}
-                            onChange={handleApplyJobChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="dateOfBirth">Date of Birth</label>
-                        <input
-                            type="Date"
-                            id="dateOfBirth"
-                            name="dateOfBirth"
+                            onChange={handleChange}
                             className="form-control"
-                            value={candidate.dateOfBirth}
-                            onChange={handleApplyJobChange}
                             required
                         />
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="email">Email</label>
+                </div>
+                <div className="mt-3">
+                    <label className="form-label">Date of Birth</label>
+                    <input
+                        type="date"
+                        name="dateOfBirth"
+                        value={candidate.dateOfBirth}
+                        onChange={handleChange}
+                        className="form-control"
+                        required
+                    />
+                </div>
+                <h5 className="text-primary mt-4">Account Information</h5>
+                <div className="row g-3">
+                    <div className="col-md-6">
+                        <label className="form-label">Email</label>
                         <input
                             type="email"
-                            id="email"
                             name="email"
-                            className="form-control"
                             value={candidate.email}
-                            onChange={handleApplyJobChange}
+                            onChange={handleChange}
+                            className="form-control"
                             required
                         />
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="userName">Username</label>
+                    <div className="col-md-6">
+                        <label className="form-label">Username</label>
                         <input
                             type="text"
-                            id="userName"
                             name="userName"
-                            className="form-control"
                             value={candidate.userName}
-                            onChange={handleApplyJobChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="password">Password</label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
+                            onChange={handleChange}
                             className="form-control"
-                            value={candidate.password}
-                            onChange={handleApplyJobChange}
                             required
                         />
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="workCompany1">Work Company 1 Name</label>
-                        <input
-                            type="text"
-                            id="workCompany1"
-                            name="workCompany1"
-                            className="form-control"
-                            value={candidate.workCompany1}
-                            onChange={handleApplyJobChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="workCompany1Skills">Work Company 1 Skills</label>
-                        <input
-                            type="text"
-                            id="workCompany1Skills"
-                            name="workCompany1Skills"
-                            className="form-control"
-                            value={candidate.workCompany1Skills}
-                            onChange={handleApplyJobChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="workCompany1Description">Work Company 1 Description</label>
-                        <input
-                            type="text"
-                            id="workCompany1Description"
-                            name="workCompany1Description"
-                            className="form-control"
-                            value={candidate.workCompany1Description}
-                            onChange={handleApplyJobChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="workCompany2">Work Company 2 Name</label>
-                        <input
-                            type="text"
-                            id="workCompany2"
-                            name="workCompany2"
-                            className="form-control"
-                            value={candidate.workCompany2}
-                            onChange={handleApplyJobChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="workCompany2Skills">Work Company 2 Skills</label>
-                        <input
-                            type="text"
-                            id="workCompany2Skills"
-                            name="workCompany2Skills"
-                            className="form-control"
-                            value={candidate.workCompany2Skills}
-                            onChange={handleApplyJobChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="workCompany2Description">Work Company 2 Description</label>
-                        <input
-                            type="text"
-                            id="workCompany2Description"
-                            name="workCompany2Description"
-                            className="form-control"
-                            value={candidate.workCompany2Description}
-                            onChange={handleApplyJobChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="education1">Education 1 Institute Name</label>
-                        <input
-                            type="text"
-                            id="education1"
-                            name="education1"
-                            className="form-control"
-                            value={candidate.education1}
-                            onChange={handleApplyJobChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="education1Description">Education 1 Description</label>
-                        <input
-                            type="text"
-                            id="education1Description"
-                            name="education1Description"
-                            className="form-control"
-                            value={candidate.education1Description}
-                            onChange={handleApplyJobChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="education2">Education 2 Institute Name</label>
-                        <input
-                            type="text"
-                            id="education2"
-                            name="education2"
-                            className="form-control"
-                            value={candidate.education2}
-                            onChange={handleApplyJobChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="education2Description">Education 2 Description</label>
-                        <input
-                            type="text"
-                            id="education2Description"
-                            name="education2Description"
-                            className="form-control"
-                            value={candidate.education2Description}
-                            onChange={handleApplyJobChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="address">Address</label>
-                        <input
-                            type="text"
-                            id="address"
+                </div>
+                <div className="mt-3">
+                    <label className="form-label">Password</label>
+                    <input
+                        type="password"
+                        name="password"
+                        value={candidate.password}
+                        onChange={handleChange}
+                        className="form-control"
+                        required
+                    />
+                </div>
+                <h5 className="text-primary mt-4">Work Experience</h5>
+                <div className="mb-3">
+                    <label className="form-label">Work Company 1</label>
+                    <input
+                        type="text"
+                        name="workCompany1"
+                        value={candidate.workCompany1}
+                        onChange={handleChange}
+                        placeholder="Company name"
+                        className="form-control"
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Work Company 1 Skills</label>
+                    <input
+                        type="text"
+                        name="workCompany1Skills"
+                        value={candidate.workCompany1Skills}
+                        onChange={handleChange}
+                        placeholder="Skills used"
+                        className="form-control"
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Work Company 1 Description</label>
+                    <textarea
+                        name="workCompany1Description"
+                        value={candidate.workCompany1Description}
+                        onChange={handleChange}
+                        placeholder="Describe your role"
+                        className="form-control"
+                        rows="3"
+                    ></textarea>
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Work Company 2</label>
+                    <input
+                        type="text"
+                        name="workCompany2"
+                        value={candidate.workCompany2}
+                        onChange={handleChange}
+                        placeholder="Company name"
+                        className="form-control"
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Work Company 2 Skills</label>
+                    <input
+                        type="text"
+                        name="workCompany2Skills"
+                        value={candidate.workCompany2Skills}
+                        onChange={handleChange}
+                        placeholder="Skills used"
+                        className="form-control"
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Work Company 2 Description</label>
+                    <textarea
+                        name="workCompany2Description"
+                        value={candidate.workCompany2Description}
+                        onChange={handleChange}
+                        placeholder="Describe your role"
+                        className="form-control"
+                        rows="3"
+                    ></textarea>
+                </div>
+                <h5 className="text-primary mt-4">Education</h5>
+                <div className="mb-3">
+                    <label className="form-label">Education 1</label>
+                    <input
+                        type="text"
+                        name="education1"
+                        value={candidate.education1}
+                        onChange={handleChange}
+                        placeholder="Institution name"
+                        className="form-control"
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Education 1 Description</label>
+                    <textarea
+                        name="education1Description"
+                        value={candidate.education1Description}
+                        onChange={handleChange}
+                        placeholder="Describe your education"
+                        className="form-control"
+                        rows="3"
+                    ></textarea>
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Education 2</label>
+                    <input
+                        type="text"
+                        name="education2"
+                        value={candidate.education2}
+                        onChange={handleChange}
+                        placeholder="Institution name"
+                        className="form-control"
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Education 2 Description</label>
+                    <textarea
+                        name="education2Description"
+                        value={candidate.education2Description}
+                        onChange={handleChange}
+                        placeholder="Describe your education"
+                        className="form-control"
+                        rows="3"
+                    ></textarea>
+                </div>
+                <h5 className="text-primary mt-4">Address</h5>
+                    <div className="mb-3">
+                        <label className="form-label">Address</label>
+                        <textarea
                             name="address"
-                            className="form-control"
                             value={candidate.address}
-                            onChange={handleApplyJobChange}
-                            required
-                        />
+                            onChange={handleChange}
+                            placeholder="Enter your address"
+                            className="form-control"
+                            rows="3"
+                        ></textarea>
                     </div>
                     <div className="form-group">
                       <label htmlFor="jobId">Job ID</label>
