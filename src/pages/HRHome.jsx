@@ -2498,7 +2498,7 @@ const [candidate, setCandidate] = useState(null);
                             <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('getAllEmployees')}>Get All employees</button>
                             <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('changeEmployeeRole')}>Change employee Role</button>
                             <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('changeEmployeeDepartment')}>Change Employee's Department</button>
-                            <button className="btn btn-primary btn-sm mb-2 px-4 py-2" onClick={() => setSelectedFeature('salaryDetailsOfEmployee')}>Salary details of employee</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('salaryDetailsOfEmployee')}>Salary details of employee</button>
                             <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('setEmployeeSalary')}>Set Employee's Salary</button>
                             <button className="btn btn-danger btn-sm mb-2 me-2" onClick={() => setSelectedFeature('deleteEmployee')}>Delete Employee</button>
                         </div>

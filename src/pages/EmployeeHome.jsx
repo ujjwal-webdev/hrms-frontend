@@ -1261,7 +1261,7 @@ export default function EmployeeHome() {
                         <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('addLeave')}>Add Leave</button>
                         <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('updateLeave')}>Update Leave</button>
                         <button className="btn btn-danger btn-sm mb-2 me-2" onClick={() => setSelectedFeature('deletePendingLeave')}>Delete Pending Leave</button>
-                        <button className="btn btn-info btn-sm mb-2 me-2" onClick={() => setSelectedFeature('checkLeaveStatus')}>Check Latest Leave Status</button>
+                        <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('checkLeaveStatus')}>Check Latest Leave Status</button>
                         <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('getAllLeaves')}>Get All Leaves</button>
                     </div>
                 </div>
