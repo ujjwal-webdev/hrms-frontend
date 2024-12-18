@@ -534,9 +534,9 @@ const handleGetAllJobs = async () => {
                     <div className="card-body">
                         <h5 className="card-title">Apply for a Job</h5>
                         <p className="card-text">Job Application</p>
-                        <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('applyJob')}>Apply</button>
-                        <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('getMyApplications')}>Get My Applications</button>
-                        <button className="btn btn-primary btn-sm" onClick={() => setSelectedFeature('getAllJobs')}>Get All Jobs</button>
+                        <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('applyJob')}>Apply</button>
+                        <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('getMyApplications')}>Get My Applications</button>
+                        <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('getAllJobs')}>Get All Jobs</button>
                     </div>
                 </div>
             </div>

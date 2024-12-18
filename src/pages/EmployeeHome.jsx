@@ -1246,10 +1246,10 @@ export default function EmployeeHome() {
                     <div className="card-body">
                         <h5 className="card-title">Address Management</h5>
                         <p className="card-text">Manage your addresses effectively.</p>
-                        <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('addAddress')}>Add Address</button>
-                        <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('updateAddress')}>Update Address</button>
-                        <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllAddresses')}>Get All Addresses</button>
-                        <button className="btn btn-danger btn-sm" onClick={() => setSelectedFeature('deleteAddress')}>Delete Address</button>
+                        <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('addAddress')}>Add Address</button>
+                        <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('updateAddress')}>Update Address</button>
+                        <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('listAllAddresses')}>Get All Addresses</button>
+                        <button className="btn btn-danger btn-sm mb-2 me-2" onClick={() => setSelectedFeature('deleteAddress')}>Delete Address</button>
                     </div>
                 </div>
             </div>
@@ -1258,11 +1258,11 @@ export default function EmployeeHome() {
                     <div className="card-body">
                         <h5 className="card-title">Leave Management</h5>
                         <p className="card-text">Track and manage your leaves.</p>
-                        <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('addLeave')}>Add Leave</button>
-                        <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('updateLeave')}>Update Leave</button>
-                        <button className="btn btn-danger btn-sm me-2" onClick={() => setSelectedFeature('deletePendingLeave')}>Delete Pending Leave</button>
-                        <button className="btn btn-info btn-sm me-2" onClick={() => setSelectedFeature('checkLeaveStatus')}>Check Latest Leave Status</button>
-                        <button className="btn btn-primary btn-sm" onClick={() => setSelectedFeature('getAllLeaves')}>Get All Leaves</button>
+                        <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('addLeave')}>Add Leave</button>
+                        <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('updateLeave')}>Update Leave</button>
+                        <button className="btn btn-danger btn-sm mb-2 me-2" onClick={() => setSelectedFeature('deletePendingLeave')}>Delete Pending Leave</button>
+                        <button className="btn btn-info btn-sm mb-2 me-2" onClick={() => setSelectedFeature('checkLeaveStatus')}>Check Latest Leave Status</button>
+                        <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('getAllLeaves')}>Get All Leaves</button>
                     </div>
                 </div>
             </div>
@@ -1271,8 +1271,8 @@ export default function EmployeeHome() {
                     <div className="card-body">
                         <h5 className="card-title">Work Management</h5>
                         <p className="card-text">Monitor and update your work status.</p>
-                        <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('checkWork')}>Check Work</button>
-                        <button className="btn btn-primary btn-sm" onClick={() => setSelectedFeature('changeWorkStatus')}>Change Work Status</button>
+                        <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('checkWork')}>Check Work</button>
+                        <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('changeWorkStatus')}>Change Work Status</button>
                     </div>
                 </div>
             </div>
@@ -1281,7 +1281,7 @@ export default function EmployeeHome() {
                     <div className="card-body">
                         <h5 className="card-title">Education Management</h5>
                         <p className="card-text">Manage your Education and related information.</p>
-                        <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('addEducation')}>Add Education</button>
+                        <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('addEducation')}>Add Education</button>
                     </div>
                 </div>
             </div>
@@ -1290,7 +1290,7 @@ export default function EmployeeHome() {
                     <div className="card-body">
                         <h5 className="card-title">Work Experience Management</h5>
                         <p className="card-text">Manage your Work Experience and related information.</p>
-                        <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('addWorkExperience')}>Add Work Experience</button>
+                        <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('addWorkExperience')}>Add Work Experience</button>
                     </div>
                 </div>
             </div>
@@ -1299,7 +1299,7 @@ export default function EmployeeHome() {
                     <div className="card-body">
                         <h5 className="card-title">Skills Management</h5>
                         <p className="card-text">Manage your Skills and related information.</p>
-                        <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('addSkills')}>Add Skills</button>
+                        <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('addSkills')}>Add Skills</button>
                     </div>
                 </div>
             </div>
