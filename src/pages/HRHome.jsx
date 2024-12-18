@@ -2480,9 +2480,9 @@ const [candidate, setCandidate] = useState(null);
                         <div className="card-body">
                             <h5 className="card-title">HR Profile Management</h5>
                             <p className="card-text">HR Profile and related information.</p>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('viewYourProfile')}>View your profile</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('registerAnotherHR')}>Register Another HR</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('updatePassword')}>Update your password</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('viewYourProfile')}>View your profile</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('registerAnotherHR')}>Register Another HR</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('updatePassword')}>Update your password</button>
                         </div>
                     </div>
                 </div>
@@ -2492,15 +2492,15 @@ const [candidate, setCandidate] = useState(null);
                         <div className="card-body">
                             <h5 className="card-title">Employee Management</h5>
                             <p className="card-text">Manage Employee and related information.</p>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('addEmployee')}>Add Employee (via DepartmentID)</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('getEmployeeByID')}>Get Employee by ID</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('getEmployeeByUsername')}>Get Employee by Username</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('getAllEmployees')}>Get All employees</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('changeEmployeeRole')}>Change employee Role</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('changeEmployeeDepartment')}>Change Employee's Department</button>
-                            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('salaryDetailsOfEmployee')}>Salary details of employee</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('setEmployeeSalary')}>Set Employee's Salary</button>
-                            <button className="btn btn-danger btn-sm me-2" onClick={() => setSelectedFeature('deleteEmployee')}>Delete Employee</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('addEmployee')}>Add Employee (via DepartmentID)</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('getEmployeeByID')}>Get Employee by ID</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('getEmployeeByUsername')}>Get Employee by Username</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('getAllEmployees')}>Get All employees</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('changeEmployeeRole')}>Change employee Role</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('changeEmployeeDepartment')}>Change Employee's Department</button>
+                            <button className="btn btn-primary btn-sm mb-2 px-4 py-2" onClick={() => setSelectedFeature('salaryDetailsOfEmployee')}>Salary details of employee</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('setEmployeeSalary')}>Set Employee's Salary</button>
+                            <button className="btn btn-danger btn-sm mb-2 me-2" onClick={() => setSelectedFeature('deleteEmployee')}>Delete Employee</button>
                         </div>
                     </div>
                 </div>
@@ -2510,14 +2510,14 @@ const [candidate, setCandidate] = useState(null);
                         <div className="card-body">
                             <h5 className="card-title">Department Management</h5>
                             <p className="card-text">Manage Department and related information.</p>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('addDepartment')}>Add Department</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('updateDepartmentName')}>Update Department Name</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('getDepartmentbyID')}>Get Department by ID</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('getAllDepartments')}>Get All Departments</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('getDepartmentByName')}>Get Department by Name</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('getDepartmentByName(ASC)')}>Get Department by Name (ASC)</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('getDepartmentByName(DESC)')}>Get Department by Name  (DESC)</button>
-                            <button className="btn btn-danger btn-sm me-2" onClick={() => setSelectedFeature('deleteDepartment')}>Delete Department</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('addDepartment')}>Add Department</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('updateDepartmentName')}>Update Department Name</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('getDepartmentbyID')}>Get Department by ID</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('getAllDepartments')}>Get All Departments</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('getDepartmentByName')}>Get Department by Name</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('getDepartmentByName(ASC)')}>Get Department by Name (ASC)</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('getDepartmentByName(DESC)')}>Get Department by Name  (DESC)</button>
+                            <button className="btn btn-danger btn-sm mb-2 me-2" onClick={() => setSelectedFeature('deleteDepartment')}>Delete Department</button>
                         </div>
                     </div>
                 </div>
@@ -2527,10 +2527,10 @@ const [candidate, setCandidate] = useState(null);
                         <div className="card-body">
                             <h5 className="card-title">Leave Management</h5>
                             <p className="card-text">Manage Leave and related information.</p>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('viewAllLeavesOfEmployee')}>View all leaves of the employee (via DepartmentID)</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('viewPending/CompletedLeaves')}>View Pending/Completed leaves</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('viewPendingStatusLeavesOfEmployee')}>View pending status leaves of the employee</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('respondToLeave')}>Respond to a leave</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('viewAllLeavesOfEmployee')}>View all leaves of the employee (via DepartmentID)</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('viewPending/CompletedLeaves')}>View Pending/Completed leaves</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('viewPendingStatusLeavesOfEmployee')}>View pending status leaves of the employee</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('respondToLeave')}>Respond to a leave</button>
                         </div>
                     </div>
                 </div>
@@ -2540,9 +2540,9 @@ const [candidate, setCandidate] = useState(null);
                         <div className="card-body">
                             <h5 className="card-title">Equipment Management</h5>
                             <p className="card-text">Manage Equipment and related information.</p>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('assignEquipment')}>Assign Equipment</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('equipmentDetailsOfEmployee')}>Equipment details of employee</button>
-                            <button className="btn btn-danger btn-sm me-2" onClick={() => setSelectedFeature('unassignEquipment')}>Unassign Equipment</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('assignEquipment')}>Assign Equipment</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('equipmentDetailsOfEmployee')}>Equipment details of employee</button>
+                            <button className="btn btn-danger btn-sm mb-2 me-2" onClick={() => setSelectedFeature('unassignEquipment')}>Unassign Equipment</button>
                         </div>
                     </div>
                 </div>
@@ -2552,10 +2552,10 @@ const [candidate, setCandidate] = useState(null);
                         <div className="card-body">
                             <h5 className="card-title">Job Management</h5>
                             <p className="card-text">Manage Job and related information.</p>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('createJob')}>Create a job</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllJobs')}>Get All Jobs</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listJobByID')}>Get Job by ID</button>
-                            <button className="btn btn-danger btn-sm me-2" onClick={() => setSelectedFeature('deleteJob')}>Delete Job</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('createJob')}>Create a job</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('listAllJobs')}>Get All Jobs</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('listJobByID')}>Get Job by ID</button>
+                            <button className="btn btn-danger btn-sm mb-2 me-2" onClick={() => setSelectedFeature('deleteJob')}>Delete Job</button>
                         </div>
                     </div>
                 </div>
@@ -2564,9 +2564,9 @@ const [candidate, setCandidate] = useState(null);
                         <div className="card-body">
                             <h5 className="card-title">Candidate Management</h5>
                             <p className="card-text">Manage Candidate and related information.</p>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listCandidatesForJob')}>Get candidates for a job</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('updateCandidateStatus')}>Update Status of Candidate</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('candidateByID')}>Get Candidate By ID</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('listCandidatesForJob')}>Get candidates for a job</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('updateCandidateStatus')}>Update Status of Candidate</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('candidateByID')}>Get Candidate By ID</button>
                         </div>
                     </div>
                 </div>
@@ -2576,173 +2576,26 @@ const [candidate, setCandidate] = useState(null);
                         <div className="card-body">
                             <h5 className="card-title">Project Management</h5>
                             <p className="card-text">Manage Project/Work and related information.</p>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('assignIndividualProject')}>Assign Individual Project</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('updateProject')}>Update Project</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('assignGroupProject')}>Assign group Project</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllProjects')}>List all Projects</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllIndividualProject')}>List all Individual Project</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllGroupProject')}>List all Group Project</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllPendingProject')}>List all pending Project</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listIndividualPendingProject')}>List Individual Pending Project</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listGroupPendingProject')}>List Group Pending Project</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllCompletedProject')}>List All completed Project</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllIndividualCompletedProject')}>List Individual's completed Project</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listAllGroupCompletedProject')}>List Group's completed Project</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('listIndividualsInCompletedProject')}>List Individuals in completed Project</button>
-                            <button className="btn btn-primary btn-sm me-2" onClick={() => setSelectedFeature('ListGroupsInCompletedProject')}>List Groups in completed Project</button>
-                            <button className="btn btn-danger btn-sm me-2" onClick={() => setSelectedFeature('deleteProject')}>Delete Project</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('assignIndividualProject')}>Assign Individual Project</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('updateProject')}>Update Project</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('assignGroupProject')}>Assign group Project</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('listAllProjects')}>List all Projects</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('listAllIndividualProject')}>List all Individual Project</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('listAllGroupProject')}>List all Group Project</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('listAllPendingProject')}>List all pending Project</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('listIndividualPendingProject')}>List Individual Pending Project</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('listGroupPendingProject')}>List Group Pending Project</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('listAllCompletedProject')}>List All completed Project</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('listAllIndividualCompletedProject')}>List Individual's completed Project</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('listAllGroupCompletedProject')}>List Group's completed Project</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('listIndividualsInCompletedProject')}>List Individuals in completed Project</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('ListGroupsInCompletedProject')}>List Groups in completed Project</button>
+                            <button className="btn btn-danger btn-sm mb-2 me-2" onClick={() => setSelectedFeature('deleteProject')}>Delete Project</button>
                         </div>
                     </div>
                 </div>
                 
-            </div>    
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('addDepartment')}>
-                Add Department
-            </button> */}
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('addEmployee')}>
-                Add Employee (via DepartmentID)
-            </button> */}
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('deleteEmployee')}>
-                Delete Employee
-            </button> */}
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getEmployeeByID')}>
-                Get Employee by ID
-            </button> */}
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getEmployeeByUsername')}>
-                Get Employee by Username
-            </button> */}
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('viewYourProfile')}>
-                View your profile
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('registerAnotherHR')}>
-                Register Another HR
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('updatePassword')}>
-                Update your password
-            </button> */}
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getAllEmployees')}>
-                Get All employees
-            </button> */}
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('changeEmployeeRole')}>
-                Change employee Role
-            </button> */}
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('setEmployeeSalary')}>
-                Set Employee's Salary
-            </button> */}
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('changeEmployeeDepartment')}>
-                Change Employee's Department
-            </button> */}
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('updateDepartmentName')}>
-                Update Department Name
-            </button> */}
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('deleteDepartment')}>
-                Delete Department
-            </button> */}
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getDepartmentbyID')}>
-                Get Department by ID
-            </button> */}
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getAllDepartments')}>
-                Get All Departments
-            </button> */}
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getDepartmentByName')}>
-                Get Department by Name
-            </button> */}
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getDepartmentByName(ASC)')}>
-                Get Department by Name (ASC)
-            </button> */}
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('getDepartmentByName(DESC)')}>
-                Get Department by Name  (DESC)
-            </button> */}
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('viewPending/CompletedLeaves')}>
-                View Pending/Completed leaves
-            </button> */}
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('viewAllLeavesOfEmployee')}>
-                View all leaves of the employee
-            </button> */}
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('viewPendingStatusLeavesOfEmployee')}>
-                View pending status leaves of the employee
-            </button> */}
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('respondToLeave')}>
-                Respond to a leave
-            </button> */}
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('assignIndividualWork')}>
-                Assign Individual work
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('deleteWork')}>
-                Delete Work
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('updateWork')}>
-                Update work
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('assignGroupWork')}>
-                Assign group work
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listAllWork')}>
-                List all works
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listAllIndividualWork')}>
-                List all Individual work
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listAllGroupWork')}>
-                List all Group work
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listAllPendingWork')}>
-                List all pending work
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listIndividualPendingWork')}>
-                List Individual Pending work
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listGroupPendingWork')}>
-                List Group Pending work
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listAllCompletedWork')}>
-                List All completed work
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listAllIndividualCompletedWork')}>
-                List Individual's completed work
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listAllGroupCompletedWork')}>
-                List Group's completed work
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listIndividualsInCompletedWork')}>
-                List Individuals in completed work
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('ListGroupsInCompletedWork')}>
-                List Groups in completed work
-            </button> */}
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('salaryDetailsOfEmployee')}>
-                Salary details of employee
-            </button> */}
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('equipmentDetailsOfEmployee')}>
-                Equipment details of employee
-            </button> */}
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('assignEquipment')}>
-                Assign Equipment
-            </button> */}
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('unassignEquipment')}>
-                Unassign Equipment
-            </button> */}
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('createJob')}>
-                Create a job
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listAllJobs')}>
-                Get All Jobs
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listJobByID')}>
-                Get Job by ID
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('deleteJob')}>
-                Delete Job
-            </button> */}
-            {/* <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('listCandidatesForJob')}>
-                Get candidates for a job
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('updateCandidateStatus')}>
-                Update Status of Candidate
-            </button>
-            <button className="btn btn-primary btn-sm px-4 py-2" onClick={() => setSelectedFeature('candidateByID')}>
-                Get Candidate By ID
-            </button> */}
+            </div>
             {renderForm()}
     </div>
   );
