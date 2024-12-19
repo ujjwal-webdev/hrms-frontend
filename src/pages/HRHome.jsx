@@ -2527,7 +2527,7 @@ const [candidate, setCandidate] = useState(null);
                         <div className="card-body">
                             <h5 className="card-title">Leave Management</h5>
                             <p className="card-text">Manage Leave and related information.</p>
-                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('viewAllLeavesOfEmployee')}>View all leaves of the employee (via DepartmentID)</button>
+                            <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('viewAllLeavesOfEmployee')}>View all leaves of the employee (via EmployeeID)</button>
                             <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('viewPending/CompletedLeaves')}>View Pending/Completed leaves</button>
                             <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('viewPendingStatusLeavesOfEmployee')}>View pending status leaves of the employee</button>
                             <button className="btn btn-primary btn-sm mb-2 me-2" onClick={() => setSelectedFeature('respondToLeave')}>Respond to a leave</button>
