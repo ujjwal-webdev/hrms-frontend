@@ -82,12 +82,6 @@ export default function SignIn() {
           </button>
         </form>
         {error && <div className="alert alert-danger mt-3" role="alert">{error}</div>}
-        <div className="text-center mt-4">
-          <p className="mb-0">Don't have an account?</p>
-          <Link to="/sign-up" className="text-decoration-none text-primary fw-bold">
-            Sign Up
-          </Link>
-        </div>
       </div>
     </div>
   );
