@@ -94,7 +94,7 @@ export const fetchAllLeaves = async (e, setMessage, setLoading, setLeaves) => { 
         setLeaves([]);
 
         const token = localStorage.getItem("authToken");
-        const response = await axios.get(`http://localhost:8896/admin/allLeaves`, {
+        const response = await axios.get(`${BASE_URL}/admin/allLeaves`, {
             headers: {
                 Authorization: token,
                 "Content-Type": "application/json",

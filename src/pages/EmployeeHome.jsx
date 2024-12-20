@@ -27,24 +27,6 @@ export default function EmployeeHome() {
 
     const [employee, setEmployee] = useState(null);
     const [message, setMessage] = useState('');
-    
-    // const handleViewProfile = async () => {
-    //     setMessage('');
-    //     try {
-    //         const token = localStorage.getItem("authToken");
-    //         const response = await axios.get(
-    //             `${BASE_URL}/employee/viewProfile`,
-    //             {
-    //                 headers: {
-    //                     Authorization: token,
-    //                 },
-    //             }
-    //         );
-    //         setEmployee(response.data); // Set employee profile data
-    //     } catch (error) {
-    //         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    //     }
-    // };
 
     const [updatedProfile, setUpdatedProfile] = useState({
         name: '',
@@ -57,28 +39,6 @@ export default function EmployeeHome() {
         setUpdatedProfile({ ...updatedProfile, [field]: value });
     };
 
-    // const handleUpdateProfile = async (e) => {
-    //     e.preventDefault();
-    //     setMessage('');
-    
-    //     try {
-    //         const token = localStorage.getItem("authToken");
-    //         const response = await axios.put(
-    //             "http://localhost:8896/employee/updateProfile",
-    //             updatedProfile,
-    //             {
-    //                 headers: {
-    //                     Authorization: token,
-    //                 },
-    //             }
-    //         );
-    //         setMessage('Profile updated successfully!');
-    //         setUpdatedProfile(response.data); // Update the form with the updated data
-    //     } catch (error) {
-    //         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    //     }
-    // };
-
     const [passwordData, setPasswordData] = useState({
         newPassword: '',
         confirmPassword: '',
@@ -88,33 +48,7 @@ export default function EmployeeHome() {
         setPasswordData({ ...passwordData, [field]: value });
     };
 
-    // const handleUpdatePassword = async (e) => {
-    //     e.preventDefault();
-    //     setMessage('');
-    
-    //     // Validation: Check if new password matches confirm password
-    //     if (passwordData.newPassword !== passwordData.confirmPassword) {
-    //         setMessage('Passwords do not match.');
-    //         return;
-    //     }
-    
-    //     try {
-    //         const token = localStorage.getItem("authToken");
-    //         const response = await axios.put(
-    //             "http://localhost:8896/employee/updatePassword",
-    //             passwordData,
-    //             {
-    //                 headers: {
-    //                     Authorization: token,
-    //                 },
-    //             }
-    //         );
-    //         setMessage(response.data); // Success message from the server
-    //         setPasswordData({ newPassword: '', confirmPassword: '' }); // Clear the form
-    //     } catch (error) {
-    //         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    //     }
-    // };
+
 
     const [addressData, setAddressData] = useState({
         houseNumber: '',
@@ -128,91 +62,7 @@ export default function EmployeeHome() {
         setAddressData({ ...addressData, [field]: value });
     };
 
-    // const handleAddAddress = async (e) => {
-    //     e.preventDefault();
-    //     setMessage('');
-    
-    //     try {
-    //         const token = localStorage.getItem("authToken");
-    //         const response = await axios.post(
-    //             "http://localhost:8896/employee/address",
-    //             addressData,
-    //             {
-    //                 headers: {
-    //                     Authorization: token,
-    //                 },
-    //             }
-    //         );
-    //         setMessage("Address added successfully!");
-    //         setAddressData({
-    //             houseNumber: '',
-    //             colony: '',
-    //             pincode: '',
-    //             city: '',
-    //             state: '',
-    //         }); // Clear the form after success
-    //     } catch (error) {
-    //         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    //     }
-    // };
-
-    // const handleUpdateAddress = async (e) => {
-    //     e.preventDefault();
-    //     setMessage('');
-    
-    //     try {
-    //         const token = localStorage.getItem("authToken");
-    //         const response = await axios.put(
-    //             `http://localhost:8896/employee/address/${addressData.addressId}`,
-    //             {
-    //                 houseNumber: addressData.houseNumber,
-    //                 colony: addressData.colony,
-    //                 pincode: addressData.pincode,
-    //                 city: addressData.city,
-    //                 state: addressData.state,
-    //             },
-    //             {
-    //                 headers: {
-    //                     Authorization: token,
-    //                 },
-    //             }
-    //         );
-    //         setMessage("Address updated successfully!");
-    //     } catch (error) {
-    //         setMessage(`Error: ${error.response?.data?.message || error.message}`);
-    //     }
-    // };
-
     const [addresses, setAddresses] = useState([]);
-
-    // const fetchAllAddresses = async () => {
-    //     try {
-    //         const token = localStorage.getItem("authToken");
-    //         const response = await axios.get("http://localhost:8896/employee/address", {
-    //             headers: {
-    //                 Authorization: token,
-    //             },
-    //         });
-    //         setAddresses(response.data);
-    //     } catch (error) {
-    //         console.error("Error fetching addresses:", error);
-    //     }
-    // };
-
-    // const deleteAddress = async (addressId) => {
-    //     try {
-    //         const token = localStorage.getItem("authToken");
-    //         const response = await axios.delete(`http://localhost:8896/employee/address/${addressId}`, {
-    //             headers: {
-    //                 Authorization: token,
-    //             },
-    //         });
-    //         alert("Address deleted successfully!");
-    //         fetchAllAddresses(); // Refresh the list
-    //     } catch (error) {
-    //         console.error("Error deleting address:", error);
-    //     }
-    // };
 
     const [leaveData, setLeaveData] = useState({
         reason: "",
@@ -220,172 +70,20 @@ export default function EmployeeHome() {
         leaveEndDate: "",
     });
 
-    // const submitLeaveRequest = async (e) => {
-    //     e.preventDefault();
-    //     try {
-    //         const token = localStorage.getItem("authToken");
-    //         const response = await axios.post("http://localhost:8896/employee/leave", leaveData, {
-    //             headers: {
-    //                 Authorization: token,
-    //             },
-    //         });
-    //         setMessage("Leave request submitted successfully!");
-    //         setLeaveData({
-    //             reason: "",
-    //             leaveStartDate: "",
-    //             leaveEndDate: "",
-    //         });
-    //     } catch (error) {
-    //         console.error("Error submitting leave request:", error);
-    //         setMessage("Failed to submit leave request.");
-    //     }
-    // };
-
-    // const submitUpdatedLeave = async (e) => {
-    //     e.preventDefault();
-    //     try {
-    //         const token = localStorage.getItem("authToken");
-    //         const response = await axios.put("http://localhost:8896/employee/leave", leaveData, {
-    //             headers: {
-    //                 Authorization: token,
-    //             },
-    //         });
-    //         setMessage("Leave updated successfully!");
-    //         setLeaveData({
-    //             reason: "",
-    //             leaveStartDate: "",
-    //             leaveEndDate: "",
-    //         });
-    //     } catch (error) {
-    //         console.error("Error updating leave:", error);
-    //         setMessage("Failed to update leave.");
-    //     }
-    // };
-
-    // const deletePendingLeaveHandler = async () => {
-    //     try {
-    //         const token = localStorage.getItem("authToken");
-    //         const response = await axios.delete("http://localhost:8896/employee/leave", {
-    //             headers: {
-    //                 Authorization: token,
-    //             },
-    //         });
-    //         setMessage("Pending leave deleted successfully!");
-    //         console.log("Deleted Leave Details:", response.data);
-    //     } catch (error) {
-    //         console.error("Error deleting pending leave:", error);
-    //         setMessage("Failed to delete pending leave.");
-    //     }
-    // };
-
     const [leaveStatus, setLeaveStatus] = useState(null);
-
-    // const checkLeaveStatusHandler = async () => {
-    //     try {
-    //         const token = localStorage.getItem("authToken");
-    //         const response = await axios.get("http://localhost:8896/employee/leave", {
-    //             headers: {
-    //                 Authorization: token,
-    //             },
-    //         });
-    //         setLeaveStatus(response.data);
-    //         setMessage("Leave status fetched successfully!");
-    //     } catch (error) {
-    //         console.error("Error fetching leave status:", error);
-    //         setMessage(error.response.data.message);
-    //     }
-    // };
 
     const [leaveList, setLeaveList] = useState([]);
 
-    // const getAllLeavesHandler = async () => {
-    //     try {
-    //         const token = localStorage.getItem("authToken");
-    //         const response = await axios.get("http://localhost:8896/employee/allLeaves", {
-    //             headers: {
-    //                 Authorization: token,
-    //             },
-    //         });
-    //         setLeaveList(response.data);
-    //         setMessage("All leaves fetched successfully!");
-    //     } catch (error) {
-    //         console.error("Error fetching all leaves:", error);
-    //         setMessage("Failed to fetch all leaves.");
-    //     }
-    // };
-
     const [workList, setWorkList] = useState([]);
 
-    // const getAllWorksHandler = async () => {    //need to test
-    //     try {
-    //         const token = localStorage.getItem("authToken");
-    //         const response = await axios.get("http://localhost:8896/employee/works", {
-    //             headers: {
-    //                 Authorization: token,
-    //             },
-    //         });
-    //         setWorkList(response.data);
-    //         setMessage("All works fetched successfully!");
-    //     } catch (error) {
-    //         console.error("Error fetching all works:", error);
-    //         setMessage("Failed to fetch all works.");
-    //     }
-    // };
 
     const [workId, setWorkId] = useState('');
-
-    // const changeWorkStatusHandler = async () => {   //need to test
-    //     if (!workId) {
-    //         alert('Please enter a valid work ID.');
-    //         return;
-    //     }
-
-    //     try {
-    //         const token = localStorage.getItem('authToken'); // Assuming token is stored in localStorage
-    //         const response = await axios.put(`http://localhost:8896/employee/changeStatus/${workId}`, {}, {
-    //             headers: {
-    //                 Authorization: token,
-    //             },
-    //         });
-
-    //         // Show success message
-    //         setMessage(response.data); // Assuming the response contains a success message
-    //     } catch (error) {
-    //         console.error('Error changing work status:', error);
-    //         setMessage('Failed to change work status.');
-    //     }
-    // };
 
     const [education, setEducation] = useState({
         instituteName: "",
         qualification: "",
         major: ""
     })
-
-    // const addEducationHandler = async (e) => {
-    //     e.preventDefault();
-    //     try {
-    //         const token = localStorage.getItem("authToken");
-    //         const response = await axios.post(
-    //             "http://localhost:8896/employee/education", 
-    //             education, 
-    //             {
-    //                 headers: {
-    //                     Authorization: token,
-    //                 },
-    //             }
-    //         );
-    //         setMessage("Education added successfully!");
-    //         setEducation({
-    //             instituteName: "",
-    //             qualification: "",
-    //             major: "",
-    //         });
-    //     } catch (error) {
-    //         console.error("Error adding education:", error);
-    //         setMessage("Failed to add education.");
-    //     }
-    // };
 
     const [workExperience, setWorkExperience] = useState({
         companyName: "",
@@ -404,34 +102,6 @@ export default function EmployeeHome() {
         }));
     };
 
-    // const addWorkExperienceHandler = async (e) => {
-    //     e.preventDefault();
-    //     try {
-    //         const token = localStorage.getItem("authToken");
-    //         const response = await axios.post(
-    //             "http://localhost:8896/employee/work-experience", 
-    //             workExperience, 
-    //             {
-    //                 headers: {
-    //                     Authorization: token,
-    //                 },
-    //             }
-    //         );
-    //         setMessage("Work Experience added successfully!");
-    //         setWorkExperience({
-    //             companyName: "",
-    //             designation: "",
-    //             startDate: "",
-    //             endDate: "",
-    //             description: "",
-    //             skillsUsed: "",
-    //         });
-    //     } catch (error) {
-    //         console.error("Error adding work experience:", error);
-    //         setMessage("Failed to add work experience.");
-    //     }
-    // };
-
     const [skill, setSkill] = useState({
         name: "",
         proficiency: "",
@@ -445,32 +115,6 @@ export default function EmployeeHome() {
             [name]: value,
         }));
     };
-
-    // const addSkillHandler = async (e) => {
-    //     e.preventDefault();
-    //     try {
-    //         const token = localStorage.getItem("authToken");
-    //         const response = await axios.post(
-    //             "http://localhost:8896/employee/skills", 
-    //             skill, 
-    //             {
-    //                 headers: {
-    //                     Authorization: token,
-    //                 },
-    //             }
-    //         );
-    //         setMessage("Skill added successfully!");
-    //         setSkill({
-    //             name: "",
-    //             proficiency: "",
-    //             yearsOfExperience: "",
-    //         });
-    //     } catch (error) {
-    //         console.error("Error adding skill:", error);
-    //         setMessage("Failed to add skill.");
-    //     }
-    // };
-    
 
     const renderForm = () => {
         switch (selectedFeature) {

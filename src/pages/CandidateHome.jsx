@@ -49,7 +49,7 @@ export default function CandidateHome() {
     try {
         const token = localStorage.getItem("authToken");
         const response = await axios.post(
-            `http://localhost:8896/candidate/apply/${jobId}`,
+            `${BASE_URL}/candidate/apply/${jobId}`,
             candidate,
         );
         setMessage("Application submitted successfully!");
